@@ -29,8 +29,7 @@ url: https://colinlu50.github.io # the base hostname & protocol for your site, e
 github_username:  colinlu50
 
 # Build settings
-# theme: minima
-remote_theme: poole/lanyon
+theme: minima
 plugins:
   - jekyll-feed
 

@@ -7,7 +7,7 @@ layout: home
 
 
  I'm currently pursuing my Ph.D. degree of Hong Kong University of Science and Technology, supervised by Prof. Cunsheng Ding from HKUST and Prof. Qi Wang from SUSTech. 
-I have a deep collaboration with Prof. Shengcai Liu and Prof. Ke Tang for [NICAL lab](http://www.nical.ai/). 
+I had a deep collaboration with Prof. Shengcai Liu and Prof. Ke Tang for [NICAL lab](http://www.nical.ai/). 
 My General research interest lie in Combinatorial Optimization, Adversarial Attack & Defense, AI Security.
 
 --- 

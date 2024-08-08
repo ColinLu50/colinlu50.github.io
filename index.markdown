@@ -5,8 +5,6 @@ list_title: 'News'
 layout: home
 ---
 
-# LU, Ning
-
 I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology, supervised by Prof. [Cunsheng Ding](https://seng.hkust.edu.hk/about/people/faculty/cunsheng-ding) from HKUST, co-supervised by Prof. [Qi Wang](https://dake98.github.io/) from SUSTech. 
 I had a deep collaboration with Prof. Shengcai Liu and Prof. Ke Tang for [NICAL lab](http://www.nical.ai/). 
 My General research interest lie in Trustworthy AI, Reliability & Security of LLM.
@@ -34,7 +32,7 @@ My General research interest lie in Trustworthy AI, Reliability & Security of LL
 
 ---
 ## Work Experience
-- [2024.7 - ] Research intern: **Huawei, 2012 Lab, RAMS**: 
+- [2024.7 - Now] Research intern: **Huawei, 2012 Lab, RAMS**: 
     - Fault-tolerant LLM pre-training and deployment.
 
 ---

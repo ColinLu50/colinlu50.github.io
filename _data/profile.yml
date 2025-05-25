@@ -16,11 +16,12 @@ github: ColinLu50
 linkedin: ning-lu-hkust
 # orcid: 0000-0000-0000-0000
 
-# Hi there! My name is Charlie, a PhD student at Cambridge working on AI for drug design under the supervision of Prof Sir Tom Blundell and Prof Pietro Lio. My background is in Biochemistry, with a strong focus on applying AI to tackle challenges in structural biology, drug discovery, and biotech, particularly through generative modelling and Geometric Deep Learning. I’m also deeply interested in entrepreneurship, science policy, and flying. I am open to considering full time work opportunties starting mid/late 2025.
-
 
 short_bio: >-
-  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. Now I am interning at ByteDance, focusing on LLM reinforcement learning and tool agents.
+  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
+  <p>
+  Now I am interning at ByteDance, focusing on LLM reinforcement learning and tool agents.
+  </p>
 
 show_portrait: true
 portrait_url: /assets/images/photos/portrait.png
@@ -38,43 +39,44 @@ education:
   date: Sep. 2016 - Jul. 2020
 
 experience:
-- name: UK Government
+- name: ByteDance
   logo: /assets/images/photos/ByteDance_logo.png
-  position: Technical Lead (Opportunties), UK Sovereign AI Unit
+  position: Research Intern, focusing on LLM RL and tool agent.
   date: Apr. 2025 - Present
 
-- name: IQ Capital
-  logo: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcEzYU1jSO0DTPEHRMznPIyrOICfQLTPOISjOHybPISjOICfOICfOICfPKC7OHybOHybPJSzYUlfPJCvecHTQLTPQMzj77O2+e5/pAAAAGHRSTlMADSgaSbrKfdjiXfH/k6v9mFRsOYaN1RHLPvegAAAA00lEQVR4AbWSRQLDIBREcQkUrdz/pmXivsskwPAfDuQ5UdbEB89EE/wkIZVSGo5qZaw1Si+4c977VzM8RO/xx8DXMAImkEGJbiHKZpxDX5d3MKCLKsUMXTeQqRZzXaujq2IbKGyDpsUohrd1A1F4hQDGjfkCSkzaXcBwBxXgdthsASktb9Sd2MBq+kVSGdHR1A2kWIfTXIJFyTeQfCJ6fEwPNdnCahF2/aiHsyXaz4ofurnPLZ1WK+T3+x3myAEvIVhvp8fw6zX5Wtkvq46SSzHyoP4EkBF2XFkkhQAAAABJRU5ErkJggg==
-  position: Venture Fellow
+- name: Huawei, Xiaoyi Business
+  logo: /assets/images/photos/Huawei_logo.png
+  position: Research Intern, exploring the agent capabilities of reasoning LLMs like DeepSeek-R1.
   date: June 2024 - Oct. 2024
 
-- name: BenevolentAI
-  logo: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0ElEQVR4AWMAgf/77Rr+77f5jxMfsPkHpO8A6ZX/jziqM6AChAHEYdsf/w/Y25JlAMJFttfwGGB7ANOFDjJA8T0ohhx1E8NjACYAOtsX1SUOCqS4gOX/AbuJSAa8+P+/gQmXAR9AhqDhNygxctAunrxAPGD7HOQVCqPR5sb/wzZq+Ay4APSzAwo+aBcGdPp5JJfcAoULSbEANEQVzSU+pBlw2EYQ1QC7EuKj8aSzMNDZs1EMOGgXjWEASfnhqJM8BQbYVZATjS/A+eGQrTeyXgA2BAhhJVLYcwAAAABJRU5ErkJggg==
-  position: Machine Learning Research Intern
-  date: July 2022 - Oct. 2022
+- name: Huawei, 2012 Lab
+  logo: /assets/images/photos/Huawei_logo.png
+  position: Research Intern, focusing on fault-torlerant large language model pre-training
+  date: June 2024 - Oct. 2024
 
 
-awards:
-- name: UK-Italy Visiting Researcher Fellowship - Alan Turing Institute
-  date: 2024
-- name: Polaris Fellowship - Entrepreneur First
-  date: 2024
-- name: Cambridge Half Blue (for gliding) - Univesity of Cambridge
-  date: 2023
-- name: CCAIM PhD Studentship - University of Cambridge
-  date: 2021
-- name: Associateship - Royal College of Science
-  date: 2020
-- name: Gold - UK Chemistry Olympiad
-  date: 2017
 
-media:
-- name: "UK Foundation for Science and Technology Podcast"
-  date: 2024
-  link: https://www.foundation.org.uk/Podcasts/2024/Charles-Harris-PhD-Protein-folding-and-machine-lea
-- name: "YouTube Video on AlphaFold"
-  date: 2024
-  link: https://www.youtube.com/watch?v=0ZxpZKtBkdA
-- name: "iGEM Synthetic Biology Podcast"
-  date: 2021
-  link: https://podcast.igem.org/episode/htsb-s1e4
+#Awards:
+#- name: UK-Italy Visiting Researcher Fellowship - Alan Turing Institute
+#  date: 2024
+#- name: Polaris Fellowship - Entrepreneur First
+#  date: 2024
+#- name: Cambridge Half Blue (for gliding) - Univesity of Cambridge
+#  date: 2023
+#- name: CCAIM PhD Studentship - University of Cambridge
+#  date: 2021
+#- name: Associateship - Royal College of Science
+#  date: 2020
+#- name: Gold - UK Chemistry Olympiad
+#  date: 2017
+
+#media:
+#- name: "UK Foundation for Science and Technology Podcast"
+#  date: 2024
+#  link: https://www.foundation.org.uk/Podcasts/2024/Charles-Harris-PhD-Protein-folding-and-machine-lea
+#- name: "YouTube Video on AlphaFold"
+#  date: 2024
+#  link: https://www.youtube.com/watch?v=0ZxpZKtBkdA
+#- name: "iGEM Synthetic Biology Podcast"
+#  date: 2021
+#  link: https://podcast.igem.org/episode/htsb-s1e4

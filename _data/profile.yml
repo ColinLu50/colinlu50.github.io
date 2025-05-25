@@ -1,0 +1,84 @@
+primary_name: "Charlie Harris"
+secondary_name: "(Charles)"
+navbar_name: "Charlie Harris"
+
+positions:
+  - '<span class="no-break"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAABVlBMVEX////3/f2bSUuyZGi4bXOsbHi6dXm2cnm6cXq+mpvO0dHLy8u7kJGvXWaVTE5/AAC8OhugaQjIuwCkORKfgwCYkwCFTADgjpLr6+vedXmULwC8IRu8sQCogACpWw6ShQCFFh17LACijBOkdxinnBCROhyHLBvAABvjlpfAwMCmmgCPQhuXgBKSXxiWBBywLDR1AACvkBaxTiHHwhGOACCMbwDx8fHf39+pACWuqBCEOBmGRC6eAADbzhSYSQL39/ebPw+/kRp2UwuUPjOcRh2RVRjNxhF3ABzHx8e9phSJLTW0WiC+mRjBACrffIG8aSCIiQuwJyWisAmco6OhKiGutgB7KzOVAAC+AAC6AACsAACzAADOzs76+vqhlGijmICie36wSQDSAB6xIRTzzc7o09ZYXw2eoo6uLACqQ0nGhh6gYhrFl52DRheSIhKLWwC+r6+kqqmiHz0PAAAB4klEQVR4AY3SVXviQBgF4K9erGgMJ0kXZxcdUsPdPVJ3l/9/UZ2s27k7z5uMwz8yN7+wuLS8srqi0ep0Wv3y8tLq8qJhDavRZLZYbQRJ0QA0Y3c4XW4P4cXoYzl+nf3kDwQBgkwoTESi5thnjF/iiaQ3xaUpbSaDmHhWiGQ34psYt1gXkdz27FCAcsDkCwRv2S6WVCxXqjW+aqWgjoDxRxtRTig0VWy11zt8iqUQAOqaWny2F+a+DtvnBsMWm6ZGkBt1E8MsS4wnU4wzUZRkURGpt8JIoqgoohTDuPu2P9jLBfcPDvZ1GYC3vqtiHSAINH145PAfabR7rwXqXzGIcnVEI/0xHz/WaDMoSNPBrwhBBCOAwxNRnGlgbwRaHaioOf3I2TlNn5/holG3Iik70pEiBi5ycMHI4o6iXErq2cYi8e20mSA/js9WrLY5rn+FcV4YC9l04YQCHXrFGDGOth2LGJddLj5yHe6/Hx/juuE91+HQLUadfFOIe5wngffjs95Y2Dg/Q4Bz1RIGbf6IAnoPmJ3CneWONYCazL31hk+1P+Z8qAx4U3MOvumVvUxwVIbOZbrHrCAbsOE8Kjsngff79Ltnj788UL1MPUHuiZE1+Lcf+fHtz8dfCU8dDObgf/MCFypgmjiBHaIAAAAASUVORK5CYII=" alt="University of Cambridge" class="inline-badge"/></span> PhD Student @ University of Cambridge'
+
+email: "cch57@cam.ac.uk"
+gscholar: bOAEkIgAAAAJ&hl
+github: cch1999
+twitter: charlieharris01
+cv_link: assets/files/CharlesHarrisCV.pdf
+# wechat_qrcode: assets/images/etc/wechat.jpg
+# wechat_prompt: >-
+#   Please tell me your <strong>name</strong> and <strong>affiliation</strong> (current or past) when adding my wechat. Thanks!
+# linkedin: your-linked-in-id
+# orcid: 0000-0000-0000-0000
+
+# Hi there! My name is Charlie, a PhD student at Cambridge working on AI for drug design under the supervision of Prof Sir Tom Blundell and Prof Pietro Lio. My background is in Biochemistry, with a strong focus on applying AI to tackle challenges in structural biology, drug discovery, and biotech, particularly through generative modelling and Geometric Deep Learning. I’m also deeply interested in entrepreneurship, science policy, and flying. I am open to considering full time work opportunties starting mid/late 2025.
+
+
+short_bio: >-
+  I’m finishing a PhD at Cambridge, where I develop generative and geometric deep-learning methods for structure-based drug discovery in the labs of Pietro Lio and Sir Tom Blundell. Alongside my research, I work with the UK Government’s new Sovereign AI Unit, focusing on policy and new datasets that support AI-driven science.
+
+show_portrait: true
+portrait_url: assets/images/photos/portrait.png
+portrait_caption: >-
+  Me.
+
+education:
+- name: University of Cambridge 
+  logo: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAABVlBMVEX////3/f2bSUuyZGi4bXOsbHi6dXm2cnm6cXq+mpvO0dHLy8u7kJGvXWaVTE5/AAC8OhugaQjIuwCkORKfgwCYkwCFTADgjpLr6+vedXmULwC8IRu8sQCogACpWw6ShQCFFh17LACijBOkdxinnBCROhyHLBvAABvjlpfAwMCmmgCPQhuXgBKSXxiWBBywLDR1AACvkBaxTiHHwhGOACCMbwDx8fHf39+pACWuqBCEOBmGRC6eAADbzhSYSQL39/ebPw+/kRp2UwuUPjOcRh2RVRjNxhF3ABzHx8e9phSJLTW0WiC+mRjBACrffIG8aSCIiQuwJyWisAmco6OhKiGutgB7KzOVAAC+AAC6AACsAACzAADOzs76+vqhlGijmICie36wSQDSAB6xIRTzzc7o09ZYXw2eoo6uLACqQ0nGhh6gYhrFl52DRheSIhKLWwC+r6+kqqmiHz0PAAAB4klEQVR4AY3SVXviQBgF4K9erGgMJ0kXZxcdUsPdPVJ3l/9/UZ2s27k7z5uMwz8yN7+wuLS8srqi0ep0Wv3y8tLq8qJhDavRZLZYbQRJ0QA0Y3c4XW4P4cXoYzl+nf3kDwQBgkwoTESi5thnjF/iiaQ3xaUpbSaDmHhWiGQ34psYt1gXkdz27FCAcsDkCwRv2S6WVCxXqjW+aqWgjoDxRxtRTig0VWy11zt8iqUQAOqaWny2F+a+DtvnBsMWm6ZGkBt1E8MsS4wnU4wzUZRkURGpt8JIoqgoohTDuPu2P9jLBfcPDvZ1GYC3vqtiHSAINH145PAfabR7rwXqXzGIcnVEI/0xHz/WaDMoSNPBrwhBBCOAwxNRnGlgbwRaHaioOf3I2TlNn5/holG3Iik70pEiBi5ycMHI4o6iXErq2cYi8e20mSA/js9WrLY5rn+FcV4YC9l04YQCHXrFGDGOth2LGJddLj5yHe6/Hx/juuE91+HQLUadfFOIe5wngffjs95Y2Dg/Q4Bz1RIGbf6IAnoPmJ3CneWONYCazL31hk+1P+Z8qAx4U3MOvumVvUxwVIbOZbrHrCAbsOE8Kjsngff79Ltnj788UL1MPUHuiZE1+Lcf+fHtz8dfCU8dDObgf/MCFypgmjiBHaIAAAAASUVORK5CYII=
+  position: PhD in Computer Science
+  date: Oct. 2021 - Present
+- name: Imperial College London
+  logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGBFG53_Wui9T7JIvKHqJL2MMmgi37nEVOad6ByDVi6FmJAzTDXwP2__BluOLbdKC9Uak&usqp=CAU
+  position: MSc in Bioinformatics and Theoretical Systems Biology
+  date: Oct. 2020 - Sep. 2021
+- name: Imperial College London
+  logo: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGBFG53_Wui9T7JIvKHqJL2MMmgi37nEVOad6ByDVi6FmJAzTDXwP2__BluOLbdKC9Uak&usqp=CAU
+  position: BSc in Biochemisty
+  date: Oct. 2017 - Jun. 2020
+
+experience:
+- name: UK Government
+  logo: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAYFBMVEULDAwAAAC8vLw2Nja4uLj29vb///8DBQV5enqysrIPEBDj4+OkpKQfHx89PT3d3d03NzfMzMzy8vLU1NQkJSVUVFSYmJhsbGw/Pz9nZ2crKyuDhITFxcXq6uqZmZmLi4u+AZROAAAAy0lEQVR4AdXQRWLEMBBEUf9pqWVmxvufMrAxBXaBKaP0xN5vBL6xx4MvTYwRvkKraj9HB34Q+OA+oTCKsZY4Cu/sEkk1E1WJVCS5KlbJHUWBJ56WXIygAkdd4yALOCmN4b2M6vsbTHMolfq8lTEGjwZfixPmLZ2G9MPQE2pHK2ccaHR0lCVu1IYhPWFbxZ0te80yTUvbxVV7XlEZt1VXx9MU113Vxpe90BqCuZZlkXoOMO0ZHXrJ9QCZ52DdJt+ftjWYZ7xLuMR7xrwCx3EJp4l9MnUAAAAASUVORK5CYII=
+  position: Technical Lead (Opportunties), UK Sovereign AI Unit
+  date: Apr. 2025 - Present
+
+- name: IQ Capital
+  logo: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcEzYU1jSO0DTPEHRMznPIyrOICfQLTPOISjOHybPISjOICfOICfOICfPKC7OHybOHybPJSzYUlfPJCvecHTQLTPQMzj77O2+e5/pAAAAGHRSTlMADSgaSbrKfdjiXfH/k6v9mFRsOYaN1RHLPvegAAAA00lEQVR4AbWSRQLDIBREcQkUrdz/pmXivsskwPAfDuQ5UdbEB89EE/wkIZVSGo5qZaw1Si+4c977VzM8RO/xx8DXMAImkEGJbiHKZpxDX5d3MKCLKsUMXTeQqRZzXaujq2IbKGyDpsUohrd1A1F4hQDGjfkCSkzaXcBwBxXgdthsASktb9Sd2MBq+kVSGdHR1A2kWIfTXIJFyTeQfCJ6fEwPNdnCahF2/aiHsyXaz4ofurnPLZ1WK+T3+x3myAEvIVhvp8fw6zX5Wtkvq46SSzHyoP4EkBF2XFkkhQAAAABJRU5ErkJggg==
+  position: Venture Fellow
+  date: June 2024 - Oct. 2024
+
+- name: BenevolentAI
+  logo: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0ElEQVR4AWMAgf/77Rr+77f5jxMfsPkHpO8A6ZX/jziqM6AChAHEYdsf/w/Y25JlAMJFttfwGGB7ANOFDjJA8T0ohhx1E8NjACYAOtsX1SUOCqS4gOX/AbuJSAa8+P+/gQmXAR9AhqDhNygxctAunrxAPGD7HOQVCqPR5sb/wzZq+Ay4APSzAwo+aBcGdPp5JJfcAoULSbEANEQVzSU+pBlw2EYQ1QC7EuKj8aSzMNDZs1EMOGgXjWEASfnhqJM8BQbYVZATjS/A+eGQrTeyXgA2BAhhJVLYcwAAAABJRU5ErkJggg==
+  position: Machine Learning Research Intern
+  date: July 2022 - Oct. 2022
+
+
+awards:
+- name: UK-Italy Visiting Researcher Fellowship - Alan Turing Institute
+  date: 2024
+- name: Polaris Fellowship - Entrepreneur First
+  date: 2024
+- name: Cambridge Half Blue (for gliding) - Univesity of Cambridge
+  date: 2023
+- name: CCAIM PhD Studentship - University of Cambridge
+  date: 2021
+- name: Associateship - Royal College of Science
+  date: 2020
+- name: Gold - UK Chemistry Olympiad
+  date: 2017
+
+media:
+- name: "UK Foundation for Science and Technology Podcast"
+  date: 2024
+  link: https://www.foundation.org.uk/Podcasts/2024/Charles-Harris-PhD-Protein-folding-and-machine-lea
+- name: "YouTube Video on AlphaFold"
+  date: 2024
+  link: https://www.youtube.com/watch?v=0ZxpZKtBkdA
+- name: "iGEM Synthetic Biology Podcast"
+  date: 2021
+  link: https://podcast.igem.org/episode/htsb-s1e4

@@ -1,0 +1,11 @@
+pages:
+- name: Home
+  url: ./
+- name: Publications
+  url: publications
+- name: Blog
+  url: https://harrisbio.substack.com
+- name: TechBio Database
+  url: https://harrisbio.notion.site
+- name: Flying
+  url: flying

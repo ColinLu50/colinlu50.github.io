@@ -51,20 +51,16 @@ img.lazy {
     min-height: 80px;
 }
 
-.badge-custom {
+div.lazy {
+    background-image: url('images/loading.gif');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 50px 50px;
+    min-height: 80px;
+}
+
+.badge-publication {
     font-size: 100%;
-}
-
-@media (min-width: 576px) {
-    .card-columns {
-        column-count: 1!important;
-    }
-}
-
-@media (min-width: 768px) {
-    .card-columns {
-        column-count: 2!important;
-    }
 }
 
 .email-text {

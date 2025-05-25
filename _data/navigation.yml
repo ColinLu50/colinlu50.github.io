@@ -1,11 +1,9 @@
 pages:
+# NOTE: `name` field must match the `navbar_title` field in the page's front matter to ensure the correct page is highlighted in the navbar.
+#       For example, the `navbar_title` field in `showcase.html` is "Showcase" and the `name` field here should also be "Showcase"
 - name: Home
-  url: ./
+  url: /
 - name: Publications
-  url: publications
-#- name: Blog
-#  url: https://harrisbio.substack.com
-#- name: TechBio Database
-#  url: https://harrisbio.notion.site
-#- name: Flying
-#  url: flying
+  url: /publications
+- name: Showcase
+  url: /showcase

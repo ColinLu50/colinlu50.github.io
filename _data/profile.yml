@@ -3,27 +3,29 @@ secondary_name: "(卢宁)"
 navbar_name: "Ning Lu"
 
 positions:
-  - '<span class="no-break"><img src="data:image/png;base64,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" alt="Hong Kong University of Science and Technology" class="inline-badge"/></span> PhD Student @ Hong Kong University of Science and Technology'
+- logo: /assets/images/photos/LOGO_UST.png  # Logo is optional
+  name: PhD Student @ Hong Kong University of Science and Technology
+#- name: Position 2 without logo
+
 
 email: "nluab AT cse.ust.hk"
-gscholar: EQWpxacAAAAJ
+# cv_link: link-to-your-cv-file
+gscholar: EQWpxacAAAAJ  # This is an example, replace it with your own Google Scholar ID
 github: ColinLu50
-# twitter: charlieharris01
-#cv_link: assets/files/CharlesHarrisCV.pdf
-# wechat_qrcode: assets/images/etc/wechat.jpg
+#twitter: your_twitter_id  # Do not include the '@' symbol
+# wechat_qrcode: /assets/images/etc/wechat.jpg
 # wechat_prompt: >-
 #   Please tell me your <strong>name</strong> and <strong>affiliation</strong> (current or past) when adding my wechat. Thanks!
-linkedin: ning-lu-hkust
+# linkedin: your-linked-in-id
 # orcid: 0000-0000-0000-0000
 
-
+short_bio_text_justify: false
 short_bio: >-
   I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
   <p>
   Now I am interning at ByteDance, focusing on LLM reinforcement learning and tool agents.
   </p>
 
-show_portrait: true
 portrait_url: /assets/images/photos/portrait.png
 portrait_caption: >-
   Me at 12.
@@ -37,6 +39,22 @@ education:
   logo: https://www.sustech.edu.cn/uploads/logo1.png
   position: Ranked 916th in Shandong Province Gaokao <br/>BSc in Computer Science and Engineering
   date: Sep. 2016 - Jul. 2020
+
+# experience:
+# - name: Peking University
+#   logo: /assets/images/badges/PKU_red.png
+#   position: Research Intern
+#   date: Sep. 2019 - Jul. 2021
+
+
+
+awards:
+- name: Outstanding Entrance Scholarship
+  date: 2016
+- name: Outstanding Graduate of the Computer Science Department
+  date: 2020
+#- name: A quick brown fox jumps over the lazy dog and runs away award
+#  date: 2021
 
 experience:
 - name: ByteDance
@@ -53,30 +71,3 @@ experience:
   logo: /assets/images/photos/Huawei_logo.png
   position: Research Intern, focusing on fault-torlerant large language model pre-training
   date: June 2024 - Oct. 2024
-
-
-
-#Awards:
-#- name: UK-Italy Visiting Researcher Fellowship - Alan Turing Institute
-#  date: 2024
-#- name: Polaris Fellowship - Entrepreneur First
-#  date: 2024
-#- name: Cambridge Half Blue (for gliding) - Univesity of Cambridge
-#  date: 2023
-#- name: CCAIM PhD Studentship - University of Cambridge
-#  date: 2021
-#- name: Associateship - Royal College of Science
-#  date: 2020
-#- name: Gold - UK Chemistry Olympiad
-#  date: 2017
-
-#media:
-#- name: "UK Foundation for Science and Technology Podcast"
-#  date: 2024
-#  link: https://www.foundation.org.uk/Podcasts/2024/Charles-Harris-PhD-Protein-folding-and-machine-lea
-#- name: "YouTube Video on AlphaFold"
-#  date: 2024
-#  link: https://www.youtube.com/watch?v=0ZxpZKtBkdA
-#- name: "iGEM Synthetic Biology Podcast"
-#  date: 2021
-#  link: https://podcast.igem.org/episode/htsb-s1e4

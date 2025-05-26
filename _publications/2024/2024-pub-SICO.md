@@ -12,10 +12,12 @@ pub_date:       "2024"
 #  Photo by Pineapple Supply Co. on Unsplash. Please put a tldr (too-long-didnt-read, 1~2 sentences) of your publication here. It is not recommended to put the actual abstract here because it is usually too long to fit in. $\LaTeX$ is supported. $a=b+c$.
 cover: /assets/images/covers/sico.jpg
 authors:
-  - Your Name
-  - James Wang
-  - Some Other Name
-  - John Doe
+  - Ning Lu
+  - Shengcai Liu
+  - Rui He
+  - Qi Wang
+  - Yew-Soon Ong
+  - Ke Tang
 links:
   Code: https://github.com/ColinLu50/Evade-GPT-Detector
   Paper: https://arxiv.org/pdf/2305.10847

@@ -13,7 +13,7 @@ pub_date:       "2025"
 cover:  /assets/images/covers/backdoorgraph.jpg
 authors:
   - Jiahao Wu
-  - Ning Lu*
+  - Ning Lu
   - Zeiyu Dai
   - Kun Wang
   - Wenqi Fan

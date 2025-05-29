@@ -1,5 +1,5 @@
 ---
-title:          "s PRM Necessary? Problem-Solving RL Implicitly Induces PRM Capability in LLMs"
+title:          "Is PRM Necessary? Problem-Solving RL Implicitly Induces PRM Capability in LLMs"
 date:           2025-05-15 00:01:00 +0800
 selected:       true
 #pub:            "International Conference on Machine Learning (ICML)"

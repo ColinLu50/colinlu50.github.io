@@ -19,6 +19,6 @@ authors:
   - Yew-Soon Ong
   - Ke Tang
 links:
-  Code: https://github.com/ColinLu50/Evade-GPT-Detector
   Paper: https://arxiv.org/pdf/2305.10847
+  Code: https://github.com/ColinLu50/Evade-GPT-Detector=
 ---

@@ -3,8 +3,8 @@ title:          "SemDiff: Generating Natural Unrestricted Adversarial Examples v
 date:           2025-04-16 00:01:00 +0800
 selected:       false
 #pub:            "2024 IEEE 35th International Symposium on Software Reliability Engineering Workshops (ISSREW)"
-pub_pre:        "Submitted to TIP"
-# pub_post:       'Under review.'
+#pub_pre:        "Submitted to TIP."
+pub_post:       'Under review.'
 #pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Oral</span>'
 pub_date:       "2025"
 

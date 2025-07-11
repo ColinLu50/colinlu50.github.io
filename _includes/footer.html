@@ -6,22 +6,24 @@
                     <i>Last updated: {{ "now" | date: "%b %Y" }}</i>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="text-right text-muted">
-                    {{ site.data.display.footer_text }}
-                </div>
-                <div class="row">
-                <div class="col-12 text-center">
-                <!-- mapmyvisitors badge -->
+<!--            <div class="col-6">-->
+<!--                <div class="text-right text-muted">-->
+<!--                    {{ site.data.display.footer_text }}-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="col-6 text-right text-muted">
+                {{ site.data.display.footer_text }}
+                <span
+                class="visitor-map-container"
+                style="display:inline-block; margin-left:0.5rem; background:transparent;"
+                >
                 <script
-                 type="text/javascript"
+                type="text/javascript"
                 id="mapmyvisitors"
-                 src="https://mapmyvisitors.com/map.js?cl=080808&w=100&t=tt&d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353">
-                </script>
-                </div>
+                src="https://mapmyvisitors.com/map.js?cl=080808&w=100&t=tt&d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353"
+                ></script>
+                </span>
             </div>
-            </div>
-
         </div>
     </div>
 </footer>

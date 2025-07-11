@@ -7,9 +7,9 @@ homepage:
 # Feel free to replace the footer text if you would like to, but I will greatly appreciate it 
 # if you keep the link to the template so that more people can benefit from it. Thanks!
 footer_text: >-
-  <div class="visitor-map-wrapper text-center my-4 p-3 rounded shadow-sm">
-      <script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?cl=080808&w=a&t=n&d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353"></script>
-    </div>
+#  <div class="visitor-map-wrapper text-center my-4 p-3 rounded shadow-sm">
+#      <script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?cl=080808&w=a&t=n&d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353"></script>
+#    </div>
 #  <img
 #    src="https://visitor-badge.laobi.icu/badge?page_id=colinlu50.github.io"
 #    alt="visitor badge"

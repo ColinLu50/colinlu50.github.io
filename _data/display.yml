@@ -7,7 +7,12 @@ homepage:
 # Feel free to replace the footer text if you would like to, but I will greatly appreciate it 
 # if you keep the link to the template so that more people can benefit from it. Thanks!
 footer_text: >-
-  <img
-    src="https://visitor-badge.laobi.icu/badge?page_id=colinlu50.github.io"
-    alt="visitor badge"
-  />
+  <div class="visitor-map-wrapper text-center my-4 p-3 rounded shadow-sm">
+      <script async defer
+        src="//mapmyvisitors.com/map.js?d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&cl=66ccff&w=500&h=200">
+      </script>
+    </div>
+#  <img
+#    src="https://visitor-badge.laobi.icu/badge?page_id=colinlu50.github.io"
+#    alt="visitor badge"
+#  />

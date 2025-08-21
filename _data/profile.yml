@@ -23,7 +23,7 @@ short_bio_text_justify: false
 short_bio: >-
   I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
   <p>
-  Now I am interning at ByteDance, focusing on LLM Reinforcement Learning and Tool Agents.
+  Now I am interning at ByteDance, focusing on LLM reasoning and RLVR.
   </p>
 
 portrait_url: /assets/images/photos/portrait.png
@@ -57,9 +57,9 @@ awards:
 #  date: 2021
 
 experience:
-- name: ByteDance
+- name: ByteDance, Data
   logo: /assets/images/photos/ByteDance_logo.png
-  position: Research Intern, focusing on LLM RL and tool agent.
+  position: Research Intern, focusing on LLM RL.
   date: Apr. 2025 - Present
 
 - name: Huawei, Xiaoyi Terminal

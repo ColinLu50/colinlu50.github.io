@@ -23,7 +23,8 @@ short_bio_text_justify: false
 short_bio: >-
   I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
   <p>
-  Now I am interning at ByteDance, focusing on LLM reasoning and RLVR.
+  <p>
+  Now I am interning at ByteDance Seed, focusing on expanding the capability boundaries of Multimodal LLMs through Agentic Reinforcement Learning.
   </p>
 
 portrait_url: /assets/images/photos/portrait.png
@@ -57,10 +58,16 @@ awards:
 #  date: 2021
 
 experience:
+- name: ByteDance, Seed
+  logo: /assets/images/photos/ByteDance_logo.png
+  position: Research Intern, focusing on Agentic RL on Multimodal LLM.
+  date: Sep. 2025 - Present
+
+
 - name: ByteDance, Data-Douyin
   logo: /assets/images/photos/ByteDance_logo.png
   position: Research Intern, focusing on LLM RL.
-  date: Apr. 2025 - Present
+  date: Apr. 2025 - Aug. 2025
 
 - name: Huawei, Xiaoyi Terminal
   logo: /assets/images/photos/Huawei_logo.png

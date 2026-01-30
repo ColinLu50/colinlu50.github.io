@@ -21,11 +21,11 @@ github: ColinLu50
 
 short_bio_text_justify: false
 short_bio: >-
-  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on efficiently building Trustworthy Language Models. 
+  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
   <p>
   </p>
   <p>
-  Now I am interning at ByteDance <span style="color: rgb(47,87,194); font-weight: bold;">Seed</span>, focusing on expanding the capability boundaries of Multimodal LLMs through Agentic Reinforcement Learning.
+  Now I am interning at ByteDance <span style="color: rgb(47,87,194); font-weight: bold;">Seed</span>, focusing on Multimodal LLMs Reinforcement Learning.
   </p>
 
 portrait_url: /assets/images/photos/portrait.png
@@ -59,9 +59,11 @@ awards:
 #  date: 2021
 
 experience:
-- name: ByteDance, Seed
+- name: "ByteDance, <span style="color: rgb(47,87,194); font-weight: bold;">Seed</span>"
   logo: /assets/images/photos/ByteDance_logo.png
-  position: Research Intern, focusing on Agentic RL on Multimodal LLM.
+  position: | 
+    - Contributed to the development of the Doubao Voice Agent.
+    - Now I'm working on Seed-2.0 post-training via RLVR.
   date: Sep. 2025 - Present
 
 

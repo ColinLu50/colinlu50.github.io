@@ -59,7 +59,7 @@ awards:
 #  date: 2021
 
 experience:
-- name: "ByteDance, <span style="color: rgb(47,87,194); font-weight: bold;">Seed</span>"
+- name: "ByteDance, Seed"
   logo: /assets/images/photos/ByteDance_logo.png
   position: "- Contributed to the development of the **Doubao Voice Agent Project**.<br/>- Now I'm working on **Seed-2.0** post-training via RLVR."
   date: Sep. 2025 - Present

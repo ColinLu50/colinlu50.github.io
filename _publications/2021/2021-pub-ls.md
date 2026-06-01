@@ -1,7 +1,7 @@
 ---
 title:          "Efficient Combinatorial Optimization for Word-level Adversarial Textual Attack"
 date:           2021-11-06 00:01:00 +0800
-selected:       true
+selected:       false
 pub:            "IEEE/ACM Transactions on Audio, Speech, and Language Processing (TALSP, CCF-B)"
 pub_date:       "2021"
 #abstract: >-

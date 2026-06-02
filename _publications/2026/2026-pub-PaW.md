@@ -1,6 +1,6 @@
 ---
-title:          "Train at the Moving Edge: Efficient RL for Large Reasoning Models via Rollout Selection"
-date:           2026-03-15 00:01:00 +0800
+title:          "Policy and World Modeling Co-Training for Language Agents"
+date:           2026-06-01 00:01:00 +0800
 selected:       true
 # pub:            "Conference on Neural Information Processing Systems (NeurIPS)"
 # pub_pre:        "Submitted to "
@@ -10,16 +10,21 @@ pub_date:       "2026"
 
 abstract: >-
   First policy-verified data selection framework for RL training.  
-cover:  /assets/images/covers/HiVE.png
+cover:  /assets/images/covers/PaW.png
 authors:
-  - Jiahao Wu*
   - Ning Lu*
+  - Baijiong Lin*
   - Shengcai Liu
-  - Kun Wang
-  - Yanting Yang
-  - Li Qing
+  - Jiahao Wu
+  - Haoze Lv
+  - Yanbin Wei
+  - Lingting Zhu
+  - Shengju Qian
+  - Xin Wang
+  - Ying-Cong Chen
+  - Qi Wang
   - Ke Tang
 links:
-  Paper: https://arxiv.org/pdf/2603.25184
+  Paper: https://www.alphaxiv.org/abs/2606.02388
 #  Code: https://github.com/ColinLu50/SafeDelta
 ---

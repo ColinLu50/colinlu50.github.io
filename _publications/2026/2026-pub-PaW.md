@@ -9,7 +9,7 @@ pub_post:       'Under review.'
 pub_date:       "2026"
 
 abstract: >-
-  First policy and world-modeling co-training framework for LLM agents.  
+  The first policy and world-modeling co-training framework for LLM agents.
 cover:  /assets/images/covers/PaW.png
 authors:
   - Ning Lu*

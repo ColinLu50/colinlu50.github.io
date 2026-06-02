@@ -9,7 +9,7 @@ pub_post:       'Under review.'
 pub_date:       "2026"
 
 abstract: >-
-  First policy-verified data selection framework for RL training.  
+  The first online policy-verified data selection framework for efficient RL training.  
 cover:  /assets/images/covers/HiVE.png
 authors:
   - Jiahao Wu*

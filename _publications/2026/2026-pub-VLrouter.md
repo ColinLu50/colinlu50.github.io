@@ -9,7 +9,7 @@ pub:            "IEEE/CVF Conference on Computer Vision and Pattern Recognition 
 pub_date:       "2026"
 
 abstract: >-
-  First benchmark for VLM router.  
+  The first benchmark for VLM router.  
 cover:  /assets/images/covers/vl_router.png
 authors:
   - Zhehao Huang

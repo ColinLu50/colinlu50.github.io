@@ -43,6 +43,18 @@ h1, h2, h3, h4, h5, h6,
     min-height: 100px;
 }
 
+.publication-abstract {
+    display: inline-block;
+    padding: 0.35rem 0.55rem;
+    border-left: 3px solid #0d9488;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e6fffb 0%, #eef6ff 100%);
+    color: #075985;
+    font-weight: 700;
+    line-height: 1.45;
+    box-shadow: 0 1px 8px rgba(13, 148, 136, 0.16);
+}
+
 img.lazy {
     background-image: url('images/loading.gif');
     background-repeat: no-repeat;
@@ -66,4 +78,3 @@ div.lazy {
 .email-text {
     font-family: Courier, monospace;
 }
-

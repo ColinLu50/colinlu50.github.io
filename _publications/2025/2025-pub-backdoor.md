@@ -1,7 +1,7 @@
 ---
 title:          "Backdoor graph condensation"
 date:           2025-03-02 00:01:00 +0800
-selected:       true
+selected:       false
 pub:            "IEEE International Conference on Data Engineering (ICDE)"
 # pub_pre:        "Submitted to "
 # pub_post:       'Under review.'

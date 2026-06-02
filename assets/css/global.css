@@ -43,16 +43,16 @@ h1, h2, h3, h4, h5, h6,
     min-height: 100px;
 }
 
-.publication-abstract {
+p.publication-abstract {
     display: inline-block;
-    padding: 0.35rem 0.55rem;
-    border-left: 3px solid #0d9488;
+    padding: 0.36rem 0.58rem;
+    border-left: 4px solid #10b981;
     border-radius: 4px;
-    background: linear-gradient(90deg, #e6fffb 0%, #eef6ff 100%);
-    color: #075985;
+    background: linear-gradient(90deg, #dcfce7 0%, #ecfdf5 58%, #f0fdfa 100%);
+    color: #047857 !important;
     font-weight: 700;
     line-height: 1.45;
-    box-shadow: 0 1px 8px rgba(13, 148, 136, 0.16);
+    box-shadow: 0 1px 9px rgba(16, 185, 129, 0.18);
 }
 
 img.lazy {

@@ -9,7 +9,7 @@ pub_post:       'Under review.'
 pub_date:       "2026"
 
 abstract: >-
-  First policy-verified data selection framework for RL training.  
+  First policy and world-modeling co-training framework for LLM agents.  
 cover:  /assets/images/covers/PaW.png
 authors:
   - Ning Lu*

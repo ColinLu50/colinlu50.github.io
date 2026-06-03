@@ -46,13 +46,13 @@ h1, h2, h3, h4, h5, h6,
 p.publication-abstract {
     display: inline-block;
     padding: 0.36rem 0.58rem;
-    border-left: 4px solid #10b981;
+    border: 1px solid #fed7aa;
     border-radius: 4px;
-    background: linear-gradient(90deg, #dcfce7 0%, #ecfdf5 58%, #f0fdfa 100%);
-    color: #047857 !important;
+    background: #fff7ed;
+    color: #92400e !important;
     font-weight: 700;
     line-height: 1.45;
-    box-shadow: 0 1px 9px rgba(16, 185, 129, 0.18);
+    box-shadow: 0 1px 7px rgba(146, 64, 14, 0.09);
 }
 
 .news-card {

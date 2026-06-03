@@ -12,8 +12,8 @@ abstract: >-
   The first tool-integrated multi-turn Agents for automatic algorithm design.
 cover:  /assets/images/covers/ahd_agent.png
 authors:
-  - Haoze Lv
-  - Ning Lu
+  - Haoze Lv*
+  - Ning Lu*
   - Ziang Zhou
   - Shengcai Liu
 links:

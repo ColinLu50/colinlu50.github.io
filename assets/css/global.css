@@ -19,6 +19,71 @@ h1, h2, h3, h4, h5, h6,
     font-weight: 400;
 }
 
+.text-profile-bio p {
+    margin-bottom: 0.62rem;
+}
+
+.bio-research {
+    margin: 0.65rem 0 0.72rem;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid #e5e7eb;
+    border-left: 3px solid #c7cdd4;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #f8fafc 0%, #ffffff 80%);
+}
+
+.bio-research-title {
+    margin-bottom: 0.34rem;
+    color: #30343b;
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+.bio-research-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.34rem 0.55rem;
+    align-items: center;
+    padding: 0.22rem 0;
+}
+
+.bio-research-row + .bio-research-row {
+    border-top: 1px solid #edf0f2;
+}
+
+.bio-research-topic {
+    color: #2f3337;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.bio-paper-links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+}
+
+.bio-paper-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.42rem;
+    padding: 0.14rem 0.42rem;
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #4b5563;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.bio-paper-links a:hover {
+    border-color: #9ca3af;
+    background: #f3f4f6;
+    color: #111827;
+    text-decoration: none;
+}
+
 .navbar {
     opacity: 0.95;
 }
@@ -62,39 +127,39 @@ p.publication-abstract {
 .news-card-title {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.85rem 1rem;
+    gap: 0.4rem;
+    padding: 0.65rem 0.9rem;
     margin: 0;
-    border-bottom: 1px solid #dce8e3;
-    color: #0f3f35;
-    background: linear-gradient(90deg, #f7fffb 0%, #ffffff 100%);
+    border-bottom: 1px solid #e5e7eb;
+    color: #30343b;
+    background: linear-gradient(90deg, #fafafa 0%, #ffffff 100%);
 }
 
 .news-card-title i {
-    color: #059669;
+    color: #6b7280;
 }
 
 .news-timeline {
-    padding: 0.95rem 1rem 1rem;
+    padding: 0.65rem 0.85rem 0.75rem;
 }
 
 .news-year-block {
     display: grid;
-    grid-template-columns: 4.4rem minmax(0, 1fr);
-    gap: 0.85rem;
+    grid-template-columns: 3.8rem minmax(0, 1fr);
+    gap: 0.65rem;
 }
 
 .news-year-block + .news-year-block {
-    margin-top: 0.9rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid #e5eee9;
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid #eeeeee;
 }
 
 .news-year-marker {
     align-self: start;
-    padding-top: 0.2rem;
-    color: #047857;
-    font-size: 0.95rem;
+    padding-top: 0.12rem;
+    color: #4b5563;
+    font-size: 0.88rem;
     font-weight: 800;
     letter-spacing: 0;
 }
@@ -102,53 +167,53 @@ p.publication-abstract {
 .news-items {
     position: relative;
     display: grid;
-    gap: 0.62rem;
-    padding-left: 1rem;
+    gap: 0.42rem;
+    padding-left: 0.85rem;
 }
 
 .news-items::before {
     content: "";
     position: absolute;
-    top: 0.45rem;
-    bottom: 0.45rem;
-    left: 0.18rem;
+    top: 0.35rem;
+    bottom: 0.35rem;
+    left: 0.14rem;
     width: 2px;
     border-radius: 999px;
-    background: linear-gradient(180deg, #34d399 0%, #a7f3d0 50%, #d1fae5 100%);
+    background: linear-gradient(180deg, #d1d5db 0%, #e5e7eb 50%, #f3f4f6 100%);
 }
 
 .news-item {
     position: relative;
     display: grid;
-    grid-template-columns: 3.35rem minmax(0, 1fr);
-    gap: 0.78rem;
+    grid-template-columns: 2.85rem minmax(0, 1fr);
+    gap: 0.62rem;
     align-items: start;
-    padding: 0.68rem 0.78rem;
-    border: 1px solid #d6eee5;
-    border-left: 4px solid #34d399;
+    padding: 0.46rem 0.62rem;
+    border: 1px solid #e5e7eb;
+    border-left: 3px solid #c7cdd4;
     border-radius: 6px;
-    background: linear-gradient(90deg, #f0fdf4 0%, #ffffff 70%);
-    box-shadow: 0 1px 7px rgba(15, 118, 110, 0.08);
+    background: linear-gradient(90deg, #f8fafc 0%, #ffffff 76%);
+    box-shadow: 0 1px 5px rgba(31, 41, 55, 0.06);
     transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
 .news-item::before {
     content: "";
     position: absolute;
-    top: 1rem;
-    left: -1.26rem;
-    width: 0.58rem;
-    height: 0.58rem;
+    top: 0.78rem;
+    left: -1.05rem;
+    width: 0.46rem;
+    height: 0.46rem;
     border: 2px solid #ffffff;
     border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 0 2px #a7f3d0;
+    background: #9ca3af;
+    box-shadow: 0 0 0 2px #e5e7eb;
 }
 
 .news-item:hover {
     transform: translateY(-1px);
-    border-color: #a7f3d0;
-    box-shadow: 0 5px 16px rgba(15, 118, 110, 0.13);
+    border-color: #d1d5db;
+    box-shadow: 0 4px 12px rgba(31, 41, 55, 0.1);
 }
 
 .news-date {
@@ -156,45 +221,45 @@ p.publication-abstract {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 3.35rem;
-    min-height: 2.9rem;
+    width: 2.85rem;
+    min-height: 2.36rem;
     border-radius: 6px;
-    background: #ecfdf5;
-    color: #047857;
+    background: #f3f4f6;
+    color: #4b5563;
     line-height: 1.05;
 }
 
 .news-date span {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 700;
     text-transform: uppercase;
 }
 
 .news-date strong {
-    margin-top: 0.12rem;
-    font-size: 1.12rem;
+    margin-top: 0.08rem;
+    font-size: 0.98rem;
     font-weight: 900;
 }
 
 .news-content {
     min-width: 0;
-    color: #26352f;
-    line-height: 1.45;
+    color: #2f3337;
+    line-height: 1.36;
     overflow-wrap: anywhere;
 }
 
 .news-content a {
-    color: #047857;
+    color: #4b5563;
     font-weight: 700;
 }
 
 .news-content a:hover {
-    color: #065f46;
+    color: #111827;
 }
 
 @media (max-width: 575.98px) {
     .news-timeline {
-        padding: 0.8rem 0.85rem 0.9rem;
+        padding: 0.62rem 0.72rem 0.72rem;
     }
 
     .news-year-block {
@@ -207,21 +272,21 @@ p.publication-abstract {
     }
 
     .news-items {
-        padding-left: 0.8rem;
+        padding-left: 0.75rem;
     }
 
     .news-item {
-        grid-template-columns: 3rem minmax(0, 1fr);
-        gap: 0.62rem;
-        padding: 0.62rem;
+        grid-template-columns: 2.7rem minmax(0, 1fr);
+        gap: 0.52rem;
+        padding: 0.44rem 0.55rem;
     }
 
     .news-date {
-        width: 3rem;
+        width: 2.7rem;
     }
 
     .news-item::before {
-        left: -1.06rem;
+        left: -0.96rem;
     }
 }
 

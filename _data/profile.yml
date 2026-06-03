@@ -21,13 +21,34 @@ github: ColinLu50
 
 short_bio_text_justify: false
 short_bio: >-
-  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
-  Previously I was an intern researcher at Bytedance-Seed, where I focus on the Agentic Reinforcement Learning.
-  Now I am focusing on Agentic Reinforcement Learning and World Modeling for LLM. 
   <p>
+  I am a Ph.D. student in Computer Science and Engineering at the Hong Kong University of Science and Technology (HKUST).
+  My research focuses on <strong>agentic reinforcement learning</strong>, <strong>world modeling for LLM agents</strong>, and <strong>language model safety</strong>.
   </p>
   <p>
-  I expect to graduate in 2026 and am actively seeking industry positions. Please feel free to reach out via email at nluab@cse.ust.hk !
+  I have worked as a research intern at ByteDance Seed, ByteDance Data-Douyin, and Huawei 2012 Lab, with recent work on RL for agents, RLVR post-training, and reliable large language model training.
+  </p>
+  <div class="bio-research">
+    <div class="bio-research-title">Research Interests</div>
+    <div class="bio-research-row">
+      <span class="bio-research-topic">LLM RL for Agents and Reasoning</span>
+      <span class="bio-paper-links">
+        <a href="https://www.alphaxiv.org/abs/2606.02388" target="_blank" rel="noopener">PaW</a>
+        <a href="https://arxiv.org/pdf/2603.25184" target="_blank" rel="noopener">HIVE</a>
+        <a href="https://www.alphaxiv.org/abs/2605.08756" target="_blank" rel="noopener">AHDAgent</a>
+        <a href="https://www.alphaxiv.org/abs/2505.11227" target="_blank" rel="noopener">PRM Necessary?</a>
+      </span>
+    </div>
+    <div class="bio-research-row">
+      <span class="bio-research-topic">LLM Alignment and Red Teaming</span>
+      <span class="bio-paper-links">
+        <a href="https://arxiv.org/pdf/2505.12038" target="_blank" rel="noopener">SafeDelta</a>
+      </span>
+    </div>
+  </div>
+  <p>
+  <strong>I expect to graduate in 2026 and am actively seeking industry positions.</strong>
+  Please feel free to reach out via email at <span class="email-text">nluab AT cse.ust.hk</span>.
   </p>
 
 portrait_url: /assets/images/photos/portrait.png

@@ -22,10 +22,12 @@ github: ColinLu50
 short_bio_text_justify: false
 short_bio: >-
   I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models. 
+  Previously I was an intern researcher at Bytedance-Seed, where I focus on the Agentic Reinforcement Learning.
+  Now I am focusing on Agentic Reinforcement Learning and World Modeling for LLM. 
   <p>
   </p>
   <p>
-  Now I am focusing on Agentic Reinforcement Learning.
+  I expect to graduate in 2026 and am actively seeking industry positions. Please feel free to reach out via email at nluab@cse.ust.hk !
   </p>
 
 portrait_url: /assets/images/photos/portrait.png
@@ -70,10 +72,10 @@ experience:
   position: Research Intern, focusing on LLM RL.
   date: Apr. 2025 - Aug. 2025
 
-- name: Huawei, Xiaoyi Terminal
-  logo: /assets/images/photos/Huawei_logo.png
-  position: Explore the LLM's process reward capabilities through problem-solving RL.
-  date: Feb. 2025 - Apr. 2025
+# - name: Huawei, Xiaoyi Terminal
+#   logo: /assets/images/photos/Huawei_logo.png
+#   position: Explore the LLM's process reward capabilities through problem-solving RL.
+#   date: Feb. 2025 - Apr. 2025
 
 - name: Huawei, 2012 Lab
   logo: /assets/images/photos/Huawei_logo.png

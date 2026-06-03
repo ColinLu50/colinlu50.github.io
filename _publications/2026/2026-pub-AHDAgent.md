@@ -10,7 +10,7 @@ pub_date:       "2026"
 
 abstract: >-
   The first tool-integrated multi-turn Agents for automatic algorithm design.
-cover:  /assets/images/covers/PaW.png
+cover:  /assets/images/covers/ahd_agent.png
 authors:
   - Haoze Lv
   - Ning Lu

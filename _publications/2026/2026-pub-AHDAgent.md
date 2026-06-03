@@ -9,7 +9,7 @@ pub_post:       'Under review.'
 pub_date:       "2026"
 
 abstract: >-
-  The first tool-integrated multi-turn Agents for automatic algorithm design.
+  The first tool-integrated multi-turn agentic framework for automatic algorithm design.
 cover:  /assets/images/covers/ahd_agent.png
 authors:
   - Haoze Lv*

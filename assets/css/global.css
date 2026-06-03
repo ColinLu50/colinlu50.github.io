@@ -47,6 +47,7 @@ p.publication-abstract {
     display: inline-block;
     padding: 0.36rem 0.58rem;
     border: 1px solid #fed7aa;
+    border-left: 4px solid #f59e0b;
     border-radius: 4px;
     background: #fff7ed;
     color: #92400e !important;

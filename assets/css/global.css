@@ -19,71 +19,6 @@ h1, h2, h3, h4, h5, h6,
     font-weight: 400;
 }
 
-.text-profile-bio p {
-    margin-bottom: 0.62rem;
-}
-
-.bio-research {
-    margin: 0.65rem 0 0.72rem;
-    padding: 0.55rem 0.65rem;
-    border: 1px solid #e5e7eb;
-    border-left: 3px solid #c7cdd4;
-    border-radius: 6px;
-    background: linear-gradient(90deg, #f8fafc 0%, #ffffff 80%);
-}
-
-.bio-research-title {
-    margin-bottom: 0.34rem;
-    color: #30343b;
-    font-size: 0.84rem;
-    font-weight: 800;
-}
-
-.bio-research-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.34rem 0.55rem;
-    align-items: center;
-    padding: 0.22rem 0;
-}
-
-.bio-research-row + .bio-research-row {
-    border-top: 1px solid #edf0f2;
-}
-
-.bio-research-topic {
-    color: #2f3337;
-    font-size: 0.88rem;
-    font-weight: 700;
-}
-
-.bio-paper-links {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0.28rem;
-}
-
-.bio-paper-links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.42rem;
-    padding: 0.14rem 0.42rem;
-    border: 1px solid #d1d5db;
-    border-radius: 999px;
-    background: #ffffff;
-    color: #4b5563;
-    font-size: 0.76rem;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.bio-paper-links a:hover {
-    border-color: #9ca3af;
-    background: #f3f4f6;
-    color: #111827;
-    text-decoration: none;
-}
-
 .navbar {
     opacity: 0.95;
 }
@@ -185,10 +120,10 @@ p.publication-abstract {
 .news-item {
     position: relative;
     display: grid;
-    grid-template-columns: 2.85rem minmax(0, 1fr);
-    gap: 0.62rem;
+    grid-template-columns: 2.18rem minmax(0, 1fr);
+    gap: 0.48rem;
     align-items: start;
-    padding: 0.46rem 0.62rem;
+    padding: 0.34rem 0.54rem;
     border: 1px solid #e5e7eb;
     border-left: 3px solid #c7cdd4;
     border-radius: 6px;
@@ -200,7 +135,7 @@ p.publication-abstract {
 .news-item::before {
     content: "";
     position: absolute;
-    top: 0.78rem;
+    top: 0.62rem;
     left: -1.05rem;
     width: 0.46rem;
     height: 0.46rem;
@@ -221,23 +156,23 @@ p.publication-abstract {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 2.85rem;
-    min-height: 2.36rem;
-    border-radius: 6px;
+    width: 2.18rem;
+    min-height: 1.72rem;
+    border-radius: 5px;
     background: #f3f4f6;
     color: #4b5563;
     line-height: 1.05;
 }
 
 .news-date span {
-    font-size: 0.62rem;
+    font-size: 0.5rem;
     font-weight: 700;
     text-transform: uppercase;
 }
 
 .news-date strong {
-    margin-top: 0.08rem;
-    font-size: 0.98rem;
+    margin-top: 0.04rem;
+    font-size: 0.72rem;
     font-weight: 900;
 }
 
@@ -276,13 +211,13 @@ p.publication-abstract {
     }
 
     .news-item {
-        grid-template-columns: 2.7rem minmax(0, 1fr);
-        gap: 0.52rem;
-        padding: 0.44rem 0.55rem;
+        grid-template-columns: 2.05rem minmax(0, 1fr);
+        gap: 0.44rem;
+        padding: 0.34rem 0.5rem;
     }
 
     .news-date {
-        width: 2.7rem;
+        width: 2.05rem;
     }
 
     .news-item::before {

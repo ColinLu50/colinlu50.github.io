@@ -21,7 +21,7 @@ github: ColinLu50
 
 short_bio_text_justify: false
 short_bio: >-
-  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), where I focus on the Safety of Language Models.
+  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), supervised by <a href="https://facultyprofiles.hkust.edu.hk/profiles.php?profile=cunsheng-ding-cding" target="_blank" rel="noopener">Prof. Cunsheng Ding</a>, <a href="https://dake98.github.io/" target="_blank" rel="noopener">Prof. Qi Wang</a>, and <a href="https://www.sustech.edu.cn/en/faculties/tangke.html" target="_blank" rel="noopener">Prof. Ke Tang</a>, where I focus on the Safety of Language Models.
   Previously I was an intern researcher at Bytedance-Seed, where I focus on the Agentic Reinforcement Learning.
   Now I am focusing on Agentic Reinforcement Learning and World Modeling for LLM.
   <p>

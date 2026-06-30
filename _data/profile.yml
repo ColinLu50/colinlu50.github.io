@@ -66,6 +66,12 @@ awards:
 #  date: 2021
 
 experience:
+- name: "Tencent, Lightspeed Studio"
+  logo: /assets/images/photos/tencent-logo.png
+  position: Research Intern (Project UP), focusing on LLM agents and world model.
+  date: Apr. 2026 - Jul. 2026
+
+
 - name: "ByteDance, <span style=\"color: rgb(47,87,194); font-weight: bold;\">Seed</span>"
   logo: /assets/images/photos/ByteDance_logo.png
   position: "• Contributed to the development of <b>Doubao Voice Agent</b>. <br/>• Contributed to the <a href=\"https://seed.bytedance.com/en/seed2\" target=\"_blank\"><b>Seed-2.0-lite-0428</b></a> RLVR post-training."

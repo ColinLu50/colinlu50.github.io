@@ -2,6 +2,9 @@
 title:          "Policy and World Modeling Co-Training for Language Agents"
 date:           2026-06-01 00:01:00 +0800
 selected:       true
+studio_featured: true
+studio_viz:     paw
+home_motivation: "RL rollouts already reveal both what to do and what each action causes."
 # pub:            "Conference on Neural Information Processing Systems (NeurIPS)"
 # pub_pre:        "Submitted to "
 pub_post:       'Under review.'

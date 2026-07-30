@@ -1,14 +1,49 @@
 {% assign publications = include.publications %}
-<div class="my-3 p-0 bg-white shadow-sm rounded-sm">
-    <h6 class="border-bottom border-gray p-3 mb-0">
-        {% if include.title %}{{ include.title }}{% else %}<i class="fas fa-star"></i> Selected Recent Publications{% endif %} 
-        <a href="{{ 'publications' | relative_url }}">(view all <i class="fas fa-angle-double-right"></i>)</a>
-    </h6>
-    {% for item in publications limit:include.limit %}
-        {% include widgets/publication_item.html item=item first=false last=false %}    
-    {% endfor %}
-    <h6 class="d-block p-3 mt-0 text-right">
-        <a href="{{ 'publications' | relative_url }}">All publications <i class="fas fa-angle-double-right"></i></a>
-    </h6>
-</div>
+<section class="home-section home-publications home-reveal" id="selected-work">
+  <header class="home-section-header">
+    <div>
+      <p class="home-section-kicker">Selected work</p>
+      <h2>{{ include.title | default: "Selected research" }}</h2>
+    </div>
+    <a class="home-section-link" href="{{ '/publications' | relative_url }}">View all <span aria-hidden="true">&#8599;</span></a>
+  </header>
 
+  <div class="home-publication-grid">
+    {% for item in publications limit:include.limit %}
+    <article class="home-publication-item" data-paper-viz="{{ item.studio_viz }}">
+      {% if item.studio_viz %}
+      <div class="home-publication-visual">
+        <canvas
+          class="home-publication-canvas"
+          data-home-viz="{{ item.studio_viz }}"
+          role="img"
+          aria-label="{{ item.home_motivation | default: item.title | strip_html | escape }}"
+        ></canvas>
+      </div>
+      {% endif %}
+
+      <div class="home-publication-body">
+        <div class="home-publication-topline">
+          <span>{{ item.pub_date }}</span>
+          <span class="home-publication-venue">{{ item.pub | default: item.pub_post | strip_html }}</span>
+        </div>
+        <h3>{{ item.title }}</h3>
+        <p class="home-publication-authors">{% include widgets/author_list.html authors=item.authors %}</p>
+        {% assign motivation = item.home_motivation | default: item.abstract | strip %}
+        {% unless motivation == empty %}
+        <p class="home-publication-motivation"><span>Core motivation</span>{{ motivation }}</p>
+        {% endunless %}
+        <div class="home-publication-links">
+          {% for link in item.links %}
+            {% if link[1].url %}
+              <a target="{{ link[1].target | default: '_blank' }}" rel="noopener" href="{{ link[1].url }}">{{ link[0] }} <span aria-hidden="true">&#8599;</span></a>
+            {% else %}
+              <a target="_blank" rel="noopener" href="{{ link[1] }}">{{ link[0] }} <span aria-hidden="true">&#8599;</span></a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>

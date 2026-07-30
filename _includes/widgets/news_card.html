@@ -1,28 +1,21 @@
-{% assign news_by_year = site.news | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" -%}
-
-<div class="my-3 bg-white shadow-sm rounded-sm news-card">
-    <h6 class="news-card-title">
-        <i class="fas fa-rss"></i>
-        <span>News</span>
-    </h6>
-    <div class="news-timeline-scroll">
-        <div class="news-timeline">
-            {% for year in news_by_year %}
-            <div class="news-year-block">
-                <div class="news-year-marker">{{ year.name }}</div>
-                <div class="news-items">
-                    {% for item in year.items %}
-                    <article class="news-item">
-                        <time class="news-date" datetime="{{ item.date | date_to_xmlschema }}">
-                            <span>{{ item.date | date: "%b" }}</span>
-                            <strong>{{ item.date | date: "%d" }}</strong>
-                        </time>
-                        <div class="news-content">{{ item.title }}</div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+{% assign recent_news = site.news | sort: "date" | reverse %}
+<section class="home-section home-news home-reveal">
+  <header class="home-section-header">
+    <div>
+      <p class="home-section-kicker">Updates</p>
+      <h2>What’s new.</h2>
     </div>
-</div>
+  </header>
+
+  <div class="home-news-list">
+    {% for item in recent_news limit:include.limit %}
+    <article>
+      <time datetime="{{ item.date | date_to_xmlschema }}">
+        <strong>{{ item.date | date: "%d" }}</strong>
+        <span>{{ item.date | date: "%b %Y" }}</span>
+      </time>
+      <div>{{ item.title }}</div>
+    </article>
+    {% endfor %}
+  </div>
+</section>

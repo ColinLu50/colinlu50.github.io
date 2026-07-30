@@ -2,6 +2,9 @@
 title:          "Safe Delta: Consistently Preserving Safety when Fine-Tuning LLMs on Diverse Datasets"
 date:           2025-05-01 00:01:00 +0800
 selected:       true
+studio_featured: true
+studio_viz:     safe-delta
+home_motivation: "Fine-tuning gains utility but can quietly erode alignment."
 pub:            "International Conference on Machine Learning (ICML)"
 # pub_pre:        "Submitted to "
 # pub_post:       'Under review.'

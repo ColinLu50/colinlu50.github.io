@@ -1,30 +1,31 @@
 ---
 layout: default
-title : Homepage
+title: Homepage
 navbar_title: Home
+container_class: home-shell
+custom_css: /assets/css/home.css?v=20260730-core-viz
+custom_js: /assets/js/home.js?v=20260730-core-viz
 ---
-{% include widgets/profile_card.html %}
 
-{% include widgets/debug_repo_name.html %}
+<main class="home-page">
+  {% include widgets/profile_card.html %}
 
-{% include widgets/debug_url.html %}
-
-{% if site.data.display.homepage.show_experience %}
+  {% if site.data.display.homepage.show_experience %}
     {% include widgets/experience_card.html %}
-{% endif %}
+  {% endif %}
 
-{% if site.data.display.homepage.show_news %}
+  {% if site.data.display.homepage.show_news %}
     {% assign count_news = site.news | size %}
     {% if count_news > 0 %}
-        {% include widgets/news_card.html limit=site.data.display.homepage.num_news %}
+      {% include widgets/news_card.html limit=site.data.display.homepage.num_news %}
     {% endif %}
-{% endif %}
+  {% endif %}
 
-{% if site.data.display.homepage.show_selected_publications %}
-    {% assign pubs = site.publications | sort: "date" | reverse | where: "selected", true %}
-    {% 
-        include widgets/publication_card.html 
-        publications=pubs
-        title='<i class="fas fa-star"></i> Selected Publications'
-    %}
-{% endif %}
+  {% if site.data.display.homepage.show_selected_publications %}
+    {% assign pubs = site.publications | sort: "date" | reverse | where: "studio_featured", true %}
+    {% include widgets/publication_card.html publications=pubs title='Selected research' %}
+  {% endif %}
+
+  {% include widgets/debug_repo_name.html %}
+  {% include widgets/debug_url.html %}
+</main>

@@ -2,6 +2,9 @@
 title:          "Train at the Moving Edge: Efficient RL for Large Reasoning Models via Rollout Selection"
 date:           2026-03-15 00:01:00 +0800
 selected:       true
+studio_featured: true
+studio_viz:     hive
+home_motivation: "Useful prompts move as the policy learns; selection should move with them."
 # pub:            "Conference on Neural Information Processing Systems (NeurIPS)"
 # pub_pre:        "Submitted to "
 pub_post:       'Under review.'

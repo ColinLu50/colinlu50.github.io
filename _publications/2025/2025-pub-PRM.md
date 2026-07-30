@@ -2,6 +2,9 @@
 title:          "Is PRM Necessary? Problem-Solving RL Implicitly Induces PRM Capability in LLMs"
 date:           2025-05-15 00:01:00 +0800
 selected:       true
+studio_featured: true
+studio_viz:     prm
+home_motivation: "Can process judgment emerge from outcome-only reinforcement learning?"
 pub:            "Conference on Neural Information Processing Systems (NeurIPS)"
 # pub_pre:        "Submitted to "
 #pub_post:       'Under review.'

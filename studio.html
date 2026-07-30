@@ -1,0 +1,121 @@
+---
+layout: default
+title: Studio
+navbar_title: Studio
+container_class: studio-shell
+custom_css: /assets/css/studio.css?v=20260730-core-viz
+custom_js: /assets/js/studio.js?v=20260730-core-viz
+---
+
+{% assign selected_papers = site.publications | sort: "date" | reverse | where: "studio_featured", true %}
+
+<main class="studio">
+  <section class="studio-hero">
+    <div class="studio-orb studio-orb-one" aria-hidden="true"></div>
+    <div class="studio-orb studio-orb-two" aria-hidden="true"></div>
+    <div class="studio-hero-copy studio-reveal">
+      <p class="studio-eyebrow">Ning Lu · AI Researcher</p>
+      <h1>I teach language agents<br><span>to think, act, and imagine.</span></h1>
+      <p class="studio-lede">
+        My research explores agentic reinforcement learning and world models—
+        building AI systems that learn through interaction, reason over long horizons,
+        and remain aligned along the way.
+      </p>
+      <div class="studio-actions">
+        <a class="studio-button studio-button-primary" href="#work">Explore the work <span aria-hidden="true">↓</span></a>
+        <a class="studio-button studio-button-quiet" href="mailto:{{ site.data.profile.email }}">Start a conversation <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <div class="studio-scroll-cue" aria-hidden="true"><span></span> Scroll to explore</div>
+  </section>
+
+  <section class="studio-statement studio-section">
+    <div class="studio-reveal">
+      <p class="studio-kicker">A research philosophy</p>
+      <p class="studio-manifesto">
+        Intelligence is not only about producing an answer.
+        It is about understanding <em>what happens next.</em>
+      </p>
+    </div>
+    <div class="studio-pillars">
+      <article class="studio-pillar studio-reveal">
+        <span>01</span><h2>Agents</h2>
+        <p>Language models that use tools, learn from environments, and improve through experience.</p>
+      </article>
+      <article class="studio-pillar studio-reveal">
+        <span>02</span><h2>Worlds</h2>
+        <p>Models that anticipate consequences and turn imagination into better decisions.</p>
+      </article>
+      <article class="studio-pillar studio-reveal">
+        <span>03</span><h2>Alignment</h2>
+        <p>Methods that keep capable models safe, useful, and faithful as they adapt.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="studio-work studio-section" id="work">
+    <div class="studio-section-heading studio-reveal">
+      <p class="studio-kicker">Selected research</p>
+      <h2>Ideas, made concrete.</h2>
+      <p>Recent work across agent learning, reasoning, world modeling, and language-model safety.</p>
+    </div>
+    <div class="studio-paper-grid">
+      {% for paper in selected_papers limit: 5 %}
+      <article class="studio-paper studio-reveal">
+        <a class="studio-paper-visual" href="{{ paper.links.Paper }}" target="_blank" rel="noopener" aria-label="Read {{ paper.title }}">
+          <canvas class="studio-paper-canvas" data-viz="{{ paper.studio_viz }}" role="img" aria-label="Animated method overview for {{ paper.title }}"></canvas>
+          <span class="studio-paper-year">{{ paper.pub_date }}</span>
+          <span class="studio-paper-arrow" aria-hidden="true">↗</span>
+        </a>
+        <div class="studio-paper-copy">
+          <p class="studio-paper-meta">{{ paper.pub | default: paper.pub_post | strip_html }}</p>
+          <h3>{{ paper.title }}</h3>
+          {% assign paper_abstract = paper.abstract | strip %}
+          {% unless paper_abstract == empty %}<p>{{ paper.abstract }}</p>{% endunless %}
+          <div class="studio-paper-links">
+            {% for link in paper.links %}
+            {% if link[1].url %}
+            <a href="{{ link[1].url }}" target="{{ link[1].target }}" rel="noopener">{{ link[0] }} <span aria-hidden="true">↗</span></a>
+            {% else %}
+            <a href="{{ link[1] }}" target="_blank" rel="noopener">{{ link[0] }} <span aria-hidden="true">↗</span></a>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div class="studio-all-work studio-reveal">
+      <a href="{{ '/publications' | relative_url }}">View all publications <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="studio-about studio-section">
+    <div class="studio-about-mark studio-reveal" aria-hidden="true">
+      <span>N</span><span>L</span>
+      <p>Research · 2026</p>
+    </div>
+    <div class="studio-about-copy studio-reveal">
+      <p class="studio-kicker">About Ning</p>
+      <h2>At the boundary of<br><em>reasoning and action.</em></h2>
+      <div class="studio-bio-source">{{ site.data.profile.short_bio }}</div>
+      <div class="studio-profile-links">
+        {% if site.data.profile.gscholar %}<a href="https://scholar.google.com/citations?user={{ site.data.profile.gscholar }}" target="_blank" rel="noopener">Google Scholar ↗</a>{% endif %}
+        {% if site.data.profile.github %}<a href="https://github.com/{{ site.data.profile.github }}" target="_blank" rel="noopener">GitHub ↗</a>{% endif %}
+      </div>
+    </div>
+    <div class="studio-facts studio-reveal">
+      <div><span>Degree</span><strong>Ph.D. in CSE</strong></div>
+      <div><span>Alma mater</span><strong>HKUST</strong></div>
+      <div><span>Current lens</span><strong>Agents × Worlds</strong></div>
+    </div>
+  </section>
+
+  <section class="studio-finale">
+    <div class="studio-reveal">
+      <p class="studio-kicker">The next question</p>
+      <h2>What if an agent could<br>learn the world as it acts?</h2>
+      <a href="mailto:{{ site.data.profile.email }}">Let’s find out together <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</main>

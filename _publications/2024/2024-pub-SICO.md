@@ -2,6 +2,9 @@
 title:          "Large Language Models can be Guided to Evade AI-generated Text Detection"
 date:           2024-05-12 00:01:00 +0800
 selected:       true
+studio_featured: true
+studio_viz:     sico
+home_motivation: "AI detectors can depend on writing cues that prompts learn to manipulate."
 pub:            "Transactions on Machine Learning Research (TMLR)"
 # pub_pre:        "Submitted to "
 # pub_post:       'Under review.'

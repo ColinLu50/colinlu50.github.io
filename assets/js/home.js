@@ -2,6 +2,42 @@
   "use strict";
 
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var themeStorageKey = "home-hero-visual-mode";
+  var hero = document.querySelector(".home-hero");
+  var themeSwitch = document.querySelector(".home-theme-switch");
+  var themeName = themeSwitch && themeSwitch.querySelector("[data-home-theme-name]");
+
+  function setEditorialMode(enabled, remember) {
+    if (!hero || !themeSwitch) return;
+    hero.classList.toggle("is-aurora", !enabled);
+    themeSwitch.setAttribute("aria-checked", enabled ? "true" : "false");
+    themeSwitch.setAttribute(
+      "aria-label",
+      enabled ? "Switch to the previous Aurora style" : "Switch to the Editorial style"
+    );
+    if (themeName) themeName.textContent = enabled ? "Editorial" : "Aurora";
+
+    if (remember) {
+      try {
+        window.localStorage.setItem(themeStorageKey, enabled ? "editorial" : "aurora");
+      } catch (error) {
+        // The visual switch still works when storage is unavailable.
+      }
+    }
+  }
+
+  if (hero && themeSwitch) {
+    var savedMode = null;
+    try {
+      savedMode = window.localStorage.getItem(themeStorageKey);
+    } catch (error) {
+      savedMode = null;
+    }
+    setEditorialMode(savedMode !== "aurora", false);
+    themeSwitch.addEventListener("click", function () {
+      setEditorialMode(themeSwitch.getAttribute("aria-checked") !== "true", true);
+    });
+  }
   var revealElements = document.querySelectorAll(".home-reveal");
 
   if ("IntersectionObserver" in window && !reduceMotion) {

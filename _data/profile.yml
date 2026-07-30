@@ -21,7 +21,7 @@ github: ColinLu50
 
 short_bio_text_justify: false
 short_bio: >-
-  I am currently pursuing a Ph.D. in CSE at Hong Kong University of Science and Technology (HKUST), supervised by <a href="https://facultyprofiles.hkust.edu.hk/profiles.php?profile=cunsheng-ding-cding" target="_blank" rel="noopener">Prof. Cunsheng Ding</a>, <a href="https://dake98.github.io/" target="_blank" rel="noopener">Prof. Qi Wang</a>, and <a href="https://www.sustech.edu.cn/en/faculties/tangke.html" target="_blank" rel="noopener">Prof. Ke Tang</a>, where I focus on the Safety of Language Models.
+  I received my Ph.D. in CSE from the Hong Kong University of Science and Technology (HKUST), where I was supervised by <a href="https://facultyprofiles.hkust.edu.hk/profiles.php?profile=cunsheng-ding-cding" target="_blank" rel="noopener">Prof. Cunsheng Ding</a>, <a href="https://dake98.github.io/" target="_blank" rel="noopener">Prof. Qi Wang</a>, and <a href="https://www.sustech.edu.cn/en/faculties/tangke.html" target="_blank" rel="noopener">Prof. Ke Tang</a> and focused on the safety of language models.
   Previously I was an intern researcher at Bytedance-Seed, where I focus on the Agentic Reinforcement Learning.
   Now I am focusing on Agentic Reinforcement Learning and World Modeling for LLM.
   <p>
@@ -30,9 +30,6 @@ short_bio: >-
   <strong>Research Interest:</strong><br>
   - LLM RL for Agent and Reasoning: <a href="https://www.alphaxiv.org/abs/2606.02388" target="_blank" rel="noopener">PaW</a>, <a href="https://arxiv.org/pdf/2603.25184" target="_blank" rel="noopener">HIVE</a>, <a href="https://www.alphaxiv.org/abs/2605.08756" target="_blank" rel="noopener">AHDAgent</a>, <a href="https://www.alphaxiv.org/abs/2505.11227" target="_blank" rel="noopener">Is PRM Necessary?</a><br>
   - LLM Alignment & RedTeaming: <a href="https://arxiv.org/pdf/2505.12038" target="_blank" rel="noopener">SafeDelta</a>, <a href="https://arxiv.org/pdf/2305.10847" target="_blank" rel="noopener">SICO</a>
-  </p>
-  <p>
-  <strong>I expect to graduate in 2026 and am actively seeking industry positions.</strong> Please feel free to reach out via email at <span class="email-text">nluab AT cse.ust.hk</span> !
   </p>
 
 portrait_url: /assets/images/photos/portrait.png

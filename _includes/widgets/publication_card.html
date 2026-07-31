@@ -2,7 +2,6 @@
 <section class="home-section home-publications home-reveal" id="selected-work">
   <header class="home-section-header">
     <div>
-      <p class="home-section-kicker">Selected work</p>
       <h2>{{ include.title | default: "Selected research" }}</h2>
     </div>
     <a class="home-section-link" href="{{ '/publications' | relative_url }}">View all <span aria-hidden="true">&#8599;</span></a>
@@ -13,26 +12,24 @@
     <article class="home-publication-item" data-paper-viz="{{ item.studio_viz }}">
       {% if item.studio_viz %}
       <div class="home-publication-visual">
-        <canvas
-          class="home-publication-canvas"
-          data-home-viz="{{ item.studio_viz }}"
-          role="img"
-          aria-label="{{ item.home_motivation | default: item.title | strip_html | escape }}"
-        ></canvas>
+        {% include widgets/research_demo.html paper=item replay=true class="research-demo--home" %}
       </div>
       {% endif %}
 
       <div class="home-publication-body">
+        {% assign publication_venue = item.pub | default: item.pub_post | strip_html %}
         <div class="home-publication-topline">
-          <span>{{ item.pub_date }}</span>
-          <span class="home-publication-venue">{{ item.pub | default: item.pub_post | strip_html }}</span>
+          <time class="home-publication-year" datetime="{{ item.pub_date }}" aria-label="Publication year {{ item.pub_date }}">
+            <span class="home-publication-year-value">{{ item.pub_date }}</span>
+          </time>
+          <div class="home-publication-venue">
+            <span class="home-publication-venue-label">{% if item.pub %}Published at{% else %}Status{% endif %}</span>
+            <strong class="home-publication-venue-name">{{ publication_venue }}</strong>
+          </div>
         </div>
         <h3>{{ item.title }}</h3>
         <p class="home-publication-authors">{% include widgets/author_list.html authors=item.authors %}</p>
-        {% assign motivation = item.home_motivation | default: item.abstract | strip %}
-        {% unless motivation == empty %}
-        <p class="home-publication-motivation"><span>Core motivation</span>{{ motivation }}</p>
-        {% endunless %}
+
         <div class="home-publication-links">
           {% for link in item.links %}
             {% if link[1].url %}

@@ -1,26 +1,23 @@
 <section class="home-hero home-reveal">
-  <button
-    class="home-theme-switch"
-    type="button"
-    role="switch"
-    aria-checked="true"
-    aria-label="Switch to the previous Aurora style"
-  >
-    <span class="home-theme-switch-copy">
-      <span class="home-theme-switch-overline">Visual mode</span>
-      <span class="home-theme-switch-name" data-home-theme-name>Editorial</span>
-    </span>
-    <span class="home-theme-switch-track" aria-hidden="true"><span class="home-theme-switch-thumb"></span></span>
-  </button>
-
   <div class="home-hero-aurora-wash" aria-hidden="true"></div>
   <div class="home-hero-orb home-hero-orb-one" aria-hidden="true"></div>
   <div class="home-hero-orb home-hero-orb-two" aria-hidden="true"></div>
 
   <div class="home-hero-inner">
     <div class="home-hero-copy">
-      <p class="home-eyebrow">{{ site.data.profile.primary_name }} · AI Researcher</p>
-      <h1>Building agents that<br><span>learn by acting.</span></h1>
+      <p class="home-eyebrow">Introduction</p>
+      <h1 class="home-name">
+        <span class="home-name-primary">{{ site.data.profile.primary_name }}</span>
+        {% if site.data.profile.secondary_name %}
+          {% assign home_secondary_name = site.data.profile.secondary_name | remove: '(' | remove: ')' %}
+          <span class="home-name-secondary" lang="zh-Hans">{{ home_secondary_name }}</span>
+        {% endif %}
+      </h1>
+      {% if site.data.profile.slogan %}
+      <p class="home-hero-thesis">
+        {{ site.data.profile.slogan.line_1 }}{% if site.data.profile.slogan.line_2 %}<br><span>{{ site.data.profile.slogan.line_2 }}</span>{% endif %}
+      </p>
+      {% endif %}
 
       <div class="home-position">
         {% for position in site.data.profile.positions %}
@@ -58,10 +55,11 @@
       <div class="home-portrait-frame">
         <img src="{{ site.data.profile.portrait_url | relative_url }}" alt="Portrait of {{ site.data.profile.primary_name }}">
       </div>
+      {% if site.data.profile.portrait_caption %}
       <div class="home-portrait-caption">
-        <span>Ning Lu</span>
-        <small>Agents · Reasoning · Alignment</small>
+        {{ site.data.profile.portrait_caption }}
       </div>
+      {% endif %}
     </aside>
     {% endif %}
   </div>

@@ -286,12 +286,6 @@ body:has(.studio) footer { display: none; }
   transition: transform .35s ease, box-shadow .35s ease;
 }
 
-.studio-paper-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 .studio-paper:hover .studio-paper-visual {
   transform: translateY(-3px);
   box-shadow: 0 22px 58px rgba(30,25,48,.16);
@@ -598,4 +592,15 @@ body:has(.studio) footer { display: none; }
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
   }
+}
+/* Home and Studio intentionally use the same research-demo component. */
+.studio-paper-visual {
+  height: 226px;
+  aspect-ratio: auto;
+}
+
+.studio-paper-visual .research-demo { height: 100%; }
+
+@media (max-width: 460px) {
+  .studio-paper-visual { height: 210px; }
 }

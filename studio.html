@@ -3,8 +3,9 @@ layout: default
 title: Studio
 navbar_title: Studio
 container_class: studio-shell
-custom_css: /assets/css/studio.css?v=20260730-core-viz
-custom_js: /assets/js/studio.js?v=20260730-core-viz
+custom_css: /assets/css/studio.css?v=20260731-shared-trajectory
+custom_js: /assets/js/studio.js?v=20260731-shared-trajectory
+research_demos: true
 ---
 
 {% assign selected_papers = site.publications | sort: "date" | reverse | where: "studio_featured", true %}
@@ -61,9 +62,9 @@ custom_js: /assets/js/studio.js?v=20260730-core-viz
     </div>
     <div class="studio-paper-grid">
       {% for paper in selected_papers limit: 5 %}
-      <article class="studio-paper studio-reveal">
+      <article class="studio-paper studio-reveal" data-paper-viz="{{ paper.studio_viz }}">
         <a class="studio-paper-visual" href="{{ paper.links.Paper }}" target="_blank" rel="noopener" aria-label="Read {{ paper.title }}">
-          <canvas class="studio-paper-canvas" data-viz="{{ paper.studio_viz }}" role="img" aria-label="Animated method overview for {{ paper.title }}"></canvas>
+          {% include widgets/research_demo.html paper=paper class="research-demo--studio" %}
           <span class="studio-paper-year">{{ paper.pub_date }}</span>
           <span class="studio-paper-arrow" aria-hidden="true">↗</span>
         </a>

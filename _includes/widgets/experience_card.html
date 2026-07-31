@@ -22,6 +22,17 @@
         </li>
         {% endfor %}
       </ol>
+
+      {% if site.data.profile.awards %}
+      <div class="home-awards">
+        <p class="home-section-kicker">Selected honors</p>
+        <div class="home-awards-list">
+          {% for item in site.data.profile.awards %}
+          <div><span>{{ item.name }}</span><time>{{ item.date }}</time></div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
     </article>
     {% endif %}
 
@@ -43,14 +54,4 @@
     {% endif %}
   </div>
 
-  {% if site.data.profile.awards %}
-  <div class="home-awards">
-    <p class="home-section-kicker">Selected honors</p>
-    <div class="home-awards-list">
-      {% for item in site.data.profile.awards %}
-      <div><span>{{ item.name }}</span><time>{{ item.date }}</time></div>
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
 </section>

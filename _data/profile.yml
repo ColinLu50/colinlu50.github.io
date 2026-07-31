@@ -2,6 +2,10 @@ primary_name: "Ning Lu"
 secondary_name: "(卢宁)"
 navbar_name: "Ning Lu"
 
+slogan:
+  line_1: "Learning from the world,"
+  line_2: "guided by value."
+
 positions:
 - logo: /assets/images/photos/LOGO_UST.png  # Logo is optional
   name: Ph.D. in CSE · Hong Kong University of Science and Technology
@@ -21,7 +25,7 @@ github: ColinLu50
 
 short_bio_text_justify: false
 short_bio: >-
-  I received my Ph.D. in CSE from the Hong Kong University of Science and Technology (HKUST), where I was supervised by <a href="https://facultyprofiles.hkust.edu.hk/profiles.php?profile=cunsheng-ding-cding" target="_blank" rel="noopener">Prof. Cunsheng Ding</a>, <a href="https://dake98.github.io/" target="_blank" rel="noopener">Prof. Qi Wang</a>, and <a href="https://www.sustech.edu.cn/en/faculties/tangke.html" target="_blank" rel="noopener">Prof. Ke Tang</a> and focused on the safety of language models.
+  I received my Ph.D. in CSE from the Hong Kong University of Science and Technology (HKUST), where I was supervised by <a href="https://facultyprofiles.hkust.edu.hk/profiles.php?profile=cunsheng-ding-cding" target="_blank" rel="noopener">Prof. Cunsheng Ding</a>, <a href="https://dake98.github.io/" target="_blank" rel="noopener">Prof. Qi Wang</a>, and <a href="https://www.sustech.edu.cn/en/faculties/tangke.html" target="_blank" rel="noopener">Prof. Ke Tang</a> and focused on trustworthy language models.
   Previously I was an intern researcher at Bytedance-Seed, where I focus on the Agentic Reinforcement Learning.
   Now I am focusing on Agentic Reinforcement Learning and World Modeling for LLM.
   <p>
@@ -40,7 +44,7 @@ education:
 - name: Hong Kong University of Science and Technology
   logo: /assets/images/photos/LOGO_UST.png
   position: PhD in Computer Science and Engineering
-  date: Sep. 2021 - Present
+  date: Sep. 2021 - Jul. 2026
 - name: Southern University of Science and Technology
   logo: https://www.sustech.edu.cn/uploads/logo1.png
   position: Ranked 916th in Shandong Province Gaokao <br/>BSc in Computer Science and Engineering
@@ -88,4 +92,4 @@ experience:
 - name: Huawei, 2012 Lab
   logo: /assets/images/photos/Huawei_logo.png
   position: Research Intern, focusing on fault-torlerant large language model pre-training
-  date: June 2024 - Oct. 2024
+  date: Jun. 2024 - Oct. 2024

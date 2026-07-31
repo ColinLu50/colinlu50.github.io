@@ -3,29 +3,32 @@ layout: default
 title: Homepage
 navbar_title: Home
 container_class: home-shell
-custom_css: /assets/css/home.css?v=20260730-theme-toggle
-custom_js: /assets/js/home.js?v=20260730-theme-toggle
+custom_css: /assets/css/home.css?v=20260731-secondary-name-v6
+custom_js: /assets/js/home.js?v=20260731-content-v1
+research_demos: true
+view_switch: true
 ---
 
-<main class="home-page">
-  {% include widgets/profile_card.html %}
+<main class="home-page" data-view-switch-root>
+  <div class="home-current-view" data-view-editorial>
+    {% include widgets/profile_card.html %}
 
-  {% if site.data.display.homepage.show_experience %}
-    {% include widgets/experience_card.html %}
-  {% endif %}
-
-  {% if site.data.display.homepage.show_news %}
-    {% assign count_news = site.news | size %}
-    {% if count_news > 0 %}
-      {% include widgets/news_card.html limit=site.data.display.homepage.num_news %}
+    {% if site.data.display.homepage.show_experience %}
+      {% include widgets/experience_card.html %}
     {% endif %}
-  {% endif %}
 
-  {% if site.data.display.homepage.show_selected_publications %}
-    {% assign pubs = site.publications | sort: "date" | reverse | where: "studio_featured", true %}
-    {% include widgets/publication_card.html publications=pubs title='Selected research' %}
-  {% endif %}
+    {% if site.data.display.homepage.show_news %}
+      {% assign count_news = site.news | size %}
+      {% if count_news > 0 %}
+        {% include widgets/news_card.html %}
+      {% endif %}
+    {% endif %}
 
-  {% include widgets/debug_repo_name.html %}
-  {% include widgets/debug_url.html %}
+    {% if site.data.display.homepage.show_selected_publications %}
+      {% assign pubs = site.publications | sort: "date" | reverse | where: "studio_featured", true %}
+      {% include widgets/publication_card.html publications=pubs title='Selected research' %}
+    {% endif %}
+  </div>
+
+  {% include widgets/home_original.html %}
 </main>

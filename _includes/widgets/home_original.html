@@ -1,0 +1,174 @@
+{% assign original_papers = site.publications | sort: "date" | reverse | where: "studio_featured", true %}
+{% assign original_news = site.news | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
+
+<div class="home-original-view" data-view-classic hidden>
+  <div class="row">
+    <div class="col">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body p-5">
+          <div class="row">
+            <div class="col">
+              {% if site.data.profile.portrait_url %}
+              <figure class="figure float-right ml-4 mb-4 d-none d-md-block original-profile-portrait">
+                <img
+                  src="{{ site.data.profile.portrait_url | relative_url }}"
+                  class="figure-img img-fluid img-thumbnail"
+                  alt="Portrait of {{ site.data.profile.primary_name }}"
+                  style="height: 200px;"
+                >
+                {% if site.data.profile.portrait_caption %}
+                <figcaption class="figure-caption text-center">{{ site.data.profile.portrait_caption }}</figcaption>
+                {% endif %}
+              </figure>
+              {% endif %}
+
+              <div class="d-flex">
+                <div class="h1 font-weight-normal">
+                  {{ site.data.profile.primary_name }} <small>{{ site.data.profile.secondary_name }}</small>
+                </div>
+                {% if site.data.profile.portrait_url %}
+                <div class="ml-auto d-md-none">
+                  <img src="{{ site.data.profile.portrait_url | relative_url }}" class="rounded-circle" style="height: 48px;" alt="Portrait">
+                </div>
+                {% endif %}
+              </div>
+
+              <div class="text-profile-position">
+                {% for position in site.data.profile.positions %}
+                {% if position.logo %}<img src="{{ position.logo | relative_url }}" alt="" class="inline-badge">{% endif %}
+                {{ position.name }}<br>
+                {% endfor %}
+              </div>
+              <div class="text-profile-bio mt-3" {% if site.data.profile.short_bio_text_justify %}style="text-align: justify;"{% endif %}>
+                {{ site.data.profile.short_bio }}
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="col original-profile-links">
+              <a class="pr-3 no-break" href="mailto:{{ site.data.profile.email | encode_email }}"><i class="fas fa-at"></i> Email</a>
+              {% if site.data.profile.gscholar %}
+                {% if site.data.profile.gscholar contains 'scholar.google' %}
+                  {% assign original_scholar_url = site.data.profile.gscholar %}
+                {% else %}
+                  {% assign original_scholar_url = 'https://scholar.google.com/citations?user=' | append: site.data.profile.gscholar %}
+                {% endif %}
+                <a class="pr-3 no-break" target="_blank" rel="noopener" href="{{ original_scholar_url }}"><i class="fab fa-google-scholar"></i> Google Scholar</a>
+              {% endif %}
+              {% if site.data.profile.github %}
+              <a class="pr-3 no-break" target="_blank" rel="noopener" href="https://github.com/{{ site.data.profile.github }}"><i class="fab fa-github"></i> GitHub</a>
+              {% endif %}
+              <a class="pr-3 no-break" href="{{ '/studio' | relative_url }}"><i class="fas fa-wand-magic-sparkles"></i> Research Studio</a>
+              {% if site.data.profile.cv_link %}
+              <a class="pr-3 no-break" target="_blank" rel="noopener" href="{{ site.data.profile.cv_link | relative_url }}"><i class="fas fa-file-alt"></i> CV</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if site.data.display.homepage.show_experience %}
+  <div class="row mt-3">
+    <div class="col">
+      <div class="card border-0 shadow-sm bg-white">
+        <div class="card-body p-4">
+          <div class="row">
+            {% if site.data.profile.education %}
+            <div class="col-md-6">
+              <div class="mx-2 my-1">
+                <h6>Education</h6>
+                <ul class="list-unstyled mb-1">
+                  {% for item in site.data.profile.education %}
+                  <li class="media mb-2">
+                    <img src="{{ item.logo | relative_url }}" alt="" style="width:18px;" class="mr-1 mt-1">
+                    <div class="media-body">
+                      <div>{{ item.name }}</div>
+                      {% if item.dept %}<div class="small">{{ item.dept }}</div>{% endif %}
+                      <div class="small d-flex">
+                        <div>{{ item.position }}</div>
+                        <div class="mt-auto ml-auto no-break"><em>{{ item.date }}</em></div>
+                      </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+
+                {% if site.data.profile.awards %}
+                <div class="original-honors">
+                  <h6>Selected honors</h6>
+                  <ul class="list small pl-3 mb-1">
+                    {% for item in site.data.profile.awards %}
+                    <li><div class="d-flex"><div>{{ item.name }}</div><div class="ml-auto mt-auto no-break"><em>{{ item.date }}</em></div></div></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+
+            {% if site.data.profile.experience %}
+            <div class="col-md-6">
+              <div class="mx-2 my-1">
+                <h6>Experience</h6>
+                <ul class="list-unstyled mb-1">
+                  {% for item in site.data.profile.experience %}
+                  <li class="media mb-2">
+                    <img src="{{ item.logo | relative_url }}" alt="" style="width:18px;" class="mr-1 mt-1">
+                    <div class="media-body">
+                      <div class="d-flex"><div>{{ item.name }}</div><div class="ml-auto no-break"><em>{{ item.date }}</em></div></div>
+                      <div class="small">{{ item.position }}</div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if site.data.display.homepage.show_news %}
+  <div class="my-3 bg-white shadow-sm rounded-sm news-card">
+    <h6 class="news-card-title"><i class="fas fa-rss"></i><span>News</span></h6>
+    <div class="news-timeline-scroll" tabindex="0" aria-label="Scrollable news archive">
+      <div class="news-timeline">
+        {% for year in original_news %}
+        <div class="news-year-block">
+          <div class="news-year-marker">{{ year.name }}</div>
+          <div class="news-items">
+            {% for item in year.items %}
+            <article class="news-item">
+              <time class="news-date" datetime="{{ item.date | date_to_xmlschema }}"><span>{{ item.date | date: "%b" }}</span><strong>{{ item.date | date: "%d" }}</strong></time>
+              <div class="news-content">{{ item.title }}</div>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if site.data.display.homepage.show_selected_publications %}
+  <div class="my-3 p-0 bg-white shadow-sm rounded-sm original-publications">
+    <h6 class="border-bottom border-gray p-3 mb-0">
+      <i class="fas fa-star"></i> Selected research
+      <a href="{{ '/publications' | relative_url }}">(view all <i class="fas fa-angle-double-right"></i>)</a>
+    </h6>
+    {% for item in original_papers limit: 5 %}
+      {% include widgets/publication_item.html item=item first=false last=false %}
+    {% endfor %}
+    <h6 class="d-block p-3 mt-0 text-right"><a href="{{ '/publications' | relative_url }}">All publications <i class="fas fa-angle-double-right"></i></a></h6>
+  </div>
+  {% endif %}
+</div>

@@ -277,3 +277,99 @@ div.lazy {
 .email-text {
     font-family: Courier, monospace;
 }
+
+/* Footer page views control */
+.footer-bar {
+    display: flex;
+    min-height: 68px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.footer-updated {
+    margin: 0;
+    color: #85817a;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    font-size: .67rem;
+    letter-spacing: -.005em;
+}
+
+.footer-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .65rem;
+}
+
+.footer-pageviews {
+    display: inline-flex;
+    align-items: baseline;
+    gap: .22rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: #85817a;
+    background: transparent;
+    box-shadow: none;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    font-size: .64rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: color .16s ease;
+}
+
+.footer-pageviews:hover {
+    color: #5f5b55;
+    text-decoration: none;
+}
+
+.footer-pageviews:focus-visible {
+    outline: 1px solid rgba(152,80,51,.38);
+    outline-offset: 3px;
+}
+
+.footer-pageviews-value {
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    letter-spacing: -.01em;
+}
+
+.footer-pageviews-label {
+    display: inline;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+.visitor-map-source {
+    position: fixed !important;
+    top: 0 !important;
+    left: -10000px !important;
+    width: 100px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+@media (max-width: 575px) {
+    .footer-bar {
+        min-height: 62px;
+        gap: .7rem;
+    }
+
+    .footer-updated { font-size: .6rem; }
+
+    .footer-pageviews { font-size: .59rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-pageviews { transition: none; }
+}

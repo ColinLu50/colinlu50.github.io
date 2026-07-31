@@ -1,29 +1,30 @@
 <footer class="footer">
-    <div class="{% if page.container_class %}{{ page.container_class }}{% else %}container-lg{% endif %}">
-        <div class="row my-3">
-            <div class="col-6">
-                <div class="text-muted">
-                    <i>Last updated: {{ "now" | date: "%b %Y" }}</i>
-                </div>
-            </div>
-<!--            <div class="col-6">-->
-<!--                <div class="text-right text-muted">-->
-<!--                    {{ site.data.display.footer_text }}-->
-<!--                </div>-->
-<!--            </div>-->
-            <div class="col-6 text-right text-muted">
-                {{ site.data.display.footer_text }}
-                <span
-                class="visitor-map-container"
-                style="display:inline-block; margin-left:0.5rem; background:transparent;"
-                >
-                <script
-                type="text/javascript"
-                id="mapmyvisitors"
-                src="https://mapmyvisitors.com/map.js?cl=080808&w=100&t=tt&d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353"
-                ></script>
-                </span>
-            </div>
-        </div>
+  <div class="{% if page.container_class %}{{ page.container_class }}{% else %}container-lg{% endif %}">
+    <div class="footer-bar">
+      <p class="footer-updated">Last updated: {{ "now" | date: "%b %Y" }}</p>
+      <div class="footer-meta">
+        {{ site.data.display.footer_text }}
+        {% if site.data.display.footer.show_pageviews %}
+        <a
+          class="footer-pageviews"
+          data-pageviews
+          href="https://mapmyvisitors.com/web/1bymz"
+          target="_blank"
+          rel="noopener"
+          aria-label="Loading page view count"
+        >
+          <span class="footer-pageviews-value" data-pageviews-value>···</span>
+          <span class="footer-pageviews-label">{{ site.data.display.footer.pageviews_label | default: "Views" }}</span>
+        </a>
+        <span class="visitor-map-source" aria-hidden="true">
+          <script
+            type="text/javascript"
+            id="mapmyvisitors"
+            src="https://mapmyvisitors.com/map.js?cl=080808&w=100&t=tt&d=qvvhgc5SNOOX3ghKFuBAcDaCtFandgHQ21xBSYlk0m8&co=ffffff&ct=808080&cmo=3acc3a&cmn=ff5353"
+          ></script>
+        </span>
+        {% endif %}
+      </div>
     </div>
+  </div>
 </footer>

@@ -2,31 +2,91 @@
 layout: default
 title : Publications
 navbar_title: Publications
+container_class: publications-shell
+custom_css: /assets/css/publications.css?v=20260731-editorial-v1
+view_switch: true
 body_attr: >-
   data-spy="scroll" data-target="#navbar-year" data-offset="100"
 ---
 
 {% assign pubs_by_year = site.publications | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
 
-<div class="row">
-    <div class="col-12 col-lg-10">
+<main class="publication-page" data-view-switch-root>
+  <section class="publication-editorial" data-view-editorial>
+    <header class="publication-editorial-header">
+      <h1>Publications</h1>
+      <p>Research on agentic reinforcement learning, world modeling, alignment, and red teaming.</p>
+    </header>
+
+    <nav class="publication-year-index" aria-label="Publication years">
+      {% for year in pubs_by_year %}
+      <a href="#editorial-year-{{ year.name }}">{{ year.name }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="publication-year-groups">
+      {% for year in pubs_by_year %}
+      <section class="publication-year-group" id="editorial-year-{{ year.name }}">
+        <h2>{{ year.name }}</h2>
+        <div class="publication-editorial-list">
+          {% for item in year.items %}
+          {% assign item_abstract = item.abstract | strip %}
+          <article class="publication-editorial-item">
+            <div class="publication-editorial-copy">
+              {% if item.pub or item.pub_post or item.pub_last %}
+              <p class="publication-editorial-venue">{{ item.pub_pre }}{% if item.pub %}{{ item.pub }}{% endif %}{{ item.pub_post }} {{ item.pub_last }}</p>
+              {% endif %}
+              <h3>{{ item.title }}</h3>
+              <p class="publication-editorial-authors">{% include widgets/author_list.html authors=item.authors %}</p>
+              {% unless item_abstract == empty %}
+              <p class="publication-editorial-abstract">{{ item.abstract }}</p>
+              {% endunless %}
+              {% if item.links %}
+              <div class="publication-editorial-links">
+                {% for link in item.links %}
+                {% if link[1].url %}
+                <a target="{{ link[1]['target'] }}" rel="noopener" href="{{ link[1]['url'] }}">{{ link[0] }} <span aria-hidden="true">&#8599;</span></a>
+                {% else %}
+                <a target="_blank" rel="noopener" href="{{ link[1] }}">{{ link[0] }} <span aria-hidden="true">&#8599;</span></a>
+                {% endif %}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            {% if item.cover %}
+            <figure class="publication-editorial-cover">
+              <img src="{{ item.cover | relative_url }}" loading="lazy" alt="Cover image for {{ item.title }}">
+            </figure>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="publication-classic" data-view-classic hidden>
+    <div class="row">
+      <div class="col-12 col-lg-10">
         {% for year in pubs_by_year %}
         {% assign num_papers = year.items | size %}
         <h2 class="pt-4" id="year-{{ year.name }}">{{ year.name }}</h2>
         <div class="my-0 p-0 bg-white shadow-sm rounded-sm">
-            {% for item in year.items %}
-                {% include widgets/publication_item.html item=item hide_bottom_border=forloop.last first=forloop.first last=forloop.last %}
-            {% endfor %}
+          {% for item in year.items %}
+            {% include widgets/publication_item.html item=item hide_bottom_border=forloop.last first=forloop.first last=forloop.last %}
+          {% endfor %}
         </div>
         {% endfor %}
-    </div>
+      </div>
 
-    <div class="col-2 d-none d-lg-block">
+      <div class="col-2 d-none d-lg-block">
         <div id="navbar-year" class="nav nav-pills flex-column sticky-top" style="top: 80px">
-            {% for year in pubs_by_year %}
-            <a class="nav-link d-block" href="#year-{{ year.name }}">{{ year.name }}</a>
-            {% endfor %}
+          {% for year in pubs_by_year %}
+          <a class="nav-link d-block" href="#year-{{ year.name }}">{{ year.name }}</a>
+          {% endfor %}
         </div>
+      </div>
     </div>
-
-</div>
+  </section>
+</main>

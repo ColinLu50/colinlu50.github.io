@@ -1,4 +1,5 @@
 {% assign recent_news = site.news | sort: "date" | reverse %}
+{% assign news_years = recent_news | group_by_exp: "item", "item.date | date: '%Y'" %}
 <section class="home-section home-news home-reveal">
   <header class="home-section-header">
     <div>
@@ -7,15 +8,64 @@
     </div>
   </header>
 
-  <div class="home-news-list">
-    {% for item in recent_news limit:include.limit %}
-    <article>
-      <time datetime="{{ item.date | date_to_xmlschema }}">
-        <strong>{{ item.date | date: "%d" }}</strong>
-        <span>{{ item.date | date: "%b %Y" }}</span>
-      </time>
-      <div>{{ item.title }}</div>
-    </article>
-    {% endfor %}
+  <div class="home-news-browser" data-news-browser>
+    <div class="home-news-toolbar">
+      <div class="home-news-years" role="tablist" aria-label="Choose news year">
+        {% for year in news_years %}
+        {% assign year_news_count = year.items | size %}
+        <button
+          type="button"
+          role="tab"
+          id="news-tab-{{ year.name }}"
+          data-news-year="{{ year.name }}"
+          aria-controls="news-panel-{{ year.name }}"
+          aria-label="Show {{ year.name }} news, {{ year_news_count }} update{% unless year_news_count == 1 %}s{% endunless %}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+        >
+          <span class="home-news-year-label">{{ year.name }}</span>
+        </button>
+        {% endfor %}
+      </div>
+      {% assign first_news_year = news_years | first %}
+      {% assign first_news_count = first_news_year.items | size %}
+    </div>
+
+    <div class="home-news-stage">
+      {% for year in news_years %}
+      <div
+        class="home-news-panel{% if forloop.first %} is-active{% endif %}"
+        id="news-panel-{{ year.name }}"
+        role="tabpanel"
+        aria-labelledby="news-tab-{{ year.name }}"
+        data-news-panel="{{ year.name }}"
+        {% unless forloop.first %}hidden{% endunless %}
+      >
+        <div class="home-news-list" data-news-deck tabindex="0" aria-label="{{ year.name }} news archive">
+          {% for item in year.items %}
+          <article class="home-news-item" data-news-item>
+            <time datetime="{{ item.date | date_to_xmlschema }}">
+              <strong>{{ item.date | date: "%d" }}</strong>
+              <span>{{ item.date | date: "%b %Y" }}</span>
+            </time>
+            <div>{{ item.title }}</div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="home-news-scroll-state" data-news-scroll-state aria-hidden="true">
+        <span class="home-news-scroll-number" data-news-scroll-current>01</span>
+        <span class="home-news-scroll-track" data-news-scroll-track>
+          <span class="home-news-scroll-cursor" data-news-scroll-cursor>
+            <span></span>
+          </span>
+        </span>
+        <span class="home-news-scroll-number" data-news-scroll-total>
+          {{ first_news_count | prepend: '0' | slice: -2, 2 }}
+        </span>
+      </div>
+    </div>
   </div>
 </section>

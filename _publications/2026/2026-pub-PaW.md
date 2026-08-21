@@ -5,9 +5,9 @@ selected:       true
 studio_featured: true
 studio_viz:     paw
 home_motivation: "RL rollouts already reveal both what to do and what each action causes."
-# pub:            "Conference on Neural Information Processing Systems (NeurIPS)"
+pub:            "Conference on Empirical Methods in Natural Language Processing (EMNLP)"
 # pub_pre:        "Submitted to "
-pub_post:       'Under review.'
+#pub_post:       'Under review.'
 #pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Spotlight</span>'
 pub_date:       "2026"
 

@@ -8,3 +8,7 @@ vendor/
 Gemfile.lock
 
 .DS_Store
+
+# Local agent files
+.agents/
+.claude/

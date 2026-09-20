@@ -1,0 +1,113 @@
+/* Realtime sky, a foreground insect, and four unobtrusive time choices. */
+.home-hero.home-sky {
+  --sky-ink: #142737;
+  --sky-muted: #263b4a;
+  --sky-accent: #334f63;
+  --sky-line: rgba(20, 39, 55, .26);
+  --sky-paper: #f2f1ec;
+  --sky-surface: rgba(246, 248, 249, .18);
+  --sky-wash: 237, 241, 241;
+  --sky-horizon: #f1f1ea;
+  --sky-copy-gap: clamp(.85rem, calc(3svh - .5rem), 1.7rem);
+  /* Account for the body's 5rem header space and the page's 1px overlap.
+     Content can still grow beyond one screen on short or narrow viewports. */
+  min-height: calc(100vh - 5rem + 1px);
+  min-height: calc(100svh - 5rem + 1px);
+  padding-top: clamp(1.25rem, calc(10svh - 4rem), 4.5rem);
+  padding-bottom: 5.5rem;
+  /* Clipping without a scroll container prevents a focused insect near an edge
+     from scrolling the entire background inside the hero. */
+  overflow: clip;
+  color: var(--sky-ink);
+  background: linear-gradient(180deg, rgb(var(--sky-wash)), var(--sky-horizon));
+  border-bottom: 1px solid var(--sky-line);
+  isolation: isolate;
+}
+.home-sky::before, .home-sky::after { content: none; }
+.home-sky .home-eyebrow { margin-bottom: .75rem; }
+.home-sky h1 { font-size: clamp(3.4rem, min(7.5vw, 10svh), 7.6rem); }
+.home-sky .home-hero-thesis { font-size: clamp(1.45rem, min(2.65vw, 4svh), 2.35rem); }
+.home-sky .home-hero-thesis, .home-sky .home-positions, .home-sky .home-bio, .home-sky .home-profile-links { margin-top: var(--sky-copy-gap); }
+.home-sky .home-bio { font-size: clamp(1rem, min(1.35vw, 2.1svh), 1.18rem); line-height: 1.55; }
+.home-sky .home-bio p { margin-top: var(--sky-copy-gap); }
+.home-sky[data-sky-theme="night"] {
+  --sky-ink: #f4f4ef;
+  --sky-muted: #dce3eb;
+  --sky-accent: #eddbc2;
+  --sky-line: rgba(236, 240, 244, .30);
+  --sky-paper: #182638;
+  --sky-surface: rgba(18, 31, 49, .20);
+  --sky-wash: 22, 32, 47;
+  --sky-horizon: #1d2b3d;
+}
+.home-sky[data-sky-look="dawn"][data-sky-theme="day"] {
+  --sky-wash: 241, 238, 232;
+  --sky-horizon: #eee5d8;
+}
+.home-sky[data-sky-look="sunset"][data-sky-theme="day"] {
+  --sky-ink: #302c32;
+  --sky-muted: #3f3740;
+  --sky-accent: #654530;
+  --sky-wash: 243, 237, 231;
+  --sky-horizon: #eddfd3;
+}
+.sky-atmosphere { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.sky-atmosphere[hidden] { display: none !important; }
+.home-sky .home-eyebrow, .home-sky .home-position, .home-sky .home-bio, .home-sky .home-portrait-caption { color: var(--sky-muted); }
+.home-sky .home-hero-thesis, .home-sky .home-bio strong { color: var(--sky-ink); }
+.home-sky .home-name-secondary, .home-sky .home-hero-thesis span, .home-sky .home-bio a:hover { color: var(--sky-accent); }
+.home-sky .home-positions { border-color: var(--sky-accent); }
+.home-sky .home-bio a { border-color: var(--sky-line); }
+.home-sky .home-profile-links a { color: var(--sky-ink); border-color: var(--sky-line); background: var(--sky-surface); }
+.home-sky .home-profile-links a:first-child, .home-sky .home-profile-links a:hover { color: var(--sky-paper); border-color: var(--sky-ink); background: var(--sky-ink); }
+.home-sky .home-portrait { color: var(--sky-muted); background: var(--sky-surface); border-color: var(--sky-line); box-shadow: 0 18px 50px rgba(13, 32, 56, .12); }
+.sky-ant {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+.sky-ant-stage {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  opacity: .9;
+  pointer-events: none;
+}
+.sky-ant-stage[hidden] { display: none !important; }
+.sky-ant:focus-visible { outline: 1px dotted var(--sky-ink); outline-offset: -12px; }
+.sky-ant[hidden], .sky-controls[hidden], .sky-controls [hidden] { display: none !important; }
+.sky-controls { position: absolute; z-index: 4; bottom: 1.5rem; left: var(--home-gutter); color: var(--sky-ink); font-size: .72rem; }
+.sky-control-row, .sky-looks { display: flex; align-items: center; }
+.sky-control-row { gap: .7rem; }
+.sky-controls button { display: inline-flex; position: relative; align-items: center; justify-content: center; min-height: 36px; padding: 0; border: 0; color: inherit; background: none; font: inherit; cursor: pointer; }
+.sky-clock { font-variant-numeric: tabular-nums; letter-spacing: .035em; min-width: 3em; }
+.sky-look { width: 24px; }
+.sky-look-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--look-color); border: 1px solid rgba(255,255,255,.55); }
+.sky-look[aria-pressed="true"] .sky-look-dot { outline: 1px solid currentColor; outline-offset: 3px; }
+.sky-look[data-sky-look="dawn"] { --look-color: #e3c4a1; }
+.sky-look[data-sky-look="noon"] { --look-color: #82add0; }
+.sky-look[data-sky-look="sunset"] { --look-color: #d58a62; }
+.sky-look[data-sky-look="night"] { --look-color: #202d46; }
+.sky-controls :focus-visible { outline: 1px solid var(--sky-ink); outline-offset: 2px; border-radius: 50%; }
+.sky-controls .sky-clock-button:focus-visible { border-radius: 3px; }
+@media (max-width: 767px) {
+  .home-hero.home-sky { padding-top: clamp(2rem, 6svh, 4rem); padding-bottom: 6rem; }
+  .home-sky h1 { font-size: clamp(3.4rem, 15vw, 5.3rem); }
+  .sky-controls button { min-height: 44px; }
+  .sky-look { width: 26px; }
+}

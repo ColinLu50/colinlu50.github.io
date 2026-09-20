@@ -61,9 +61,13 @@
 
 ## 4. 视觉系统与卡片约束
 
-- 逻辑画布：约 `720 × 210`；桌面高度约 `220px`，移动端约 `205px`。
-- 背景采用暖黑/石墨色的编辑式平面；允许非常轻的区域光，不使用泡泡、星点或点阵纹理。
-- 主文字：暖白；次要文字：中性灰。
+- 所有论文复用 `_includes/widgets/research_demo.html`：独立标题栏 + Replay + 图示区。
+- 标题来自 `_data/research_demos.yml`，使用同一套全大写、小字号、灰色加粗样式。
+- Replay 始终使用相同图标、文字、32px 高度、边框、圆角和焦点样式；手机端也保留文字。
+- panel 最小高度由 `--research-demo-height: 260px` 统一管理。标题自然换行，不能覆盖按钮。
+- 绘图区域由 `research-panel.js` 统一缩放。新 Konva 场景使用 `y=0..188`；兼容层将旧 Canvas 的 `y=32..220` 映射到同一内容区。
+- 论文专属 CSS 只能设置主题变量，禁止另写标题、按钮、间距和媒体查询覆盖。
+- 使用平面背景。浅色为默认，SICO 的深色主题通过同一组主题变量实现。
 - 建议语义色：
   - cobalt：policy / utility / selected update
   - teal：world signal / verified / accepted / repaired
@@ -72,6 +76,7 @@
   - violet：shared model / cached prior / prompt
 - 正文标签视觉字号不低于约 `10px`；移动端不低于 `9.5px`。
 - 同屏永久标签控制在 6–9 个；公式只保留最短、最关键的一条。
+- 画面只保留解释论文机制的标签；图形性质与来源写在无障碍说明中，不添加通用页脚标注。
 - 每张图必须在无动画截图中仍能看出：输入、关键变化、结论。
 - Canvas/SVG 的高 DPI、ResizeObserver、IntersectionObserver 和无障碍文本都必须保留。
 
@@ -83,59 +88,66 @@
 
 核心问题：标准 agentic RL rollout 已经产生 `o_t → a_t → o_{t+1}`，但通常只用 action 与 reward 更新策略，下一观察中“动作造成了什么”被浪费。
 
-故事：
+故事：一条共享的 `Obs 0 / Act 0 / Obs 1 / Act 1 / … / Obs T` trajectory 先按列出现。上方 `Policy loss` mask observation columns，仅在 action columns 显示 flame-shaped train marks；下方 `World modeling loss` 把初始 `Obs 0 + Act 0` 合并为一个 mask，训练 resulting observations 并 mask 中间 action。两条 lane 保留到最后，在宽图合流为同一个 policy update。
 
-1. rollout 时间轴生成 `obs → action → next obs`；基线只接走 action，`next obs unused` 变灰。
-2. 同一 transition 分成两条监督 lane：全部 action 进入 `RL`；高 action entropy 的 transition 经 `top-α` 选择后，其 next observation 进入 `WM · CMAE`。
-3. CMAE 用 token 状态显示“低概率噪声梯度被封顶、高置信 token 停止更新”，而不是笼统地删除噪声。
-4. `RL` 与 `WM · CMAE` 汇入同一个 `policy πθ`，明确没有额外模型和额外 rollout。
-5. 回报 gauge 改变 `λ=1−R̄/Rmax`，只改变 WM lane 的线宽；更新反馈回下一轮 rollout。
+最少标签：`Policy loss`、`Mask`、`World modeling loss`、`Shared policy`。
 
-最少标签：`rollout`、`H(aₜ|hₜ)`、`top-α`、`RL`、`WM · CMAE`、`λ=1−R̄/Rmax`、`same policy πθ`。
-
-视觉变量：横向位置=交互时间；stem 高度=action entropy；饱和/halo=是否入选；线宽=`λ`；空心/封顶 token=CMAE 状态。
+视觉变量：横向位置=同一次 rollout 的 token 位置；soft clay/blue cells=action/observation；flame=train；rounded muted mask=不被该 loss 监督。CMAE、entropy gate 与 reward balancing 是论文的次要机制，刻意不放入这个紧凑场景。
 
 最终句：**The same transition teaches which action works and what that action does.**
 
-### HIVE — 在昂贵 rollout 之前追踪移动的学习边缘
+### HIVE: the moving edge, with selection before rollout
 
-论文：[Train at the Moving Edge](https://arxiv.org/html/2603.25184v2)
+Source: [Train at the Moving Edge, sections 2-3](https://arxiv.org/html/2603.25184v2).
 
-核心问题：prompt utility 不是固定属性。随着 policy 变强，真正有梯度的中等难度、高不确定样本会移动；只靠历史统计会变 stale，并把 rollout 浪费在 zero-variance prompt 上。
+The main story is **target medium difficulty → policy changes → history becomes stale
+→ prompt entropy corrects selection before rollout**. Keep a fixed `Easy / Medium /
+Hard` horizontal scale with a faint central `Medium` band. Two rows show the **same
+prompts**: `History` and `Current policy`. During the policy update, lower-row dots
+move toward easier positions while the historical row stays in place. Some historical
+favorites visibly leave the medium band. Prompt entropy then fades those stale choices
+and selects the currently useful medium-difficulty candidates.
 
-故事：
+- The history shortlist is broad and retains exploration candidates. Historical
+  filled marks illustrate the previous preference, not an extra Stage-1 top-k gate.
+- Online verification takes the upper half by current prompt entropy **within the
+  shortlisted pool only**; the median is computed from that pool.
+- Difficulty coordinates and entropy scores are independent illustrative inputs.
+  Do not turn prompt entropy into an exact difficulty estimator or a universal
+  entropy-versus-difficulty curve. The paper's edge also requires high uncertainty.
+- `Policy changes`, `History is stale`, and `Correct with prompt entropy` appear in
+  one changing caption. The final caption is `Select current medium`.
+- Keep the common Replay, backward scrub, final frame and reduced-motion behavior.
+- Diagram context lives in `demo_description`; on-canvas labels focus on the mechanism.
+- Reuse existing nodes and one layer; no new library, particle system or draw loop.
 
-1. 固定散点坐标中，current learning edge 与历史候选带起初重合。
-2. policy 更新后 current edge 向更难区域移动，历史带留在旧位置；旧候选落到阈值下并显示 `stale`，其昂贵 rollout 分支淡去。
-3. `Stage 1 · history` 用 reward trajectory 与 response entropy 做便宜的宽候选带。
-4. `Stage 2 · online verify` 由当前 policy 的 prompt entropy 更新候选纵向位置；`γₜ median` 只保留线上样本。
-5. 只有 teal survivors 生成 rollout 并进入 `GRPO`；新 reward 与 response entropy 回写 history。
+### Is PRM Necessary?: one model, two developing capabilities
 
-最少标签：`easy`、`learning edge`、`hard`、`history: reward + response H`、`current Vₜ(x)`、`γₜ median`、`rollout`、`GRPO`。
+Source: [Is PRM Necessary?, section 3.3 and Figure 1](https://arxiv.org/html/2505.11227v2).
 
-视觉变量：x=当前难度；y=current prompt entropy；amber=历史候选；teal=当前验证；coral ring=stale；rollout 分支=昂贵计算。
+Two directly labeled traces (`Solve`, `Judge`) grow along the same outcome-only
+RL training axis, with a qualitative `Capability` vertical axis. The panel title is
+`SOLVING BUILDS JUDGMENT`, kept on one line. Keep the supervision description in
+the accessible text. The dashed trace
+can develop earlier than the solid trace: process judgment is not simply a delayed
+copy of answer accuracy. Remove the arithmetic cards and the solve-equals-judge sign.
 
-最终句：**History narrows cheaply; current-policy entropy catches the edge before rollout.**
+- These are **qualitative, illustrative** trends, not digitized measurements.
+- The vertical positions do not numerically compare accuracy with ProcessBench F1.
+- The final frame retains the curves, their direct labels and axes, with no cautionary caption.
+- Self-PRM reranking is outside this small panel's scope; the central finding gets
+  the entire scene instead of competing with a second mechanism.
 
-### Is PRM Necessary? — outcome RL 同时长出解题与过程判断能力
-
-论文：[Is PRM Necessary?](https://arxiv.org/html/2505.11227v2)
-
-核心问题：显式 process labels 是否是过程判断能力的必要来源？论文观察到纯 outcome RL 在提高解题能力时，也诱导出可观的 PRM 能力。
-
-故事：
-
-1. 开场显示常见假设：`process labels → PRM`；随后将 labels 标为 absent，只保留 final outcome reward。
-2. 一条 RL training playhead 从左向右推进；同一模型上两条对齐曲线分别表示 `solve` 与 `process judgment`，后者随训练共同上升。
-3. 多条 candidate reasoning path 从同一问题展开；外部 PRM 路径变成弱残影，表示它对强 reasoning model 的 rerank 帮助有限。
-4. 同一个模型切换为 `Self-PRM`，用内部 reward 对自己的路径排序，选中的路径回到主 lane。
-5. 最终保留一个明确 caveat：对最难问题，self-judgment 仍可能出现 false positive，不能画成完美 verifier。
-
-最少标签：`outcome reward only`、`solve ↑`、`process judgment ↑`、`same model`、`Self-PRM`、`rerank`、`hard-case FP`。
-
-视觉变量：同一横轴=RL training time；两条曲线=能力共同演化；路径位置=候选；回到主 lane=被选中；coral outline=错误自信。
-
-最终句：**Outcome-only RL improves solving and implicitly induces process judgment in the same model.**
+Both panels use flat light fields, fine lines, a restrained accent, and few labels.
+All five panel headings use the shared HTML header and CSS: uppercase, muted text,
+weight 720, the same font size, and the same upper-left alignment. No renderer draws
+its own heading or controls.
+The chart reference was [Lieflat Charts](https://github.com/larashero3-dotcom/lieflat-charts):
+F2 Hairline Line and F8 Plumb Scatter were inspected for direct labels, fixed axes,
+and restrained marks. L11 Trend Lineage encodes event histories, so it is not a fit
+for these mechanisms. All five scenes use static Konva nodes mutated by paused GSAP timelines.
+This is visual reference,
+not a template-based report or an installed skill.
 
 ### Safe Delta — 按安全预算选择参数更新，再修复残余损伤
 
@@ -143,17 +155,11 @@
 
 核心问题：不同 fine-tuning 数据导致的 safety degradation 不同，固定 defense strength 要么安全不够，要么过度牺牲 utility。
 
-故事：
+故事：左侧恢复 4×4 圆角 `ΔW` 参数格；每个 cell 内的蓝色 utility bar 与 muted-red safety-cost bar 保留原始相对值。selection 依 greedy order 依次描出五个蓝色边框并弱化其余 cell。右侧仅有两根 live metric bars：SFT 让两者升高；selection 后 Utility 维持高度，Safety loss 降低，淡色 SFT ghost 保留原高度作为参照。
 
-1. 同一个 `Static defense` 作用于不同 `D_sft`：一侧 risk 越过阈值，另一侧 utility 明显缩水。
-2. 从 `W_orig + D_safe` 计算并固定 `H⁻¹ once`；随后不重算。
-3. fine-tune 产生 `ΔW`，utility 与 risk 同时上升；每个 delta cell 由 `H⁻¹` 得到 safety cost 与 `rₘ`。
-4. cells 按 `rₘ` 排序，playhead 逐个接纳；累计 cost 在 `ΣδL<ε` 前停止。
-5. mint compensation `C` 只进入未选位置，形成 `W_sd = W_orig + M⊙ΔW + C`。
+最少标签：`ΔW`、`SFT`、`Utility`、`Safety loss`、`Base / SFT / Select / Safe Delta`。
 
-最少标签：`Static`、`D_sft`、`H⁻¹ once`、`ΔW`、`rₘ`、`ΣδL<ε`、`+C`、`W_sd`。
-
-视觉变量：左右位置=`rₘ` 排名；bar 长度=累计 safety cost；固定线=`ε`；cobalt=selected；coral=risk；mint=未选位置 compensation。
+视觉变量：cell 内双 bar=各 delta 的 utility/safety-cost；blue outline=greedy selected；右侧 bar height=定性 metric state。残余 compensation 是 accessible description 的机制，因此图不承诺零损伤。
 
 最终句：**Keep the useful updates that fit the safety budget, then repair the residual damage.**
 
@@ -163,17 +169,11 @@
 
 核心问题：detector 依赖可变化的表面统计，而语义可以保持不变；直接放入未经优化的人类示例并不足以显著改变生成分布。
 
-故事：
+故事：顶部是 `Example → Detector` 的小循环。detector 的 `AI score` meter 随 2–3 个 amber sentence/word edits 缩短，return path 标注 `Rewrite`。底部把同一个 amber example 迁入 `Prompt`，与新 `Input` 合并后经过 `LLM` 生成新的 `Text`。
 
-1. 原始 AI output 在固定 `P_AI` gauge 上得分高；raw human example 只轻微移动 gauge，显示失败基线。
-2. 从 AI/Human pairs 提取 `t_feature`，在固定 meaning anchor 下初始化 `y_ic`。
-3. word-level 与 sentence-level substitution 交替发生；每轮 2–3 个候选使用同一 gauge 评分。
-4. 最低 `P_AI` 候选回到中央主 lane，其他候选成为 coral 残影；`U(p)` 上升并更新 best `p*`。
-5. 最终 prompt stack 为 `feature + task + optimized example`；新 input 生成 output，detector 仅以虚线 evaluation probe 出现。
+最少标签：`Example`、`Detector`、`AI score`、`Rewrite`、`Prompt`、`Input`、`LLM`、`Text`。
 
-最少标签：`AI / Human`、`t_feature`、`y_ic`、`word`、`sentence`、`P_AI↓`、`keep min`、`U(p)↑`、`p*`。
-
-视觉变量：统一 gauge 位置=`P_AI`；返回主 lane=greedy selection；gold lock=语义固定；coral=rejected；teal=accepted；violet=最终 prompt。
+视觉变量：amber edits=接受的 example revisions；meter length=detector feedback；相同 amber strokes=同一 example 被复用。该图专指 SICO-Gen，不表示对最终输出逐篇改写。
 
 最终句：**Keep meaning fixed, optimize the demonstration, and reuse the resulting prompt.**
 
@@ -207,10 +207,10 @@
 
 ### 信息结构
 
-1. **只保留一个共享对象。** 顶部只画一条 trajectory：`Obs 0 → Act 0 → Obs 1 → Act 1 → … → Obs T`。后续阶段不得复制或重画第二条 trajectory，否则会误导读者以为方法需要额外 rollout。
-2. **监督 lane 与 trajectory 单元严格对齐。** `action loss` 只在 action 列出现有效信号；`observation loss` 只在 observation 列出现有效信号。空白或短横线表示该 token 在这一目标下未被监督。
+1. **只保留一个共享对象。** 中间只画一条 trajectory：`Obs 0 → Act 0 → Obs 1 → Act 1 → … → Obs T`。后续阶段不得复制或重画第二条 trajectory，否则会误导读者以为方法需要额外 rollout。
+2. **监督 lane 与 trajectory 单元严格对齐。** `action loss` 只在 action 列出现有效信号；`observation loss` 只在 observation 列出现有效信号。火焰标记表示参与训练，`Mask` 表示该 token 在这一目标下未被监督；world-modeling lane 的初始 observation-action prefix 合并为一个 mask。
 3. **先基线、后增量。** 开场显示 trajectory；随后只点亮标准 RL 的 action lane；最后在完全相同的横向位置加入 observation lane。旧 lane 保留，新增 lane 成为当前焦点。
-4. **公式与 lane 同步出现。** 每条公式放在对应 lane 的右侧或相邻区域。新增 observation loss 之前，不提前显示 world-modeling 公式。
+4. **标签与 lane 同步出现。** `Policy loss` 放在上方 lane 外侧，`World modeling loss` 放在下方 lane 外侧；新增 loss 之前不提前显示其标签。宽图最终用两条曲线汇入 `Shared policy update`。
 5. **最终帧回答一个句子。** 读者无需播放动画，也应能看出：同一条 rollout 同时训练「采取什么动作」与「动作后世界如何变化」。
 
 ### 何时不使用 playhead
@@ -232,6 +232,38 @@
 
 - 约 30% 进度：只能看到 trajectory 与标准 RL 的 action supervision。
 - 约 70% 进度：observation supervision 与对应公式出现，原 action lane 仍保留。
-- 最终帧：共享 trajectory、两条 loss lane 和两条公式同时成立。
+- 最终帧：共享 trajectory、两条 loss lane 与同一个 policy update 同时成立。
 - `prefers-reduced-motion` 直接显示最终帧。
 - 桌面和窄屏都不得产生横向溢出；Original 模式的历史论文卡片不复用这一 demo。
+
+## 9. 公共组件与论文实现的边界
+
+- **数据**：`_data/research_demos.yml` 存标题，每篇论文 front matter 的
+  `demo_description` 提供无障碍说明。正文内容不由组件生成。
+- **外壳**：`_includes/widgets/research_demo.html` 与 `assets/css/research-demos.css`
+  统一标题栏、Replay、内容区、尺寸、留白、焦点和主题变量。
+- **行为**：`assets/js/research-panel.js` 的 `ResearchPanel` 统一管理首次入场播放、
+  重播、离屏/后台暂停、最终帧、scrub、reduced-motion 实时切换、DPR、resize 和销毁。
+- **场景**：`assets/js/research-scenes.js` 中的 Konva 场景实现
+  `create({ Konva, gsap, root, width, height, theme }) → { timeline, render }`。
+  `timeline` 必须初始暂停；`render` 将 timeline 驱动的状态应用到已有节点。
+  使用具名阶段和 GSAP 缓动，不在新场景中复制 `phase(progress, start, end)`。
+  `research-demos.js` 只注册全部五个 Konva 场景。
+  场景不能创建按钮、观察器、计时器或独立动画循环。
+- **加载**：`research-loader.js` 在 panel 距视口 500px 内才加载共享库和场景；
+  并发请求复用同一 Promise。只有开启 `research_demos` 的页面引入 loader。
+  Konva 10.5.0 与 GSAP 3.15.0 的官方浏览器发行文件保存在项目 `vendor` 下，
+  保留版权、许可说明和 npm 完整性校验记录，无全局安装或新增构建框架。
+- **运行成本**：每个 Konva panel 只有一个 `listening: false` 图层；
+  依靠 Konva 自动合并绘制，GSAP 只驱动播放中的场景。离屏/后台暂停，完成停住，
+  不添加 Konva.Animation 或第二套 requestAnimationFrame 循环。DPR 上限为 2。
+  resize 时释放旧节点与 timeline，并恢复原进度；destroy 释放资源。
+- **页面接入**：Home 和 Studio 只 include 同一个模板。Studio 的年份放在论文信息中，
+  Paper 链接放在原有链接区；不能用链接包住带 Replay 按钮的整个 panel。
+
+新增论文：在数据表中添加标题，注册一个 Konva 场景，设置 `studio_viz` 和无障碍说明；
+需要新配色时只增加主题变量。无需复制标题、按钮或播放逻辑，也无需写页面专属适配。
+
+验证：`node --test tests/research-panel.test.cjs tests/research-loader.test.cjs` 使用实际 GSAP 时间轴，覆盖按需加载、请求去重、失败重试、独立重播、暂停恢复、最终帧、
+动态 reduced-motion、scrub 恢复、DPR/resize、重复挂载和销毁。Jekyll 构建后核对
+Home 与 Studio 的 5 个 panel 都有相同外壳，且按钮不嵌套在链接内。

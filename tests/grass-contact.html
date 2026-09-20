@@ -1,0 +1,68 @@
+<!doctype html><meta charset="utf-8"><title>Grass contact inspection</title>
+<style>
+body { margin:24px; background:#e8e1d6; color:#352e27; font:14px system-ui; }
+canvas { display:block; width:680px; max-width:100%; height:auto; aspect-ratio:680/380; margin:20px 0; }
+button { padding:8px 12px; margin:3px; } output { display:block; white-space:pre-wrap; font:13px ui-monospace,monospace; }
+</style>
+<h1>Leaf contact · 3×</h1>
+<p>Green rings follow the same leaf points as supporting toes. Test with and without wind.</p>
+<button id="step">Step</button><button id="play">Play</button><button id="check">Check 120 frames</button>
+<button id="walk">Walk</button><button id="turn">Turn</button><button id="groom">Groom</button>
+<button id="back">Back up</button><button id="wind">Stand in wind</button><button id="touch">Touch</button><button id="lens">Depth of field</button>
+<canvas></canvas><output>Loading…</output>
+<script type="module">
+import '../assets/js/leaf-walker.js';
+import { AntRenderer } from '../assets/js/ant-renderer.js';
+import { Vector3, Raycaster } from '../assets/js/vendor/three/three.module.min.js';
+const view = new AntRenderer(document.querySelector('canvas'), {debug:true});
+view.resize(680, 380, 380);
+const surface = view.grass.surface;
+const walker = new window.LeafWalker(surface, () => .5);
+const center = surface.sample(surface.length*.48, 0, 5, 0);
+const distance = 380 / (2*Math.tan(Math.PI/30));
+view.camera.position.set(center.x, center.y-distance*.6, center.z+distance*.8);
+view.camera.lookAt(center.x,center.y,center.z); view.camera.zoom=3;
+view.camera.updateProjectionMatrix(); view.camera.updateMatrixWorld();
+const ray = new Raycaster();
+let paused=true, windOnly=false, samples=0, maxContact=0, maxSlip=0, missing=0, last=[], action='Walk';
+function reset() {
+  walker.showResting(); walker.state='exploring'; walker.target={x:surface.length*.59,y:0}; walker.cruise=9;
+  walker.stride=null; walker.stepHold=0; walker.reacting=false; walker.ignoreAttention=false;
+  samples=0; maxContact=0; maxSlip=0; missing=0; last=[]; windOnly=false;
+}
+function draw() {
+  view.render(walker,false); view.scene.updateMatrixWorld(true);
+  const mesh = view.grass.blades[0].mesh; mesh.geometry.computeBoundingSphere();
+  walker.feet.forEach((foot,i) => {
+    const tip = view.legs[i].bones[3].localToWorld(new Vector3(0,.5,0));
+    if(foot.planted) {
+      const normal=new Vector3().copy(surface.frame(foot.x,foot.y,walker.time).normal);
+      ray.set(tip.clone().addScaledVector(normal,2),normal.clone().negate());
+      const hit=ray.intersectObject(mesh)[0];
+      if(hit) maxContact=Math.max(maxContact,Math.abs(hit.distance-2)); else missing++;
+      if(last[i]?.planted) {
+        const anchor=surface.sample(last[i].x,last[i].y,0,walker.time);
+        maxSlip=Math.max(maxSlip,tip.distanceTo(anchor)); samples++;
+      }
+    }
+  });
+  last=walker.feet.map(f=>({x:f.x,y:f.y,planted:f.planted}));
+  document.querySelector('output').textContent=JSON.stringify({action,state:walker.state,supportingFeet:walker.feet.filter(f=>f.planted).length,
+    supportingSamples:samples,renderedSlipRelativeToLeaf:maxSlip.toExponential(3),maxDistanceToLeafTriangles:maxContact.toFixed(5),missedLeafContacts:missing},null,2);
+}
+function tick() { if(windOnly) walker.time+=1/30; else walker.tick(1/30); draw(); }
+const bind=(id,fn)=>document.getElementById(id).onclick=()=>{fn();draw();};
+bind('step',tick);
+bind('play',()=>{paused=!paused;document.getElementById('play').textContent=paused?'Play':'Pause';});
+bind('check',()=>{for(let i=0;i<120;i++)tick();});
+bind('walk',()=>{reset();action='Walk';});
+bind('turn',()=>{reset();walker.target={x:surface.length*.38,y:0};action='Turn';});
+bind('back',()=>{reset();walker.state='backing';walker.backRemaining=12;action='Back up';});
+bind('groom',()=>{reset();walker.state='grooming';walker.timer=6;walker.groomSide=-1;walker.groomed=false;action='Groom';});
+bind('wind',()=>{reset();walker.state='resting';windOnly=true;action='Stand in wind';});
+bind('touch',()=>{windOnly=false;walker.react();action='Touch';});
+bind('lens',()=>{view.debug=!view.debug;document.getElementById('lens').textContent=view.debug?'Depth of field':'Contact markers';});
+reset();draw();let previous=0;
+function frame(now) { if(now-previous>32){if(!paused)tick();previous=now;}requestAnimationFrame(frame); }
+requestAnimationFrame(frame);
+</script>

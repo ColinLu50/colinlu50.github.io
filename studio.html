@@ -3,7 +3,7 @@ layout: default
 title: Studio
 navbar_title: Studio
 container_class: studio-shell
-custom_css: /assets/css/studio.css?v=20260731-shared-trajectory
+custom_css: /assets/css/studio.css?v=20260917-shared-panel
 custom_js: /assets/js/studio.js?v=20260731-shared-trajectory
 research_demos: true
 ---
@@ -63,13 +63,11 @@ research_demos: true
     <div class="studio-paper-grid">
       {% for paper in selected_papers limit: 5 %}
       <article class="studio-paper studio-reveal" data-paper-viz="{{ paper.studio_viz }}">
-        <a class="studio-paper-visual" href="{{ paper.links.Paper }}" target="_blank" rel="noopener" aria-label="Read {{ paper.title }}">
-          {% include widgets/research_demo.html paper=paper class="research-demo--studio" %}
-          <span class="studio-paper-year">{{ paper.pub_date }}</span>
-          <span class="studio-paper-arrow" aria-hidden="true">↗</span>
-        </a>
+        <div class="studio-paper-visual">
+          {% include widgets/research_demo.html paper=paper %}
+        </div>
         <div class="studio-paper-copy">
-          <p class="studio-paper-meta">{{ paper.pub | default: paper.pub_post | strip_html }}</p>
+          <p class="studio-paper-meta">{{ paper.pub_date }} · {{ paper.pub | default: paper.pub_post | strip_html }}</p>
           <h3>{{ paper.title }}</h3>
           {% assign paper_abstract = paper.abstract | strip %}
           {% unless paper_abstract == empty %}<p>{{ paper.abstract }}</p>{% endunless %}

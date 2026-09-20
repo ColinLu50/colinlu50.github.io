@@ -1,24 +1,28 @@
 {% assign demo_type = include.paper.studio_viz %}
-{% if demo_type %}
-<div class="research-demo research-demo--{{ demo_type }} {{ include.class }}">
-  <canvas
-    class="research-demo-canvas"
-    data-research-viz="{{ demo_type }}"
-    role="img"
-    aria-label="{{ include.paper.home_motivation | default: include.paper.title | strip_html | escape }}"
-  ></canvas>
-  {% if include.replay %}
-  <button
-    class="research-demo-replay"
-    type="button"
-    data-research-demo-replay
-    aria-label="Replay the {{ include.paper.title | strip_html | escape }} research diagram"
-  >
-    <svg aria-hidden="true" viewBox="0 0 16 16">
-      <path d="M13.3 4.7A6 6 0 1 0 14 8h-1.6a4.4 4.4 0 1 1-.7-2.4L9.5 7.8H15V2.3l-1.7 2.4Z"/>
-    </svg>
-    <span>Replay</span>
-  </button>
-  {% endif %}
+{% assign demo = site.data.research_demos[demo_type] %}
+{% if demo_type and demo %}
+<div class="research-demo research-demo--{{ demo_type }}">
+  <header class="research-demo-header">
+    <p class="research-demo-title">{{ demo.title | escape }}</p>
+    <button
+      class="research-demo-replay"
+      type="button"
+      data-research-demo-replay
+      aria-label="Replay the {{ include.paper.title | strip_html | escape }} research diagram"
+    >
+      <svg aria-hidden="true" viewBox="0 0 16 16">
+        <path d="M13.3 4.7A6 6 0 1 0 14 8h-1.6a4.4 4.4 0 1 1-.7-2.4L9.5 7.8H15V2.3l-1.7 2.4Z"/>
+      </svg>
+      <span>Replay</span>
+    </button>
+  </header>
+  <div class="research-demo-stage">
+    <div
+      class="research-demo-viewport"
+      data-research-viz="{{ demo_type }}"
+      role="img"
+      aria-label="{{ include.paper.demo_description | default: include.paper.home_motivation | default: include.paper.title | strip_html | escape }}"
+    ></div>
+  </div>
 </div>
 {% endif %}

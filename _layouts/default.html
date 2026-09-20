@@ -21,8 +21,11 @@
     {% if page.custom_css %}
     <link rel="stylesheet" href="{{ page.custom_css | relative_url }}">
     {% endif %}
+    {% if page.sky_scene %}
+    <link rel="stylesheet" href="{{ '/assets/css/sky-scene.css?v=20260920-light-motion' | relative_url }}">
+    {% endif %}
     {% if page.research_demos %}
-    <link rel="stylesheet" href="{{ '/assets/css/research-demos.css?v=20260731-prm-side-chart-v23' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/research-demos.css?v=20260917-konva-panel' | relative_url }}">
     {% endif %}
 </head>
 <body class="bg-light" {{ page.body_attr }}>
@@ -60,10 +63,13 @@
     <script src="{{ '/assets/js/view-switch.js?v=20260731-single-v2' | relative_url }}"></script>
     {% endif %}
     {% if page.research_demos %}
-    <script src="{{ '/assets/js/research-demos.js?v=20260731-prm-side-chart-v23' | relative_url }}"></script>
+    <script defer src="{{ '/assets/js/research-loader.js?v=20260917-paw-restored' | relative_url }}" data-assets="{{ '/assets/js/' | relative_url }}"></script>
     {% endif %}
     {% if page.custom_js %}
     <script src="{{ page.custom_js | relative_url }}"></script>
+    {% endif %}
+    {% if page.sky_scene %}
+    <script type="module" src="{{ '/assets/js/sky-scene.js?v=20260920-light-motion' | relative_url }}"></script>
     {% endif %}
 </body>
 </html>

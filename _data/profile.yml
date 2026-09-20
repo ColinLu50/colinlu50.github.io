@@ -7,6 +7,8 @@ slogan:
   line_2: "guided by value."
 
 positions:
+- logo: /assets/images/photos/ant-group-ling-logo.svg
+  name: Research Scientist · Ant Group, Ling Team
 - logo: /assets/images/photos/LOGO_UST.png  # Logo is optional
   name: Ph.D. in CSE · Hong Kong University of Science and Technology
 #- name: Position 2 without logo
@@ -25,9 +27,9 @@ github: ColinLu50
 
 short_bio_text_justify: false
 short_bio: >-
+  I am currently a Research Scientist with the Ling Team at Ant Group, focusing on agentic terminal coding.
   I received my Ph.D. in CSE from the Hong Kong University of Science and Technology (HKUST), where I was supervised by <a href="https://facultyprofiles.hkust.edu.hk/profiles.php?profile=cunsheng-ding-cding" target="_blank" rel="noopener">Prof. Cunsheng Ding</a>, <a href="https://dake98.github.io/" target="_blank" rel="noopener">Prof. Qi Wang</a>, and <a href="https://www.sustech.edu.cn/en/faculties/tangke.html" target="_blank" rel="noopener">Prof. Ke Tang</a> and focused on trustworthy language models.
   Previously I was an intern researcher at Bytedance-Seed, where I focus on the Agentic Reinforcement Learning.
-  Now I am focusing on Agentic Reinforcement Learning and World Modeling for LLM.
   <p>
   </p>
   <p>
@@ -67,6 +69,11 @@ awards:
 #  date: 2021
 
 experience:
+- name: "Ant Group, Ling Team"
+  logo: /assets/images/photos/ant-group-ling-logo.svg
+  position: Research Scientist, focusing on coding agent post-training.
+  date: Aug. 2026 - Present
+
 - name: "Tencent, Lightspeed Studio"
   logo: /assets/images/photos/tencent-logo.png
   position: Research Intern (Project UP), focusing on LLM agents and world model.

@@ -1,0 +1,76 @@
+<!doctype html><meta charset="utf-8"><title>Realtime sky inspection</title>
+<style>body{font:14px system-ui;margin:24px;background:#eeefeb;color:#263540}canvas{display:block;width:min(100%,960px);height:auto;margin:20px 0}button{padding:8px 12px;margin:3px}output{display:block;white-space:pre-wrap;font:13px ui-monospace,monospace}</style>
+<h1>Realtime sky</h1>
+<button data-look="dawn">Dawn</button><button data-look="noon">Noon</button><button data-look="sunset">Sunset</button><button data-look="night">Night</button>
+<button id="verify">Verify rendering</button>
+<button id="transition">Play day to night</button>
+<label>Cloud viewpoint <input id="pointer" type="range" min="-1" max="1" step=".1" value="0"></label>
+<canvas></canvas><output>Ready</output>
+<script type="module">
+import {SkyRenderer} from '../assets/js/sky-renderer.js?v=20260920-light-motion';
+import {SkyMotion} from '../assets/js/sky-motion.js';
+const sky=new SkyRenderer(document.querySelector('canvas'));
+const motion=new SkyMotion();
+let frame=0;
+const out=document.querySelector('output');
+function resize(w,h){sky.resize(w,h,[{left:24,top:160,right:w*.62,bottom:h*.70}],260,812);}
+function pixels(pointer={x:0,y:0}){
+  sky.render(0,pointer);
+  const gl=sky.renderer.getContext(),w=sky.canvas.width,h=sky.canvas.height,data=new Uint8Array(w*h*4);
+  gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,data);
+  if(gl.getError()!==gl.NO_ERROR)throw Error('GPU readback failed');
+  return data;
+}
+const difference=(a,b)=>{let n=0;for(let i=0;i<a.length;i+=4)n+=Math.abs(a[i]-b[i])+Math.abs(a[i+1]-b[i+1])+Math.abs(a[i+2]-b[i+2]);return n/(a.length*.75);};
+function solarContrast(data){
+  const u=sky.uniforms,w=sky.canvas.width,h=sky.canvas.height;
+  const x=u.sunPoint.value.x*w,y=(1-u.sunPoint.value.y)*h,r=u.sunRadius.value*w/sky.width;
+  const brightness=(px,py)=>{const i=(Math.max(0,Math.min(h-1,Math.round(py)))*w+Math.max(0,Math.min(w-1,Math.round(px))))*4;return (data[i]*.2126+data[i+1]*.7152+data[i+2]*.0722)/255;};
+  let halo=0;for(let i=0;i<12;i++){const a=i*Math.PI/6;halo+=brightness(x+Math.cos(a)*r*3.2,y+Math.sin(a)*r*3.2)/12;}
+  return brightness(x,y)-halo;
+}
+document.querySelectorAll('[data-look]').forEach(b=>b.onclick=()=>{cancelAnimationFrame(frame);sky.setLook(b.dataset.look);sky.render(0);out.textContent=b.dataset.look;});
+document.querySelector('#transition').onclick=()=>{
+  cancelAnimationFrame(frame);motion.select('noon',true);motion.select('night');let last=0;
+  function tick(now){const dt=last?Math.min((now-last)/1000,.06):0;last=now;motion.step(dt);sky.setBlend(motion.weights);sky.render(dt);out.textContent='Night mix: '+motion.weights.night.toFixed(3);if(motion.transitioning)frame=requestAnimationFrame(tick);}
+  frame=requestAnimationFrame(tick);
+};
+document.querySelector('#pointer').oninput=e=>{cancelAnimationFrame(frame);sky.render(0,{x:-Number(e.target.value)*14,y:0});};
+document.querySelector('#verify').onclick=()=>{
+  cancelAnimationFrame(frame);
+  const results=[];
+  try {
+    for(const width of [375,768,1440]) {
+      resize(width,950);
+      for(const look of ['dawn','noon','sunset','night']) {
+        sky.setLook(look);const first=pixels(),contrast=solarContrast(first);
+        const stationary=difference(first,pixels());
+        sky.render(25);const moving=difference(first,pixels());
+        if(contrast<.035||stationary!==0||moving<.15)throw Error(JSON.stringify({width,look,contrast,stationary,moving}));
+        results.push({width,look,solarContrast:+contrast.toFixed(3),pausedDifference:stationary,cloudMotionDifference:+moving.toFixed(2)});
+      }
+    }
+    resize(960,600);sky.setLook('noon');
+    const still=pixels(),shifted=pixels({x:14,y:9});
+    const parallax=difference(still,shifted);
+    if(parallax<.1)throw Error('Pointer has no visible cloud response: '+parallax);
+    motion.select('noon',true);motion.select('night');
+    let last=still,largestStep=0;
+    for(let i=0;i<70;i++){
+      motion.step(1/30);sky.setBlend(motion.weights);
+      const current=pixels();largestStep=Math.max(largestStep,difference(last,current));last=current;
+    }
+    const fullChange=difference(still,last);
+    if(motion.transitioning||largestStep>fullChange*.2)throw Error('Discontinuous lighting transition');
+    // A sun/moon switch must also be continuous locally, not just on average.
+    sky.setBlend({dawn:0,noon:.501,sunset:0,night:.499});const beforeMoon=pixels();
+    sky.setBlend({dawn:0,noon:.499,sunset:0,night:.501});const afterMoon=pixels();
+    let peak=0;for(let i=0;i<beforeMoon.length;i++)peak=Math.max(peak,Math.abs(beforeMoon[i]-afterMoon[i]));
+    if(peak>12)throw Error('Sun/moon pops at the transition midpoint: '+peak);
+    results.push({parallaxDifference:+parallax.toFixed(3),largestTransitionStep:+largestStep.toFixed(3),fullChange:+fullChange.toFixed(3),midpointPeak:peak});
+    out.textContent=JSON.stringify({status:'passed',cases:results},null,2);
+  }catch(error){out.textContent='FAILED '+error.message;}
+  resize(960,600);sky.setLook('noon');sky.render(0);
+};
+resize(960,600);sky.render(0);
+</script>

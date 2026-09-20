@@ -1,7 +1,5 @@
-<section class="home-hero home-reveal">
-  <div class="home-hero-aurora-wash" aria-hidden="true"></div>
-  <div class="home-hero-orb home-hero-orb-one" aria-hidden="true"></div>
-  <div class="home-hero-orb home-hero-orb-two" aria-hidden="true"></div>
+<section class="home-hero home-sky" data-sky-scene>
+  {% include widgets/sky_scene.html %}
 
   <div class="home-hero-inner">
     <div class="home-hero-copy">
@@ -19,10 +17,12 @@
       </p>
       {% endif %}
 
-      <div class="home-position">
+      <div class="home-positions">
         {% for position in site.data.profile.positions %}
-          {% if position.logo %}<img src="{{ position.logo | relative_url }}" alt="" aria-hidden="true">{% endif %}
-          <span>{{ position.name }}</span>
+          <div class="home-position">
+            {% if position.logo %}<img src="{{ position.logo | relative_url }}" alt="" aria-hidden="true">{% endif %}
+            <span>{{ position.name }}</span>
+          </div>
         {% endfor %}
       </div>
 

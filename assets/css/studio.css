@@ -279,9 +279,8 @@ body:has(.studio) footer { display: none; }
   position: relative;
   display: block;
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  height: var(--research-demo-height, 260px);
   border-radius: 22px;
-  background: #10131a;
   box-shadow: 0 12px 40px rgba(30,25,48,.10);
   transition: transform .35s ease, box-shadow .35s ease;
 }
@@ -291,23 +290,6 @@ body:has(.studio) footer { display: none; }
   box-shadow: 0 22px 58px rgba(30,25,48,.16);
 }
 
-.studio-paper-year,
-.studio-paper-arrow {
-  position: absolute;
-  z-index: 2;
-  top: 1.1rem;
-  display: grid;
-  height: 34px;
-  place-items: center;
-  border: 1px solid rgba(255,255,255,.28);
-  border-radius: 999px;
-  color: #fff;
-  background: rgba(15,15,18,.28);
-  backdrop-filter: blur(12px);
-}
-
-.studio-paper-year { left: 1.1rem; padding: 0 .8rem; font-size: .75rem; }
-.studio-paper-arrow { right: 1.1rem; width: 34px; }
 .studio-paper-copy { padding: 1.35rem .2rem 0; }
 
 .studio-paper-meta {
@@ -592,15 +574,4 @@ body:has(.studio) footer { display: none; }
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
   }
-}
-/* Home and Studio intentionally use the same research-demo component. */
-.studio-paper-visual {
-  height: 226px;
-  aspect-ratio: auto;
-}
-
-.studio-paper-visual .research-demo { height: 100%; }
-
-@media (max-width: 460px) {
-  .studio-paper-visual { height: 210px; }
 }

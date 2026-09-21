@@ -37,8 +37,10 @@
     "license": "MIT",
     "package": "popper.js@1.14.7",
     "files": [
-      "dist/umd/popper.min.js"
-    ]
+      "dist/umd/popper.min.js",
+      "LICENSE.md"
+    ],
+    "licenseSource": "https://raw.githubusercontent.com/FezVrasta/popper.js/v1.14.7/LICENSE.md"
   },
   "fontawesome-free-6.5.1": {
     "tarball": "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.5.1.tgz",
@@ -61,10 +63,6 @@
     "package": "academicons@1.9.1",
     "files": [
       "css/academicons.min.css",
-      "docs/assets/academicons-v1.8.5/css/academicons.min.css",
-      "docs/assets/academicons-v1.8.6/css/academicons.min.css",
-      "docs/assets/academicons-v1.8.5/fonts/academicons.woff",
-      "docs/assets/academicons-v1.8.6/fonts/academicons.woff",
       "fonts/academicons.woff"
     ]
   },

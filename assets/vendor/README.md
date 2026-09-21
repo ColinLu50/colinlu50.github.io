@@ -14,9 +14,10 @@ on those services. No package manager or additional build step is needed.
 - Lato v25 retains normal/italic weights 300, 400, 700 and 900, including Latin
   and Latin Extended subsets, with the original `font-display: swap`. Raleway
   was requested by the old template but is not used by any active site style.
-- KaTeX (including its fonts), Masonry, imagesLoaded and GitHub Buttons load only
-  when matching page content exists; adding them to the repo adds no automatic
-  first-page download. GitHub Buttons still contacts GitHub when used.
+- After the first paint, KaTeX (including its fonts), Masonry, imagesLoaded and
+  GitHub Buttons automatically load if the page contains their matching content.
+  Research panel assets also load in the background without waiting for a scroll;
+  offscreen animations stay paused. GitHub Buttons still contacts GitHub when used.
 - Three.js, Konva and GSAP remain under `assets/js/vendor`.
 
 The visitor counter is a live third-party service, not a static asset. Its loader

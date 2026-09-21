@@ -8,8 +8,10 @@ const root = path.resolve(__dirname, '..');
 const code = name => fs.readFileSync(path.join(root, 'assets/js', name), 'utf8');
 const flush = () => new Promise(resolve => setImmediate(resolve));
 
-function enhancements({ text = [], grid = false, github = false } = {}) {
+function enhancements({ text = [], grid = false, github = false, painted = true } = {}) {
   const requests = [], rendered = [], warnings = [];
+  const frames = new Map(), timers = new Map();
+  let nextId = 0;
   const nodes = text.map(value => ({
     textContent: typeof value === 'string' ? value : value.text,
     parentElement: { closest: () => value.code || false }
@@ -27,11 +29,36 @@ function enhancements({ text = [], grid = false, github = false } = {}) {
   };
   vm.runInNewContext(code('enhancements.js'), {
     document, NodeFilter: { SHOW_TEXT: 4, FILTER_REJECT: 2, FILTER_ACCEPT: 1 },
-    window: { renderMathInElement: (...args) => rendered.push(args) },
+    window: {
+      renderMathInElement: (...args) => rendered.push(args),
+      setTimeout: fn => { timers.set(++nextId, fn); return nextId; },
+      clearTimeout: id => timers.delete(id),
+      requestAnimationFrame: fn => { frames.set(++nextId, fn); return nextId; },
+      cancelAnimationFrame: id => frames.delete(id)
+    },
     console: { warn: (...args) => warnings.push(args) }
   });
-  return { requests, rendered, warnings };
+  const state = { requests, rendered, warnings,
+    paint: () => { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(fn => fn()); },
+    timeout: () => { const callbacks = [...timers.values()]; timers.clear(); callbacks.forEach(fn => fn()); }
+  };
+  if (painted) { state.paint(); state.paint(); }
+  return state;
 }
+
+test('enhancements start after a paint and do not wait for scrolling or page load', () => {
+  const state = enhancements({ text: ['$x^2$'], painted: false });
+  assert.equal(state.requests.length, 0);
+  state.paint(); assert.equal(state.requests.length, 0);
+  state.paint(); assert.equal(state.requests.length, 2);
+  state.timeout(); assert.equal(state.requests.length, 2);
+});
+
+test('the background-tab fallback starts enhancements once when rAF is paused', () => {
+  const state = enhancements({ text: ['$x^2$'], painted: false });
+  state.timeout(); assert.equal(state.requests.length, 2);
+  state.paint(); state.paint(); assert.equal(state.requests.length, 2);
+});
 
 test('plain content and code examples load no optional libraries', () => {
   assert.equal(enhancements({ text: ['Research', { text: '$x^2$', code: true }] }).requests.length, 0);

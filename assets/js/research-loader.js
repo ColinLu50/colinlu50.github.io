@@ -1,4 +1,4 @@
-/* Load the shared animation libraries only near a research panel. */
+/* Show the page first, then prepare its research panels in the background. */
 (function () {
   "use strict";
   var viewports = Array.from(document.querySelectorAll(".research-demo-viewport"));
@@ -8,6 +8,8 @@
   var pending = null;
   var loaded = false;
   var observer;
+  var backgroundTimer = 0;
+  var backgroundFrame = 0;
   var controls = Array.from(document.querySelectorAll("[data-research-demo-replay]"));
 
   function script(file) {
@@ -29,6 +31,8 @@
   }
 
   function load() {
+    window.clearTimeout(backgroundTimer);
+    if (backgroundFrame) window.cancelAnimationFrame(backgroundFrame);
     if (loaded || pending) return pending;
     pending = Promise.all([
       script("vendor/konva/konva.min.js?v=10.5.0"),
@@ -67,4 +71,14 @@
     }, { rootMargin: "500px 0px" });
     viewports.forEach(function (viewport) { observer.observe(viewport); });
   } else load();
+
+  // Start automatically after a paint, even if the reader never scrolls.
+  // The timer also progresses downloads in a background tab, where rAF pauses.
+  // Intersection and Replay can promote the same request without duplicating it.
+  if (!pending && !loaded) {
+    backgroundTimer = window.setTimeout(load, 1000);
+    backgroundFrame = window.requestAnimationFrame(function () {
+      backgroundFrame = window.requestAnimationFrame(load);
+    });
+  }
 }());

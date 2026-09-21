@@ -7,6 +7,8 @@ const flush = () => new Promise(resolve => setImmediate(resolve));
 
 function setup({ observer = true, empty = false } = {}) {
   const classes = new Set(), listeners = new Set(), requests = [];
+  const frames = new Map(), timers = new Map();
+  let nextId = 0;
   let observerInstance;
   const viewport = { textContent: '', classList: {
     add: name => classes.add(name), remove: name => classes.delete(name), contains: name => classes.has(name)
@@ -23,8 +25,17 @@ function setup({ observer = true, empty = false } = {}) {
     createElement: () => ({ remove() { this.removed = true; } }),
     head: { appendChild: script => requests.push(script) }
   };
-  vm.runInNewContext(source, { document, window: observer ? { IntersectionObserver: Observer } : {}, IntersectionObserver: Observer });
+  const window = {
+    setTimeout: fn => { timers.set(++nextId, fn); return nextId; },
+    clearTimeout: id => timers.delete(id),
+    requestAnimationFrame: fn => { frames.set(++nextId, fn); return nextId; },
+    cancelAnimationFrame: id => frames.delete(id)
+  };
+  if (observer) window.IntersectionObserver = Observer;
+  vm.runInNewContext(source, { document, window, IntersectionObserver: Observer });
   return { requests, viewport, listeners, observer: observerInstance,
+    paint: () => { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(fn => fn()); },
+    timeout: () => { const callbacks = [...timers.values()]; timers.clear(); callbacks.forEach(fn => fn()); },
     near: () => observerInstance.fn([{ isIntersecting: true }]),
     far: () => observerInstance.fn([{ isIntersecting: false }]),
     click: () => [...listeners].forEach(fn => fn()) };
@@ -35,15 +46,24 @@ async function succeedPending(env) {
   await flush();
 }
 
-test('no animation libraries are requested before a panel approaches the viewport', () => {
+test('panels below the fold load automatically after the first paint without scrolling', () => {
   const env = setup();
   assert.equal(env.requests.length, 0);
   env.far(); assert.equal(env.requests.length, 0);
+  env.paint(); assert.equal(env.requests.length, 0);
+  env.paint(); assert.equal(env.requests.length, 2);
   assert.equal(env.observer.options.rootMargin, '500px 0px');
 });
 
-test('concurrent intersection and Replay requests share libraries and respect script dependencies', async () => {
+test('background loading progresses even if animation frames are paused', () => {
+  const env = setup();
+  env.timeout(); assert.equal(env.requests.length, 2);
+  env.paint(); env.paint(); assert.equal(env.requests.length, 2);
+});
+
+test('background, intersection and Replay share requests and preserve dependency order', async () => {
   const env = setup(); env.near(); env.near(); env.click();
+  env.paint(); env.paint(); env.timeout();
   assert.equal(env.requests.length, 2);
   assert.ok(env.requests.every(r => r.src.startsWith('/project/assets/js/vendor/')));
   await succeedPending(env);
@@ -72,5 +92,7 @@ test('Replay retries a failed asset without downloading successful dependencies 
 
 test('browsers without IntersectionObserver load immediately; pages without panels load nothing', () => {
   assert.equal(setup({ observer: false }).requests.length, 2);
-  assert.equal(setup({ empty: true }).requests.length, 0);
+  const empty = setup({ empty: true });
+  empty.paint(); empty.paint(); empty.timeout();
+  assert.equal(empty.requests.length, 0);
 });

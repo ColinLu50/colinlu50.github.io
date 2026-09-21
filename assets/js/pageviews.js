@@ -26,4 +26,27 @@
   });
 
   observer.observe(source, { childList: true, subtree: true, characterData: true });
+
+  function loadProvider() {
+    var url = source.getAttribute("data-pageviews-src");
+    if (!url || document.getElementById("mapmyvisitors")) return;
+    var script = document.createElement("script");
+    script.id = "mapmyvisitors";
+    script.async = true;
+    script.src = url;
+    source.appendChild(script);
+  }
+
+  // The provider inserts its widget beside this script (no document.write).
+  // Start after page load, so even the load event is independent of the counter
+  // and its private jQuery cannot race the site's deferred jQuery script.
+  function scheduleProvider() {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(loadProvider, { timeout: 2000 });
+    } else {
+      window.setTimeout(loadProvider, 0);
+    }
+  }
+  if (document.readyState === "complete") scheduleProvider();
+  else window.addEventListener("load", scheduleProvider, { once: true });
 }());

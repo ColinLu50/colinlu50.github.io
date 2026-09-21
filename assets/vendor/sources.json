@@ -1,0 +1,154 @@
+{
+  "bootstrap-4.6.0": {
+    "tarball": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.6.0.tgz",
+    "integrity": "sha512-Io55IuQY3kydzHtbGvQya3H+KorS/M9rSNyfCGCg9WZ4pyT/lCxIlpJgG1GXW/PswzC84Tr2fBYi+7+jFVQQBw==",
+    "license": "MIT",
+    "package": "bootstrap@4.6.0",
+    "files": [
+      "LICENSE",
+      "dist/css/bootstrap.min.css",
+      "dist/js/bootstrap.min.js"
+    ]
+  },
+  "jquery-3.5.1": {
+    "tarball": "https://registry.npmjs.org/jquery/-/jquery-3.5.1.tgz",
+    "integrity": "sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==",
+    "license": "MIT",
+    "package": "jquery@3.5.1",
+    "files": [
+      "dist/jquery.min.js",
+      "external/sizzle/LICENSE.txt",
+      "LICENSE.txt"
+    ]
+  },
+  "jquery-lazy-1.7.9": {
+    "tarball": "https://registry.npmjs.org/jquery-lazy/-/jquery-lazy-1.7.9.tgz",
+    "integrity": "sha512-lRzANO9+Z7MBgo+uLOIvhRBMeOJR6a9wVdwhpYH+SWG4Ky9bOjOFGHN+M0vV1vLuRViUJs4msZgz3gTeAY1GWQ==",
+    "license": null,
+    "package": "jquery-lazy@1.7.9",
+    "files": [
+      "jquery.lazy.min.js",
+      "LICENSE"
+    ]
+  },
+  "popper.js-1.14.7": {
+    "tarball": "https://registry.npmjs.org/popper.js/-/popper.js-1.14.7.tgz",
+    "integrity": "sha512-4q1hNvoUre/8srWsH7hnoSJ5xVmIL4qgz+s4qf2TnJIMyZFUFMGH+9vE7mXynAlHSZ/NdTmmow86muD0myUkVQ==",
+    "license": "MIT",
+    "package": "popper.js@1.14.7",
+    "files": [
+      "dist/umd/popper.min.js"
+    ]
+  },
+  "fontawesome-free-6.5.1": {
+    "tarball": "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.5.1.tgz",
+    "integrity": "sha512-CNy5vSwN3fsUStPRLX7fUYojyuzoEMSXPl7zSLJ8TgtRfjv24LOnOWKT2zYwaHZCJGkdyRnTmstR0P+Ah503Gw==",
+    "license": "(CC-BY-4.0 AND OFL-1.1 AND MIT)",
+    "package": "@fortawesome/fontawesome-free@6.5.1",
+    "files": [
+      "css/all.min.css",
+      "LICENSE.txt",
+      "webfonts/fa-brands-400.woff2",
+      "webfonts/fa-regular-400.woff2",
+      "webfonts/fa-solid-900.woff2",
+      "webfonts/fa-v4compatibility.woff2"
+    ]
+  },
+  "academicons-1.9.1": {
+    "tarball": "https://registry.npmjs.org/academicons/-/academicons-1.9.1.tgz",
+    "integrity": "sha512-5bNH9nbbCdIaBsD7g6VYssA+N0QmqLxKSZgLCfOsFyppc5RPgmq8ZttTTbFMsuDgr57gbHROSLgPtc3Jah4oOw==",
+    "license": "OFL-1.1",
+    "package": "academicons@1.9.1",
+    "files": [
+      "css/academicons.min.css",
+      "docs/assets/academicons-v1.8.5/css/academicons.min.css",
+      "docs/assets/academicons-v1.8.6/css/academicons.min.css",
+      "docs/assets/academicons-v1.8.5/fonts/academicons.woff",
+      "docs/assets/academicons-v1.8.6/fonts/academicons.woff",
+      "fonts/academicons.woff"
+    ]
+  },
+  "katex-0.16.11": {
+    "tarball": "https://registry.npmjs.org/katex/-/katex-0.16.11.tgz",
+    "integrity": "sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==",
+    "license": "MIT",
+    "package": "katex@0.16.11",
+    "files": [
+      "LICENSE",
+      "dist/katex.min.css",
+      "dist/contrib/auto-render.min.js",
+      "dist/katex.min.js",
+      "dist/fonts/KaTeX_AMS-Regular.woff2",
+      "dist/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "dist/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "dist/fonts/KaTeX_Fraktur-Bold.woff2",
+      "dist/fonts/KaTeX_Fraktur-Regular.woff2",
+      "dist/fonts/KaTeX_Main-Bold.woff2",
+      "dist/fonts/KaTeX_Main-BoldItalic.woff2",
+      "dist/fonts/KaTeX_Main-Italic.woff2",
+      "dist/fonts/KaTeX_Main-Regular.woff2",
+      "dist/fonts/KaTeX_Math-BoldItalic.woff2",
+      "dist/fonts/KaTeX_Math-Italic.woff2",
+      "dist/fonts/KaTeX_SansSerif-Bold.woff2",
+      "dist/fonts/KaTeX_SansSerif-Italic.woff2",
+      "dist/fonts/KaTeX_SansSerif-Regular.woff2",
+      "dist/fonts/KaTeX_Script-Regular.woff2",
+      "dist/fonts/KaTeX_Size1-Regular.woff2",
+      "dist/fonts/KaTeX_Size2-Regular.woff2",
+      "dist/fonts/KaTeX_Size3-Regular.woff2",
+      "dist/fonts/KaTeX_Size4-Regular.woff2",
+      "dist/fonts/KaTeX_Typewriter-Regular.woff2"
+    ]
+  },
+  "masonry-layout-4.2.2": {
+    "tarball": "https://registry.npmjs.org/masonry-layout/-/masonry-layout-4.2.2.tgz",
+    "integrity": "sha512-iGtAlrpHNyxaR19CvKC3npnEcAwszXoyJiI8ARV2ePi7fmYhIud25MHK8Zx4P0LCC4d3TNO9+rFa1KoK1OEOaA==",
+    "license": "MIT",
+    "package": "masonry-layout@4.2.2",
+    "files": [
+      "dist/masonry.pkgd.min.js"
+    ]
+  },
+  "imagesloaded-5.0.0": {
+    "tarball": "https://registry.npmjs.org/imagesloaded/-/imagesloaded-5.0.0.tgz",
+    "integrity": "sha512-/0JGSubc1MTCoDKVmonLHgbifBWHdyLkun+R/151E1c5n79hiSxcd7cB7mPXFgojYu8xnRZv7GYxzKoxW8BetQ==",
+    "license": "MIT",
+    "package": "imagesloaded@5.0.0",
+    "files": [
+      "imagesloaded.pkgd.min.js",
+      "LICENSE.md"
+    ]
+  },
+  "github-buttons-2.14.2": {
+    "tarball": "https://registry.npmjs.org/github-buttons/-/github-buttons-2.14.2.tgz",
+    "integrity": "sha512-DMakrcFRdojVAndkKYVDTHF3Ym09OoWia//IQ7B/MVxC+iQ2DenYfD7IR69ZZ9awM8PNS/9wthr4IyDhkFJ4mg==",
+    "license": "BSD-2-Clause",
+    "package": "github-buttons@2.14.2",
+    "files": [
+      "LICENSE",
+      "dist/buttons.min.js"
+    ]
+  },
+  "lato-v25": {
+    "source": "Google Fonts CSS API, Lato v25 (same family and weights as the original stylesheet)",
+    "license": "OFL-1.1",
+    "fontURLs": [
+      "https://fonts.gstatic.com/s/lato/v25/S6u8w4BMUTPHjxsAUi-qNiXg7eU0.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u8w4BMUTPHjxsAXC-qNiXg7Q.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh50XSwaPGQ3q5d0N7w.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh50XSwiPGQ3q5d0.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwaPGQ3q5d0N7w.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVSwiPGQ3q5d0.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh7USSwaPGQ3q5d0N7w.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh7USSwiPGQ3q5d0.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u_w4BMUTPHjxsI3wi_FQftx9897sxZ.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u_w4BMUTPHjxsI3wi_Gwftx9897g.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u_w4BMUTPHjxsI5wq_FQftx9897sxZ.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u_w4BMUTPHjxsI5wq_Gwftx9897g.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u_w4BMUTPHjxsI9w2_FQftx9897sxZ.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6u_w4BMUTPHjxsI9w2_Gwftx9897g.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXiWtFCc.woff2",
+      "https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjxAwXiWtFCfQ7A.woff2"
+    ]
+  }
+}

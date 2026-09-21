@@ -12,10 +12,10 @@
   --sky-wash: 237, 241, 241;
   --sky-horizon: #f1f1ea;
   --sky-copy-gap: clamp(.85rem, calc(3svh - .5rem), 1.7rem);
-  /* Account for the body's 5rem header space and the page's 1px overlap.
+  /* Use the same measured header height as the page's top offset.
      Content can still grow beyond one screen on short or narrow viewports. */
-  min-height: calc(100vh - 5rem + 1px);
-  min-height: calc(100svh - 5rem + 1px);
+  min-height: calc(100vh - var(--home-nav-height));
+  min-height: calc(100svh - var(--home-nav-height));
   padding-top: clamp(1.25rem, calc(10svh - 4rem), 4.5rem);
   padding-bottom: 5.5rem;
   /* Clipping without a scroll container prevents a focused insect near an edge

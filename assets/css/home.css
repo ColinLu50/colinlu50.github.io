@@ -10,10 +10,17 @@
 }
 
 body:has(.home-page) {
+  --home-nav-height: calc(3.5rem + 1px);
   overflow-x: hidden;
   color: var(--home-ink);
   background: var(--home-paper) !important;
 }
+
+body:has(.home-page:not(.is-classic)) {
+  padding-top: var(--home-nav-height);
+}
+
+.home-page:not(.is-classic) { margin-top: 0; }
 
 body:has(.home-page) > .home-shell {
   max-width: none;

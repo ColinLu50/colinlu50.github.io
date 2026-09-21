@@ -1,6 +1,21 @@
 (function () {
   "use strict";
 
+  // Keep the sky flush with the fixed navbar, including font changes and the
+  // expanded mobile menu. CSS supplies the normal height before JS arrives.
+  var navbar = document.querySelector(".navbar");
+  function syncNavbarHeight() {
+    var height = navbar.getBoundingClientRect().height;
+    if (height) document.body.style.setProperty("--home-nav-height", height + "px");
+  }
+  if (navbar) {
+    syncNavbarHeight();
+    if ("ResizeObserver" in window) {
+      var navbarObserver = new ResizeObserver(syncNavbarHeight);
+      navbarObserver.observe(navbar);
+    } else window.addEventListener("resize", syncNavbarHeight, { passive: true });
+  }
+
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var newsTabs = Array.prototype.slice.call(document.querySelectorAll("[data-news-year]"));
   var newsPanels = Array.prototype.slice.call(document.querySelectorAll("[data-news-panel]"));

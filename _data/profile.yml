@@ -71,7 +71,9 @@ awards:
 experience:
 - name: "Ant Group, Ling Team"
   logo: /assets/images/photos/ant-group-ling-logo.svg
-  position: Research Scientist, focusing on coding agent post-training.
+  position: >-
+    Research Scientist, focusing on coding agent post-training.<br/>
+    • Contributed to <a href="https://huggingface.co/inclusionAI/Ling-3.1-flash" target="_blank" rel="noopener"><b>Ling-3.1-flash</b></a> and was responsible for agentic terminal coding.
   date: Aug. 2026 - Present
 
 - name: "Tencent, Lightspeed Studio"

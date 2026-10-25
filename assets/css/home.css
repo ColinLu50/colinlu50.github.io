@@ -1364,7 +1364,6 @@ body:has(.home-page.is-classic) footer {
 }
 
 .home-news-list article > div {
-  max-width: 74ch;
   color: #4b4843;
   font-size: clamp(.98rem, 1.15vw, 1.08rem);
   line-height: 1.56;

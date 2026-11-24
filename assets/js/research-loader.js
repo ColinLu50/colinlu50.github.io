@@ -40,7 +40,7 @@
     ]).then(function () {
       return Promise.all([
         script("research-panel.js?v=20260917-konva-panel"),
-        script("research-scenes.js?v=20260917-paw-restored")
+        script("research-scenes.js?v=20261123-hive-clean")
       ]);
     }).then(function () {
       viewports.forEach(function (viewport) {

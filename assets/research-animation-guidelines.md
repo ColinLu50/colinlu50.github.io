@@ -63,7 +63,7 @@
 
 - 所有论文复用 `_includes/widgets/research_demo.html`：独立标题栏 + Replay + 图示区。
 - 标题来自 `_data/research_demos.yml`，使用同一套全大写、小字号、灰色加粗样式。
-- Replay 始终使用相同图标、文字、32px 高度、边框、圆角和焦点样式；手机端也保留文字。
+- Replay 始终使用相同图标、32px 圆形尺寸、边框、圆角和焦点样式（纯图标按钮，不显示“Replay”文字）。
 - panel 最小高度由 `--research-demo-height: 260px` 统一管理。标题自然换行，不能覆盖按钮。
 - 绘图区域由 `research-panel.js` 统一缩放。新 Konva 场景使用 `y=0..188`；兼容层将旧 Canvas 的 `y=32..220` 映射到同一内容区。
 - 论文专属 CSS 只能设置主题变量，禁止另写标题、按钮、间距和媒体查询覆盖。
@@ -101,12 +101,14 @@
 Source: [Train at the Moving Edge, sections 2-3](https://arxiv.org/html/2603.25184v2).
 
 The main story is **target medium difficulty → policy changes → history becomes stale
-→ prompt entropy corrects selection before rollout**. Keep a fixed `Easy / Medium /
-Hard` horizontal scale with a faint central `Medium` band. Two rows show the **same
-prompts**: `History` and `Current policy`. During the policy update, lower-row dots
-move toward easier positions while the historical row stays in place. Some historical
-favorites visibly leave the medium band. Prompt entropy then fades those stale choices
-and selects the currently useful medium-difficulty candidates.
+→ prompt entropy bars + median gate correct selection**. Keep a fixed `Easy / Medium /
+Hard` horizontal scale with a faint central `Medium` band and a clean left label gutter.
+Three vertically aligned lanes show `History`, `Current`, and `Prompt entropy`. During
+the policy update, `Current` dots move toward easier positions while `History` stays
+in place, with stale historical picks visibly stranded in `Easy`. Stage 2 then raises
+`Prompt entropy` bars aligned under the shortlisted pool alongside the `Median` dashed
+gate, fading stale low-entropy choices and linking only the verified medium-difficulty
+bars upward to the corrected selection.
 
 - The history shortlist is broad and retains exploration candidates. Historical
   filled marks illustrate the previous preference, not an extra Stage-1 top-k gate.
@@ -169,11 +171,11 @@ not a template-based report or an installed skill.
 
 核心问题：detector 依赖可变化的表面统计，而语义可以保持不变；直接放入未经优化的人类示例并不足以显著改变生成分布。
 
-故事：顶部是 `Example → Detector` 的小循环。detector 的 `AI score` meter 随 2–3 个 amber sentence/word edits 缩短，return path 标注 `Rewrite`。底部把同一个 amber example 迁入 `Prompt`，与新 `Input` 合并后经过 `LLM` 生成新的 `Text`。
+故事：顶部是 `Example → Detector` 的小循环。开场 `Example` 中的 coral surface cues 被 `Detector` 标为高于 threshold 的高 `AI score`（保留 coral baseline 残影）；随后 `Rewrite` 回路分步执行 word-level substitution 与 sentence-level paraphrasing（保持整行语义骨架不变），3 个 amber edits 依次替换掉 coral cues，将 `AI score` 阶梯降至 threshold 以下的 teal 区。底部左侧无交叉地将同一个 amber example 迁入 `Prompt`，与新的蓝色 `Input` 合并后经过 `LLM` 直接生成带有 low-AI-score 指示条的新 `Text`。
 
-最少标签：`Example`、`Detector`、`AI score`、`Rewrite`、`Prompt`、`Input`、`LLM`、`Text`。
+最少标签：`Example`、`Detector`、`AI score`、`Rewrite`、`Prompt`、`Input`、`LLM`、`Text` 与底部动态 stage caption。
 
-视觉变量：amber edits=接受的 example revisions；meter length=detector feedback；相同 amber strokes=同一 example 被复用。该图专指 SICO-Gen，不表示对最终输出逐篇改写。
+视觉变量：coral cues/ghost=未优化的高 AI 风险基线；amber edits=固定语义下接受的 example revisions；meter length + threshold=detector feedback；相同 amber strokes=同一 example 被复用；底部 teal meter=SICO-Gen 直接生成低检测风险文本，而非对输出逐篇改写。
 
 最终句：**Keep meaning fixed, optimize the demonstration, and reuse the resulting prompt.**
 

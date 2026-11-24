@@ -5,7 +5,7 @@ selected:       true
 studio_featured: true
 studio_viz:     sico
 home_motivation: "AI detectors can depend on writing cues that prompts learn to manipulate."
-demo_description: "A SICO-Gen schematic: detector feedback guides a few sentence or word revisions to one in-context example while preserving its meaning. The optimized same example is then reused in a prompt with a new input, passed through an LLM, and used to generate new text."
+demo_description: "A SICO-Gen schematic: an unoptimized example starts with high AI score above the detector threshold. Proxy detector feedback guides word-level substitutions and sentence paraphrasing to one in-context example while keeping its meaning fixed, stepping its AI score below threshold. The optimized same example is then reused in a prompt with a new input so the LLM directly generates human-like text below the detection threshold without per-output rewriting."
 pub:            "Transactions on Machine Learning Research (TMLR)"
 # pub_pre:        "Submitted to "
 # pub_post:       'Under review.'

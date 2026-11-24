@@ -47,100 +47,167 @@
   // https://arxiv.org/html/2603.25184v2 — keep the CURRENT medium-difficulty edge.
   function createHIVE(options) {
     var K = options.Konva, gsap = options.gsap, root = options.root, theme = options.theme;
-    var width = options.width, left = 24, right = width - 24, span = right - left;
+    var width = options.width, compact = width < 320;
+    var gutterLeft = compact ? 14 : 20, gutterWidth = compact ? 54 : 68;
+    var plotLeft = gutterLeft + gutterWidth, plotRight = width - (compact ? 16 : 20), span = plotRight - plotLeft;
     var ui = primitives(K, root, theme);
-    var state = { history: 0, current: 0, shift: 0, verification: 0, rollout: 0, hold: 0 };
-    // Same prompt identities, evaluated under two policies. These illustrative
-    // difficulties and entropy scores are independent, not an entropy-to-difficulty law.
-    var historical = [.06, .14, .22, .30, .39, .47, .55, .63, .71, .79, .87, .95];
-    var current =    [.04, .09, .15, .20, .25, .30, .38, .47, .56, .65, .81, .93];
-    var entropy =   [.08, .10, .11, .25, .18, .36, .83, .94, .88, .76, .29, .13];
-    var low = .34, high = .68;
-    function x(value) { return left + span * value; }
-    // Coarse narrowing retains a broad pool, including exploration candidates.
-    var candidates = [3, 4, 5, 6, 7, 8, 9, 10];
+    var state = { history: 0, current: 0, shift: 0, verification: 0, hold: 0 };
+    // Same prompt identities, evaluated under two policies. Illustrative difficulties
+    // and prompt-entropy scores are independent, not an entropy-to-difficulty law.
+    var historical = [.07, .16, .26, .37, .47, .58, .69, .79, .91];
+    var current =    [.04, .10, .17, .23, .30, .43, .53, .63, .87];
+    var entropy =    [.08, .12, .18, .22, .29, .85, .94, .79, .14];
+    var low = .34, high = .67;
+    function x(value) { return plotLeft + span * value; }
+    function smooth(t) { var u = Math.max(0, Math.min(1, t)); return u * u * (3 - 2 * u); }
+    // Stage 1: broad history-informed pool retaining exploration candidates [2..7].
+    var candidates = [2, 3, 4, 5, 6, 7];
     var scores = candidates.map(function (i) { return entropy[i]; }).sort(function (a, b) { return a - b; });
-    var median = (scores[3] + scores[4]) / 2;
+    var median = (scores[2] + scores[3]) / 2;
+    var staleColor = "#b85c52";
+    var historyY = 43, currentY = 77, entropyBaseY = 152, maxBarH = 42;
+    var medianY = entropyBaseY - median * maxBarH;
+    var barW = Math.max(5.5, Math.min(11, span * .032));
+    var poolLeft = x(current[2]) - barW * .85, poolRight = x(current[7]) + barW * .85;
 
-    ui.line([x(low), 34, x(high), 34, x(high), 122, x(low), 122], {
+    ui.line([x(low), 24, x(high), 24, x(high), 156, x(low), 156], {
       name: "medium-band", closed: true, fill: theme.accent, strokeEnabled: false, opacity: .065
     });
-    ui.line([x(low), 34, x(high), 34], { stroke: theme.accent, opacity: .28 });
-    ui.label("Easy", left, 20);
-    ui.label("Medium", x((low + high) / 2), 20, { align: "center", fill: theme.accent, fontStyle: "600" });
-    ui.label("Hard", right, 20, { align: "right" });
-    ui.line([left, 65, right, 65], { opacity: .35 });
-    var currentRule = ui.line([left, 112, right, 112], { opacity: 0 });
-    var historyLabel = ui.label("History", left, 47, { fontSize: 9.5 });
-    var currentLabel = ui.label("Current policy", left, 133, { fontSize: 9.5, opacity: 0 });
+    ui.line([x(low), 24, x(high), 24], { stroke: theme.accent, opacity: .3 });
+    ui.label("Easy", plotLeft, 13, { fontSize: 9.5 });
+    ui.label("Medium", x((low + high) / 2), 13, { align: "center", fontSize: 10, fill: theme.accent, fontStyle: "600" });
+    ui.label("Hard", plotRight, 13, { align: "right", fontSize: 9.5 });
+
+    ui.line([plotLeft, historyY, plotRight, historyY], { opacity: .3 });
+    var currentRule = ui.line([plotLeft, currentY, plotRight, currentY], { opacity: 0 });
+    var historyLabel = ui.label("History", gutterLeft, historyY, { fontSize: 9.5 });
+    var currentLabel = ui.label("Current", gutterLeft, currentY, { fontSize: 9.5, opacity: 0 });
+    var entropyLabelTop = ui.label("Prompt", gutterLeft, 124, { fontSize: 9.5, fontStyle: "600", opacity: 0 });
+    var entropyLabelBot = ui.label("entropy", gutterLeft, 136, { fontSize: 9.5, fontStyle: "600", opacity: 0 });
+
+    var entropyBase = ui.line([poolLeft, entropyBaseY, poolRight, entropyBaseY], { stroke: theme.rule, opacity: 0 });
+    var medianLine = ui.line([poolLeft, medianY, poolRight + 5, medianY], {
+      name: "entropy-median", stroke: theme.accent, strokeWidth: .95, dash: [3, 3], opacity: 0
+    });
+    var medianLabel = ui.label("Median", poolRight + 9, medianY, { fontSize: 9.5, fill: theme.accent, opacity: 0 });
+
     var prompts = historical.map(function (difficulty, index) {
       var shortlisted = candidates.indexOf(index) !== -1;
-      // Filled history marks illustrate the previous preference; this is not an
-      // extra algorithmic top-k/median gate in Stage 1.
       var favored = difficulty >= low && difficulty <= high;
-      var link = favored ? ui.line([x(difficulty), 69, x(difficulty), 108], {
-        name: "drift-" + index, stroke: theme.accent, dash: [2, 3], opacity: 0
+      var verified = shortlisted && entropy[index] >= median;
+      var becameStale = favored && !verified;
+      var link = shortlisted ? ui.line([x(difficulty), historyY + 4, x(difficulty), currentY - 4], {
+        name: "drift-" + index, stroke: becameStale ? staleColor : theme.accent,
+        strokeWidth: favored ? .9 : .65, dash: [2, 3], opacity: 0
       }) : null;
-      var old = ui.dot(x(difficulty), 65, {
-        name: "history-" + index, radius: shortlisted ? 3.1 : 2,
+      var old = ui.dot(x(difficulty), historyY, {
+        name: "history-" + index, radius: shortlisted ? 3.2 : 2,
         fill: favored ? theme.accent : theme.surface,
         stroke: shortlisted ? theme.accent : theme.muted, strokeWidth: 1, opacity: 0
       });
-      var outline = ui.dot(x(difficulty), 112, {
+      var outline = ui.dot(x(difficulty), currentY, {
         name: "prompt-" + index, radius: shortlisted ? 3.5 : 2,
         fill: theme.surface, stroke: shortlisted ? theme.accent : theme.muted,
         strokeWidth: 1, opacity: 0
       });
-      var selected = ui.dot(x(difficulty), 112, { name: "selected-" + index, radius: 3.5, opacity: 0 });
-      return { old: old, outline: outline, selected: selected, link: link,
-        favored: favored, shortlisted: shortlisted, verified: shortlisted && entropy[index] >= median };
+      var selected = ui.dot(x(difficulty), currentY, {
+        name: "selected-" + index, radius: 3.5, fill: theme.accent, opacity: 0
+      });
+      var staleRing = becameStale ? ui.dot(x(difficulty), currentY, {
+        name: "stale-ring-" + index, radius: 6, fillEnabled: false,
+        stroke: staleColor, strokeWidth: 1.1, dash: [2, 2], opacity: 0
+      }) : null;
+      var barX = x(current[index]) - barW / 2;
+      var barTopY = entropyBaseY - entropy[index] * maxBarH;
+      var entropyBar = shortlisted ? ui.rect(barX, entropyBaseY, barW, 0, {
+        name: "entropy-bar-" + index, cornerRadius: 1.8,
+        fill: verified ? theme.accent : (becameStale ? staleColor : theme.muted),
+        strokeEnabled: false, opacity: 0
+      }) : null;
+      var verifyLink = verified ? ui.line([x(current[index]), barTopY - 3, x(current[index]), barTopY - 3], {
+        name: "verify-link-" + index, stroke: theme.accent, strokeWidth: .95, dash: [2, 2], opacity: 0
+      }) : null;
+      return {
+        old: old, outline: outline, selected: selected, staleRing: staleRing, link: link,
+        entropyBar: entropyBar, verifyLink: verifyLink, barTopY: barTopY,
+        favored: favored, shortlisted: shortlisted, verified: verified, becameStale: becameStale
+      };
     });
 
-    var verifier = ui.label("Prompt entropy", left, 158, { fontStyle: "600", opacity: .35 });
-    var rolloutArrow = ui.arrow([left + 92, 158, right - 43, 158], { opacity: .35 });
-    var rollout = ui.label("Rollout", right, 158, { align: "right", fontStyle: "600", opacity: .35 });
-    var caption = ui.label("Select medium", left, 180, { fontSize: 9.5 });
+    var caption = ui.label("Target medium difficulty", gutterLeft, 174, { fontSize: 9.5 });
 
     var timeline = gsap.timeline({ paused: true, defaults: { ease: "sine.inOut" } })
       .addLabel("history", 0)
       .to(state, { history: 1, duration: .6 }, .15)
       .addLabel("policy-update", .9)
       .to(state, { current: 1, duration: .4 }, "policy-update")
-      .to(state, { shift: 1, duration: 1.35 }, "policy-update+=.25")
-      .addLabel("stale-history", 2.5)
-      .addLabel("prompt-entropy", 3.35)
-      .to(state, { verification: 1, duration: 1.2 }, "prompt-entropy")
-      .addLabel("rollout", 4.8)
-      .to(state, { rollout: 1, duration: .7 }, "rollout")
-      .to(state, { hold: 1, duration: 1.3 }, 5.5);
+      .to(state, { shift: 1, duration: 1.3 }, "policy-update+=.25")
+      .addLabel("stale-history", 2.45)
+      .addLabel("prompt-entropy", 3.15)
+      .to(state, { verification: 1, duration: 1.75 }, "prompt-entropy")
+      .to(state, { hold: 1, duration: 1.9 }, 4.9);
 
     function render() {
-      historyLabel.opacity(mix(1, .6, state.shift));
+      var barGrow = smooth(state.verification * 1.45);
+      var gateApply = smooth((state.verification - .35) / .65);
+      var staleShow = smooth((state.shift - .55) / .45) * (1 - gateApply);
+
+      historyLabel.opacity(mix(1, .52, state.shift));
       currentLabel.opacity(state.current);
+      currentLabel.fill(state.current > 0 ? theme.ink : theme.muted);
       currentRule.opacity(state.current * .35);
+
+      var entropyShow = smooth(state.verification * 2.5);
+      entropyLabelTop.opacity(entropyShow);
+      entropyLabelTop.fill(entropyShow > 0 ? theme.ink : theme.muted);
+      entropyLabelBot.opacity(entropyShow);
+      entropyLabelBot.fill(entropyShow > 0 ? theme.ink : theme.muted);
+      entropyBase.opacity(entropyShow * .6);
+      medianLine.opacity(smooth(state.verification * 2) * .78);
+      medianLabel.opacity(smooth((state.verification - .1) * 2) * .95);
+
       prompts.forEach(function (prompt, index) {
         var px = x(mix(historical[index], current[index], state.shift));
-        prompt.old.opacity(state.history * (prompt.shortlisted ? mix(.9, .35, state.shift) : .15));
+        prompt.old.opacity(state.history * (prompt.shortlisted ? mix(.92, .38, state.shift) : .16));
         prompt.outline.x(px);
-        prompt.outline.opacity(state.current * (prompt.shortlisted ? mix(.6, prompt.verified ? 1 : .25, state.verification) : .15));
+        prompt.outline.stroke(
+          prompt.becameStale && (staleShow > .05 || gateApply > .05) ? staleColor :
+          (prompt.shortlisted ? theme.accent : theme.muted)
+        );
+        prompt.outline.opacity(state.current * (prompt.shortlisted ? mix(.65, prompt.verified ? 1 : (prompt.becameStale ? .48 : .28), gateApply) : .16));
+
         prompt.selected.x(px);
-        prompt.selected.opacity(state.current * mix(prompt.favored ? 1 : 0, prompt.verified ? 1 : 0, state.verification));
+        prompt.selected.fill(prompt.becameStale && staleShow > .05 ? staleColor : theme.accent);
+        prompt.selected.opacity(state.current * mix(prompt.favored ? 1 : 0, prompt.verified ? 1 : 0, gateApply));
+
+        if (prompt.staleRing) {
+          prompt.staleRing.x(px);
+          prompt.staleRing.opacity(state.current * staleShow * .92);
+        }
         if (prompt.link) {
-          prompt.link.points([x(historical[index]), 69, px, 108]);
-          prompt.link.opacity(state.current * mix(.35, .18, state.verification));
+          prompt.link.points([x(historical[index]), historyY + 4, px, currentY - 4]);
+          var baseLink = prompt.favored ? mix(.38, .18, gateApply) : .15;
+          prompt.link.opacity(state.current * (prompt.becameStale ? mix(baseLink, .55, staleShow) : baseLink));
+        }
+        if (prompt.entropyBar) {
+          var barH = entropy[index] * maxBarH * barGrow;
+          prompt.entropyBar.setAttrs({
+            y: entropyBaseY - barH,
+            height: barH,
+            opacity: entropyShow * mix(.5, prompt.verified ? .9 : (prompt.becameStale ? .45 : .28), gateApply)
+          });
+        }
+        if (prompt.verifyLink) {
+          var linkTop = mix(prompt.barTopY - 3, currentY + 6, gateApply);
+          prompt.verifyLink.points([x(current[index]), prompt.barTopY - 3, x(current[index]), linkTop]);
+          prompt.verifyLink.opacity(gateApply * .78);
         }
       });
-      verifier.opacity(mix(.35, 1, state.verification));
-      verifier.fill(state.verification > 0 ? theme.accent : theme.muted);
-      rolloutArrow.opacity(mix(.35, 1, state.rollout));
-      rolloutArrow.stroke(state.rollout > 0 ? theme.accent : theme.rule);
-      rolloutArrow.fill(state.rollout > 0 ? theme.accent : theme.rule);
-      rollout.opacity(mix(.35, 1, state.rollout));
-      rollout.fill(state.rollout > 0 ? theme.accent : theme.muted);
+
       caption.text(state.verification >= .999 ? "Select current medium" :
         state.verification > 0 ? "Correct with prompt entropy" :
         state.shift >= .999 ? "History is stale" :
-        state.current > 0 ? "Policy changes" : "Select medium");
+        state.current > 0 ? "Policy changes" : "Target medium difficulty");
     }
     render();
     return { timeline: timeline, render: render };
@@ -387,98 +454,206 @@
   // https://arxiv.org/html/2305.10847 — SICO-Gen optimizes one example, then reuses it.
   function createSICO(options) {
     var K = options.Konva, gsap = options.gsap, root = options.root, theme = options.theme;
-    var width = options.width, ui = primitives(K, root, theme), left = 20, right = width - 20, span = right - left;
+    var width = options.width, ui = primitives(K, root, theme), left = 18, right = width - 18, span = right - left;
     var state = { example: 0, detector: 0, optimize: 0, reuse: 0, llm: 0, output: 0, hold: 0 };
-    var exampleWidth = Math.max(100, span * .40), exampleLeft = left, exampleRight = exampleLeft + exampleWidth;
-    var detectorWidth = Math.min(80, Math.max(70, span * .24)), detectorLeft = right - detectorWidth;
-    var cardFill = "rgba(255,255,255,.055)", exampleCard = ui.rect(exampleLeft, 29, exampleWidth, 41, {
-      name: "example-card", cornerRadius: 6, fill: cardFill, opacity: 0
-    });
-    var exampleLabel = ui.label("Example", exampleLeft, 16, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
-    var strokeFractions = [.76, .54, .84], exampleStrokes = strokeFractions.map(function (fraction, index) {
-      return ui.line([exampleLeft + 10, 40 + index * 9, exampleLeft + 10 + (exampleWidth - 20) * fraction, 40 + index * 9], {
+    var coralRgb = [224, 114, 96], amberRgb = [226, 179, 97], tealRgb = [98, 184, 158];
+    var coral = "rgb(224,114,96)", teal = "rgb(98,184,158)", inputBlue = "rgb(132,172,208)", cardFill = "rgba(255,255,255,.055)";
+    function mixRgb(a, b, t) {
+      var u = Math.max(0, Math.min(1, t));
+      return "rgb(" + Math.round(mix(a[0], b[0], u)) + "," + Math.round(mix(a[1], b[1], u)) + "," + Math.round(mix(a[2], b[2], u)) + ")";
+    }
+    function smooth(t) { var u = Math.max(0, Math.min(1, t)); return u * u * (3 - 2 * u); }
+
+    var exampleWidth = Math.round(Math.min(260, Math.max(88, span * .43))), exampleLeft = left, exampleRight = exampleLeft + exampleWidth;
+    var detectorWidth = Math.round(Math.min(210, Math.max(76, span * .34))), detectorLeft = right - detectorWidth;
+    var exampleLabel = ui.label("Example", exampleLeft, 15, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
+    var exampleCard = ui.rect(exampleLeft, 26, exampleWidth, 38, { name: "example-card", cornerRadius: 6, fill: cardFill, opacity: 0 });
+    var strokeFractions = [.78, .90, .82], editStarts = [.44, .18, .50], editLengths = [.16, .50, .16];
+    var exampleContentX = exampleLeft + 10, exampleContentW = exampleWidth - 20;
+    var exampleStrokes = strokeFractions.map(function (fraction, index) {
+      var y = 35 + index * 10;
+      return ui.line([exampleContentX, y, exampleContentX + exampleContentW * fraction, y], {
         name: "example-stroke-" + index, stroke: theme.muted, strokeWidth: 1.2, opacity: 0
       });
     });
-    var editStarts = [.42, .22, .50], editLengths = [.20, .17, .17];
-    var edits = [0, 1, 2].map(function (index) {
-      var y = 40 + index * 9, start = exampleLeft + 10 + (exampleWidth - 20) * editStarts[index];
-      return ui.line([start, y, start + (exampleWidth - 20) * editLengths[index], y], {
-        name: "example-edit-" + index, stroke: theme.accent, strokeWidth: 1.8, opacity: 0
+    var exampleCues = [0, 1, 2].map(function (index) {
+      var y = 35 + index * 10, start = exampleContentX + exampleContentW * editStarts[index];
+      return ui.line([start, y, start + exampleContentW * editLengths[index], y], {
+        name: "example-cue-" + index, stroke: coral, strokeWidth: 1.9, opacity: 0
       });
     });
-    var forward = ui.arrow([exampleRight + 7, 48, detectorLeft - 8, 48], { name: "example-to-detector",
-      stroke: theme.accent, fill: theme.accent, opacity: 0 });
-    var detectorLabel = ui.label("Detector", detectorLeft, 16, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
-    var scoreLabel = ui.label("AI score", detectorLeft, 35, { fontSize: 9, fill: theme.muted, opacity: 0 });
-    var meterBase = ui.line([detectorLeft, 54, right, 54], { name: "ai-score-meter", stroke: theme.rule, strokeWidth: 1.2, opacity: 0 });
-    var meterFill = ui.line([detectorLeft, 54, detectorLeft, 54], { name: "ai-score-fill", stroke: theme.accent, strokeWidth: 2, opacity: 0 });
-    var meterTip = ui.dot(detectorLeft, 54, { name: "ai-score-tip", radius: 2.3, opacity: 0 });
-    var feedback = ui.arrow([detectorLeft + detectorWidth * .72, 62, detectorLeft + detectorWidth * .72, 85,
-      exampleLeft + 10, 85, exampleLeft + 10, 75], { name: "detector-feedback", stroke: theme.accent, fill: theme.accent, opacity: 0 });
-    var rewrite = ui.label("Rewrite", detectorLeft + detectorWidth * .5, 100, { name: "rewrite-label", align: "center", fontSize: 9, fill: theme.muted, opacity: 0 });
-    var promptWidth = Math.max(75, span * .33), promptLeft = left, promptRight = promptLeft + promptWidth;
-    var promptLabel = ui.label("Prompt", promptLeft, 122, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
-    var promptCard = ui.rect(promptLeft, 134, promptWidth, 40, { name: "prompt-card", cornerRadius: 6, fill: cardFill, opacity: 0 });
-    var transfer = ui.arrow([exampleRight - 10, 72, exampleRight - 10, 112, promptRight - 10, 112, promptRight - 10, 130], {
-      name: "example-transfer", stroke: theme.accent, fill: theme.accent, opacity: 0
+    var edits = [0, 1, 2].map(function (index) {
+      var y = 35 + index * 10, start = exampleContentX + exampleContentW * editStarts[index];
+      return ui.line([start, y, start, y], { name: "example-edit-" + index, stroke: theme.accent, strokeWidth: 2, opacity: 0 });
     });
+
+    var forward = ui.arrow([exampleRight + 5, 45, detectorLeft - 6, 45], {
+      name: "example-to-detector", stroke: theme.rule, fill: theme.rule, opacity: 0
+    });
+    var detectorLabel = ui.label("Detector", detectorLeft, 15, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
+    var scoreLabel = ui.label("AI score", detectorLeft, 34, { fontSize: 9.5, fill: theme.muted, opacity: 0 });
+    var meterX0 = detectorLeft, meterX1 = right, meterW = meterX1 - meterX0, meterY = 51, threshold = .45, baseScore = .86;
+    var meterBase = ui.line([meterX0, meterY, meterX1, meterY], { name: "ai-score-meter", stroke: theme.rule, strokeWidth: 1.3, opacity: 0 });
+    var meterGhost = ui.line([meterX0, meterY, meterX0 + meterW * baseScore, meterY], { name: "ai-score-ghost", stroke: coral, strokeWidth: 2, opacity: 0 });
+    var threshX = meterX0 + meterW * threshold;
+    var meterThreshold = ui.line([threshX, meterY - 5, threshX, meterY + 5], {
+      name: "ai-score-threshold", stroke: theme.muted, strokeWidth: 1, dash: [2, 2], opacity: 0
+    });
+    var meterFill = ui.line([meterX0, meterY, meterX0, meterY], { name: "ai-score-fill", stroke: coral, strokeWidth: 2.4, opacity: 0 });
+    var meterTip = ui.dot(meterX0, meterY, { name: "ai-score-tip", radius: 2.6, fill: coral, opacity: 0 });
+
+    var feedbackReturnX = exampleRight - 14, feedbackLeaveX = detectorLeft + 12;
+    var feedback = ui.arrow([feedbackLeaveX, 62, feedbackLeaveX, 80, feedbackReturnX, 80, feedbackReturnX, 67], {
+      name: "detector-feedback", stroke: theme.accent, fill: theme.accent, opacity: 0
+    });
+    var rewrite = ui.label("Rewrite", (feedbackReturnX + feedbackLeaveX) / 2, 70, {
+      name: "rewrite-label", align: "center", fontSize: 9.5, fill: theme.accent, opacity: 0
+    });
+
+    var arrowGap = Math.round(Math.max(14, Math.min(28, span * .07)));
+    var llmW = Math.round(Math.max(32, Math.min(46, span * .11)));
+    var usableBottom = span - llmW - arrowGap * 2;
+    var promptWidth = Math.round(usableBottom * .54), promptLeft = left, promptRight = promptLeft + promptWidth;
+    var textWidth = usableBottom - promptWidth, textLeft = right - textWidth;
+    var llmX = promptRight + arrowGap + llmW / 2;
+
+    var transferX = exampleLeft + Math.min(24, Math.round(exampleWidth * .22));
+    var transfer = ui.arrow([transferX, 66, transferX, 66], { name: "example-transfer", stroke: theme.accent, fill: theme.accent, opacity: 0 });
+    var promptLabel = ui.label("Prompt", promptLeft, 101, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
+    var promptCard = ui.rect(promptLeft, 112, promptWidth, 44, { name: "prompt-card", cornerRadius: 6, fill: cardFill, opacity: 0 });
+    var promptContentX = promptLeft + 9, promptContentW = promptWidth - 18;
     var promptStrokes = strokeFractions.map(function (fraction, index) {
-      return ui.line([exampleLeft + 10, 40 + index * 9, exampleLeft + 10 + (exampleWidth - 20) * fraction, 40 + index * 9], {
-        name: "prompt-example-" + index, stroke: theme.muted, strokeWidth: 1.2, opacity: 0
+      return ui.line([exampleContentX, 35 + index * 10, exampleContentX + exampleContentW * fraction, 35 + index * 10], {
+        name: "prompt-example-" + index, stroke: theme.muted, strokeWidth: 1.15, opacity: 0
       });
     });
     var promptEdits = [0, 1, 2].map(function (index) {
-      return ui.line([exampleLeft, 40 + index * 9, exampleLeft, 40 + index * 9], {
-        name: "prompt-edit-" + index, stroke: theme.accent, strokeWidth: 1.8, opacity: 0
+      return ui.line([exampleContentX, 35 + index * 10, exampleContentX, 35 + index * 10], {
+        name: "prompt-edit-" + index, stroke: theme.accent, strokeWidth: 1.9, opacity: 0
       });
     });
-    var inputLabel = ui.label("Input", promptLeft + 10, 161, { fontSize: 9, fill: theme.muted, opacity: 0 });
-    var inputStroke = ui.line([promptLeft + 39, 164, promptRight - 10, 164], { name: "prompt-input", stroke: theme.muted, strokeWidth: 1.1, opacity: 0 });
-    var llmX = left + span * .57, llmCard = ui.rect(llmX - 19, 139, 38, 30, { name: "llm-node", cornerRadius: 6, fill: cardFill, opacity: 0 });
-    var llmLabel = ui.label("LLM", llmX, 154, { align: "center", fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
-    var promptArrow = ui.arrow([promptRight + 5, 154, llmX - 24, 154], { name: "prompt-to-llm", stroke: theme.rule, fill: theme.rule, opacity: 0 });
-    var textWidth = Math.max(55, span * .24), textLeft = right - textWidth;
-    var textLabel = ui.label("Text", textLeft, 122, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
-    var textCard = ui.rect(textLeft, 134, textWidth, 40, { name: "text-card", cornerRadius: 6, fill: cardFill, opacity: 0 });
-    var textLines = [.75, .56, .84].map(function (fraction, index) {
-      return ui.line([textLeft + 9, 144 + index * 8, textLeft + 9 + (textWidth - 18) * fraction, 144 + index * 8], {
-        name: "new-text-" + index, stroke: theme.muted, strokeWidth: 1.15, opacity: 0
+    var inputLabel = ui.label("Input", promptLeft + 9, 147, { fontSize: 9.5, fill: inputBlue, opacity: 0 });
+    var inputStroke = ui.line([promptLeft + 38, 147, promptRight - 9, 147], {
+      name: "prompt-input", stroke: inputBlue, strokeWidth: 1.35, opacity: 0
+    });
+
+    var promptArrow = ui.arrow([promptRight + 2, 134, llmX - llmW / 2 - 3, 134], {
+      name: "prompt-to-llm", stroke: theme.rule, fill: theme.rule, opacity: 0
+    });
+    var llmCard = ui.rect(llmX - llmW / 2, 122, llmW, 24, { name: "llm-node", cornerRadius: 12, fill: cardFill, opacity: 0 });
+    var llmLabel = ui.label("LLM", llmX, 134, { align: "center", fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
+
+    var llmArrow = ui.arrow([llmX + llmW / 2 + 2, 134, textLeft - 3, 134], {
+      name: "llm-to-text", stroke: theme.rule, fill: theme.rule, opacity: 0
+    });
+    var textLabel = ui.label("Text", textLeft, 106, { fontSize: 9.5, fontStyle: "600", fill: theme.ink, opacity: 0 });
+    var textCard = ui.rect(textLeft, 117, textWidth, 34, { name: "text-card", cornerRadius: 6, fill: cardFill, opacity: 0 });
+    var textContentX = textLeft + 9, textContentW = textWidth - 18;
+    var textLines = [.74, .88, .62].map(function (fraction, index) {
+      var y = 126 + index * 8;
+      return ui.line([textContentX, y, textContentX + textContentW * fraction, y], {
+        name: "new-text-" + index, stroke: theme.ink, strokeWidth: 1.2, opacity: 0
       });
     });
-    var llmArrow = ui.arrow([llmX + 24, 154, textLeft - 5, 154], { name: "llm-to-text", stroke: theme.rule, fill: theme.rule, opacity: 0 });
+    var textMeterX0 = textLeft + 30, textMeterW = Math.max(22, textWidth - 30), textMeterY = 106;
+    var textScoreBase = ui.line([textMeterX0, textMeterY, textMeterX0 + textMeterW, textMeterY], {
+      name: "text-score-meter", stroke: theme.rule, strokeWidth: 1.2, opacity: 0
+    });
+    var textThreshX = textMeterX0 + textMeterW * threshold;
+    var textScoreThreshold = ui.line([textThreshX, textMeterY - 3, textThreshX, textMeterY + 3], {
+      name: "text-score-threshold", stroke: theme.muted, strokeWidth: 1, dash: [2, 2], opacity: 0
+    });
+    var textScoreFill = ui.line([textMeterX0, textMeterY, textMeterX0, textMeterY], {
+      name: "text-score-fill", stroke: teal, strokeWidth: 2.2, opacity: 0
+    });
+
+    var caption = ui.label("Unoptimized example", left, 174, { name: "sico-caption", fontSize: 9.5, fill: theme.muted });
+
     var timeline = gsap.timeline({ paused: true, defaults: { ease: "sine.inOut" } })
-      .addLabel("example", .1).to(state, { example: 1, duration: .8 }, "example")
-      .addLabel("detector", 1.05).to(state, { detector: 1, duration: .4 }, "detector")
-      .addLabel("rewrite", 1.55).to(state, { optimize: 1, duration: 1.8 }, "rewrite")
-      .addLabel("reuse", 3.65).to(state, { reuse: 1, duration: .75 }, "reuse")
+      .addLabel("example", .1).to(state, { example: 1, duration: .65 }, "example")
+      .addLabel("detector", .85).to(state, { detector: 1, duration: .5 }, "detector")
+      .addLabel("rewrite", 1.5).to(state, { optimize: 1, duration: 2.1, ease: "none" }, "rewrite")
+      .addLabel("reuse", 3.75).to(state, { reuse: 1, duration: .75 }, "reuse")
       .addLabel("llm", 4.65).to(state, { llm: 1, duration: .55 }, "llm")
-      .addLabel("text", 5.45).to(state, { output: 1, duration: .65 }, "text")
-      .to(state, { hold: 1, duration: 1.2 }, 6.25);
+      .addLabel("text", 5.35).to(state, { output: 1, duration: .65 }, "text")
+      .to(state, { hold: 1, duration: .95 }, 6.0);
+
     function render() {
-      var loopOpacity = mix(1, .7, state.reuse), pathOpacity = mix(1, .4, state.reuse), scoreEnd = mix(detectorLeft + detectorWidth * .82, detectorLeft + detectorWidth * .24, state.optimize);
-      exampleCard.opacity(state.example * loopOpacity); exampleLabel.opacity(state.example * loopOpacity);
+      var loopOpacity = mix(1, .78, state.reuse), pathOpacity = mix(1, .55, state.reuse);
+      var steps = [0, 1, 2].map(function (index) { return smooth(state.optimize * 3 - index); });
+      var scoreValue = baseScore - (.24 * steps[0] + .28 * steps[1] + .16 * steps[2]);
+      var scoreEnd = meterX0 + meterW * scoreValue;
+      var scoreColor = scoreValue > threshold
+        ? mixRgb(coralRgb, amberRgb, (baseScore - scoreValue) / (baseScore - threshold))
+        : mixRgb(amberRgb, tealRgb, (threshold - scoreValue) / (threshold - .18));
+
+      exampleCard.opacity(state.example * loopOpacity);
+      exampleLabel.opacity(state.example * loopOpacity);
       exampleStrokes.forEach(function (stroke) { stroke.opacity(state.example * loopOpacity); });
-      edits.forEach(function (edit, index) { edit.opacity(Math.max(0, Math.min(1, state.optimize * 3 - index)) * loopOpacity); });
-      forward.opacity(state.detector * pathOpacity); detectorLabel.opacity(state.detector * loopOpacity); scoreLabel.opacity(state.detector * loopOpacity);
-      meterBase.opacity(state.detector * loopOpacity); meterFill.points([detectorLeft, 54, scoreEnd, 54]); meterFill.opacity(state.detector * loopOpacity);
-      meterTip.position({ x: scoreEnd, y: 54 }); meterTip.opacity(state.detector * loopOpacity);
-      feedback.opacity(state.optimize * pathOpacity); rewrite.opacity(state.optimize * loopOpacity);
-      promptLabel.opacity(state.reuse); promptCard.opacity(state.reuse); transfer.opacity(state.reuse);
+      [0, 1, 2].forEach(function (index) {
+        var y = 35 + index * 10, start = exampleContentX + exampleContentW * editStarts[index];
+        var end = start + exampleContentW * editLengths[index], t = steps[index];
+        exampleCues[index].opacity(state.example * mix(1, .16, t) * loopOpacity);
+        edits[index].points([start, y, mix(start, end, t), y]);
+        edits[index].opacity((t > 0 ? Math.min(1, t * 3) : 0) * loopOpacity);
+      });
+
+      forward.opacity(state.detector * pathOpacity);
+      detectorLabel.opacity(state.detector * loopOpacity);
+      scoreLabel.opacity(state.detector * loopOpacity);
+      meterBase.opacity(state.detector * loopOpacity);
+      meterThreshold.opacity(state.detector * loopOpacity);
+      meterGhost.opacity((state.optimize > 0 ? Math.min(1, state.optimize * 4) * .24 : 0) * loopOpacity);
+      meterFill.points([meterX0, meterY, scoreEnd, meterY]);
+      meterFill.stroke(scoreColor);
+      meterFill.opacity(state.detector * loopOpacity);
+      meterTip.position({ x: scoreEnd, y: meterY });
+      meterTip.fill(scoreColor);
+      meterTip.opacity(state.detector * loopOpacity);
+
+      var optActive = state.optimize > 0 && state.optimize < 1;
+      var pulse = optActive ? .55 + .45 * Math.sin(Math.PI * ((state.optimize * 3) % 1)) : 1;
+      feedback.opacity((state.optimize > 0 ? Math.min(1, state.optimize * 5) : 0) * pulse * pathOpacity);
+      rewrite.opacity((state.optimize > 0 ? Math.min(1, state.optimize * 5) : 0) * loopOpacity);
+
+      var cardReveal = smooth(state.reuse * 2), moveT = smooth((state.reuse - .1) / .9), inputReveal = smooth((state.reuse - .45) / .55);
+      transfer.points([transferX, 66, transferX, mix(66, 109, Math.min(1, state.reuse * 1.4))]);
+      transfer.opacity(state.reuse > 0 ? Math.min(1, state.reuse * 3) : 0);
+      promptLabel.opacity(cardReveal);
+      promptCard.opacity(cardReveal);
       promptStrokes.forEach(function (stroke, index) {
-        var sourceX = exampleLeft + 10, targetX = promptLeft + 8, sourceY = 40 + index * 9, targetY = 144 + index * 5;
-        var x = mix(sourceX, targetX, state.reuse), y = mix(sourceY, targetY, state.reuse);
-        var contentWidth = mix(exampleWidth - 20, promptWidth - 16, state.reuse);
-        var length = contentWidth * strokeFractions[index];
-        stroke.points([x, y, x + length, y]); stroke.opacity(state.reuse);
+        var x = mix(exampleContentX, promptContentX, moveT), y = mix(35 + index * 10, 120 + index * 7, moveT);
+        var contentWidth = mix(exampleContentW, promptContentW, moveT);
+        stroke.points([x, y, x + contentWidth * strokeFractions[index], y]);
+        stroke.opacity(cardReveal);
         var editStart = x + contentWidth * editStarts[index], editLength = contentWidth * editLengths[index];
         promptEdits[index].points([editStart, y, editStart + editLength, y]);
-        promptEdits[index].opacity(state.reuse * Math.max(0, Math.min(1, state.optimize * 3 - index)));
+        promptEdits[index].opacity(cardReveal * (steps[index] > 0 ? 1 : 0));
       });
-      inputLabel.opacity(state.reuse); inputStroke.opacity(state.reuse);
-      promptArrow.opacity(state.llm); llmCard.opacity(state.llm); llmLabel.opacity(state.llm);
-      llmArrow.opacity(state.output); textLabel.opacity(state.output); textCard.opacity(state.output);
-      textLines.forEach(function (line) { line.opacity(state.output); });
+      inputLabel.opacity(inputReveal);
+      inputStroke.opacity(inputReveal);
+
+      promptArrow.opacity(state.llm);
+      llmCard.opacity(state.llm);
+      llmCard.stroke(state.llm > 0 ? theme.accent : theme.rule);
+      llmLabel.opacity(state.llm);
+
+      var outT = smooth(state.output), outMeterReveal = smooth((state.output - .35) / .65);
+      llmArrow.opacity(state.output);
+      textLabel.opacity(outT);
+      textCard.opacity(outT);
+      textCard.stroke(state.output > .5 ? teal : theme.rule);
+      textLines.forEach(function (line) { line.opacity(outT * .82); });
+      textScoreBase.opacity(outMeterReveal);
+      textScoreThreshold.opacity(outMeterReveal);
+      textScoreFill.points([textMeterX0, textMeterY, textMeterX0 + textMeterW * .18 * outMeterReveal, textMeterY]);
+      textScoreFill.opacity(outMeterReveal);
+
+      caption.text(state.output >= .999 ? "Evades detection directly" :
+        state.llm > 0 ? "Guide LLM on new input" :
+        state.reuse > 0 ? "Reuse optimized example" :
+        state.optimize > 0 ? "Rewrite surface, keep meaning" :
+        state.detector > 0 ? "Flagged: high AI score" : "Unoptimized example");
     }
     render();
     return { timeline: timeline, render: render };

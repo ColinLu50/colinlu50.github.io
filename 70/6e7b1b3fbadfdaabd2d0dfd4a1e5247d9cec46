@@ -1,0 +1,28 @@
+.gitignore
+  h_24c4aa48dc6e0f 34
+_config.yml
+  h_24c4aa48dc6e0f 26-34
+_includes/widgets/research_demo.html
+  h_24c4aa48dc6e0f 12
+_publications/2024/2024-pub-SICO.md
+  h_24c4aa48dc6e0f 8
+assets/css/research-demos.css
+  h_24c4aa48dc6e0f 75-77,88-89
+assets/js/research-loader.js
+  h_24c4aa48dc6e0f 43
+assets/js/research-scenes.js
+  h_24c4aa48dc6e0f 50-52,54-64,66-71,73,76-93,97-101,103-104,108,113-134,137,144-148,151-155,157,159-168,171,173-178,180-186,188-203,206,210,457,459-475,479-482,485-500,502-524,526-527,531-532,535-555,558-571,573-576,578-580,582-591,593-623,625-628,631,633-656
+assets/research-animation-guidelines.md
+  h_24c4aa48dc6e0f 66,104-111,174,176,178
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "706e7b1b3fbadfdaabd2d0dfd4a1e5247d9cec46",
+  "prompts": {},
+  "humans": {
+    "h_24c4aa48dc6e0f": {
+      "author": "ChengGu <ln555557@antgroup.com>"
+    }
+  }
+}
